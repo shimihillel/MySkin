@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="שגרת שימי">
+<link rel="apple-touch-icon" href="app-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="app-icon.png">
+<link rel="apple-touch-icon" sizes="167x167" href="app-icon.png">
+<link rel="apple-touch-icon" sizes="152x152" href="app-icon.png">
+<link rel="apple-touch-icon" sizes="120x120" href="app-icon.png">
+<link rel="icon" type="image/png" href="app-icon.png">
+<title>שגרת שימי</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :root {
+    /* Day mode - Editorial Warm */
+    --day-bg: #faf3e7;
+    --day-bg-soft: #f5ead7;
+    --day-paper: #fffaf0;
+    --day-peach: #f0d4b8;
+    --day-rose: #d4a294;
+    --day-copper: #b8755a;
+    --day-gold: #a08152;
+    --day-ink: #2d1f15;
+    --day-ink-soft: #5c4a3a;
+    --day-ink-mute: #8a7563;
+    --day-line: rgba(160, 129, 82, 0.18);
+
+    /* Night mode - Quiet Luxury */
+    --night-bg: #0f1726;
+    --night-bg-soft: #1a2438;
+    --night-paper: #1e2940;
+    --night-gold-live: #c9a961;
+    --night-verdigris: #6b9080;
+    --night-cream: #e8dcc4;
+    --night-cream-soft: #b8ad96;
+    --night-mute: #7a7261;
+    --night-line: rgba(201, 169, 97, 0.18);
+
+    /* Default to day */
+    --bg: var(--day-bg);
+    --bg-soft: var(--day-bg-soft);
+    --paper: var(--day-paper);
+    --accent: var(--day-copper);
+    --gold: var(--day-gold);
+    --ink: var(--day-ink);
+    --ink-soft: var(--day-ink-soft);
+    --ink-mute: var(--day-ink-mute);
+    --line: var(--day-line);
+  }
+
+  body.night {
+    --bg: var(--night-bg);
+    --bg-soft: var(--night-bg-soft);
+    --paper: var(--night-paper);
+    --accent: var(--night-gold-live);
+    --gold: var(--night-gold-live);
+    --ink: var(--night-cream);
+    --ink-soft: var(--night-cream-soft);
+    --ink-mute: var(--night-mute);
+    --line: var(--night-line);
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.8s ease, color 0.8s ease;
+  }
+
+  body {
+    padding: 0;
+    background:
+      radial-gradient(ellipse 500px 400px at 20% 0%, rgba(212, 162, 148, 0.15), transparent 60%),
+      radial-gradient(ellipse 400px 500px at 90% 80%, rgba(184, 117, 90, 0.08), transparent 60%),
+      var(--bg);
+    min-height: 100vh;
+  }
+
+  body.night {
+    background:
+      radial-gradient(ellipse 500px 400px at 20% 0%, rgba(201, 169, 97, 0.08), transparent 60%),
+      radial-gradient(ellipse 400px 500px at 90% 80%, rgba(107, 144, 128, 0.06), transparent 60%),
+      var(--night-bg);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.3  0 0 0 0 0.1  0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 24px 100px;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  }
+
+  /* === VIEWS === */
+  .view { display: none; }
+  .view.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === HEADER === */
+  .header {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .header-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .ornament-line {
+    width: 50px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .ornament-symbol {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold);
+  }
+
+  .greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 400;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .header-name {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 38px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.3px;
+  }
+
+  .header-name .accent {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  .header-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-top: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 32px 24px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px solid var(--line);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .hero-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .hero-label::before,
+  .hero-label::after {
+    content: '·';
+    margin: 0 10px;
+    color: var(--gold);
+  }
+
+  .hero-product {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .hero-target {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-mute);
+    text-align: center;
+    margin-bottom: 22px;
+    letter-spacing: 1px;
+  }
+
+  .hero-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .hero-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ink-mute);
+    opacity: 0.25;
+    transition: all 0.4s ease;
+  }
+
+  .hero-dot.done {
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .hero-dot.current {
+    background: var(--accent);
+    opacity: 1;
+    width: 24px;
+    border-radius: 3px;
+  }
+
+  .hero-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .hero-btn:hover, .hero-btn:active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .hero-btn .arrow {
+    font-family: 'Frank Ruhl Libre', serif;
+    margin-right: 10px;
+    font-style: normal;
+  }
+
+  .hero-complete {
+    text-align: center;
+    padding: 14px 0 4px;
+  }
+
+  .hero-complete-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .hero-complete-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  /* === SECTION TITLE === */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .section-title::before,
+  .section-title::after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+    vertical-align: middle;
+    margin: 0 12px;
+  }
+
+  /* === WEEK STRIP === */
+  .week-strip {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 0 12px;
+    margin: 0 -24px 32px;
+    padding-right: 24px;
+    padding-left: 24px;
+    scrollbar-width: none;
+  }
+  .week-strip::-webkit-scrollbar { display: none; }
+
+  .week-day {
+    flex-shrink: 0;
+    width: 78px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .week-day:hover { border-color: var(--accent); }
+
+  .week-day.today {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .week-day-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  .week-day-num {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
+
+  .week-day-type {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 10px;
+    opacity: 0.6;
+    letter-spacing: 0.5px;
+  }
+
+  /* === COMING UP === */
+  .coming-up {
+    background: var(--bg-soft);
+    padding: 22px 24px;
+    margin-bottom: 32px;
+    border-right: 2px solid var(--accent);
+  }
+
+  .coming-up-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .coming-up-text {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .coming-up-text .accent {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* === FOCUS MODE OVERLAY === */
+  .focus-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 500;
+    display: none;
+    padding: 24px;
+    overflow-y: auto;
+    flex-direction: column;
+  }
+
+  .focus-overlay.active {
+    display: flex;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .focus-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding-top: 12px;
+  }
+
+  .focus-exit {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 22px;
+    line-height: 1;
+    transition: all 0.3s;
+  }
+
+  .focus-exit:active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .focus-counter {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-mute);
+    letter-spacing: 2px;
+  }
+
+  .focus-progress {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 50%;
+  }
+
+  .focus-progress .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--ink-mute);
+    opacity: 0.25;
+    transition: all 0.4s;
+  }
+
+  .focus-progress .dot.done {
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .focus-progress .dot.current {
+    background: var(--accent);
+    opacity: 1;
+    width: 18px;
+    border-radius: 3px;
+  }
+
+  .focus-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .focus-section {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .focus-emblem {
+    width: 100px;
+    height: 100px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    position: relative;
+    background: var(--paper);
+  }
+
+  .focus-emblem::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  .focus-emblem-num {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 30px;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .focus-name {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+    max-width: 360px;
+    padding: 0 16px;
+  }
+
+  .focus-target {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-mute);
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+  }
+
+  .focus-tip {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--gold);
+    line-height: 1.5;
+    max-width: 340px;
+    margin-bottom: 16px;
+    padding: 18px 22px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .focus-actions {
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .focus-done-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 18px 60px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    min-width: 240px;
+  }
+
+  .focus-done-btn:active {
+    background: var(--accent);
+  }
+
+  .focus-skip {
+    background: transparent;
+    border: none;
+    color: var(--ink-mute);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+  }
+
+  .focus-skip:active { color: var(--accent); }
+
+  /* Focus complete */
+  .focus-complete {
+    text-align: center;
+    padding: 60px 24px;
+  }
+
+  .focus-complete-ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 20px;
+    letter-spacing: 8px;
+  }
+
+  .focus-complete-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 36px;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+
+  .focus-complete-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--accent);
+    margin-bottom: 36px;
+  }
+
+  /* === DAY DETAIL VIEW === */
+  .back-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 8px 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .back-btn:active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .day-detail-header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .day-detail-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .day-detail-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 32px;
+    color: var(--ink);
+    line-height: 1.05;
+    margin-bottom: 4px;
+  }
+
+  .day-detail-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--accent);
+  }
+
+  .routine-section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .routine-section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .routine-section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .routine-section-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .routine-step {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .routine-step:hover {
+    background: var(--bg-soft);
+    margin: 0 -8px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .routine-step.checked .routine-step-name {
+    color: var(--ink-mute);
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 0.5px;
+  }
+
+  .routine-step.checked .routine-step-num {
+    opacity: 0.3;
+  }
+
+  .routine-step-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--ink-mute);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .routine-step.checked .routine-step-checkbox {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .routine-step.checked .routine-step-checkbox::after {
+    content: '✓';
+    color: var(--paper);
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .routine-step-num {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 18px;
+    color: var(--accent);
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+    font-weight: 400;
+  }
+
+  .routine-step-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .routine-step-name {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.25;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .target-tag {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    padding: 2px 8px;
+    border: 1px solid var(--line);
+    letter-spacing: 0.5px;
+    color: var(--ink-mute);
+  }
+
+  .target-tag.face { color: var(--accent); border-color: var(--accent); }
+  .target-tag.neck { color: var(--gold); border-color: var(--gold); }
+  .target-tag.both { color: var(--ink-soft); }
+
+  .routine-step-tip {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* === PRODUCTS === */
+  .products-section-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 24px;
+    color: var(--ink);
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .products-section-title:first-of-type { margin-top: 0; }
+
+  .product-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+
+  .product-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .product-card-name {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.2;
+    flex: 1;
+  }
+
+  .product-card-category {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+
+  .product-card-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .product-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+
+  .product-meta-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11px;
+    padding: 2px 8px;
+    color: var(--ink-mute);
+    letter-spacing: 0.5px;
+    border-right: 1px solid var(--line);
+    padding-right: 10px;
+  }
+
+  .product-meta-tag:last-child { border-right: none; }
+
+  /* === BOTTOM NAV === */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    z-index: 100;
+    padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--ink-mute);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .nav-btn.active { color: var(--accent); }
+
+  .nav-btn.active::after {
+    content: '·';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent);
+    font-size: 20px;
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ===== HOME VIEW ===== -->
+  <div class="view active" id="view-home">
+
+    <header class="header">
+      <div class="header-ornament">
+        <div class="ornament-line"></div>
+        <div class="ornament-symbol" id="ornamentSymbol">☼</div>
+        <div class="ornament-line"></div>
+      </div>
+      <div class="greeting" id="greeting">בוקר טוב,</div>
+      <h1 class="header-name">שגרת <span class="accent">שימי</span></h1>
+      <div class="header-date" id="dateText"></div>
+    </header>
+
+    <!-- Hero -->
+    <div class="hero" id="heroCard"></div>
+
+    <!-- Week -->
+    <div class="section-title">השבוע</div>
+    <div class="week-strip" id="weekStrip"></div>
+
+    <!-- Coming up -->
+    <div class="coming-up" id="comingUp"></div>
+
+  </div>
+
+  <!-- ===== CALENDAR VIEW ===== -->
+  <div class="view" id="view-calendar">
+    <header class="header" style="padding-top:20px;">
+      <div class="header-ornament">
+        <div class="ornament-line"></div>
+        <div class="ornament-symbol">⌖</div>
+        <div class="ornament-line"></div>
+      </div>
+      <div class="greeting">לוח שבועי</div>
+      <h1 class="header-name">השבוע <span class="accent">שלך</span></h1>
+    </header>
+    <div id="calendarList"></div>
+  </div>
+
+  <!-- ===== PRODUCTS VIEW ===== -->
+  <div class="view" id="view-products">
+    <header class="header" style="padding-top:20px;">
+      <div class="header-ornament">
+        <div class="ornament-line"></div>
+        <div class="ornament-symbol">❖</div>
+        <div class="ornament-line"></div>
+      </div>
+      <div class="greeting">My Stash</div>
+      <h1 class="header-name">המוצרים <span class="accent">שלי</span></h1>
+    </header>
+    <div id="productsContent"></div>
+  </div>
+
+  <!-- ===== DAY DETAIL VIEW ===== -->
+  <div class="view" id="view-day-detail">
+    <button class="back-btn" id="backToCalendar">← חזרה</button>
+    <div class="day-detail-header">
+      <div class="day-detail-label" id="detailLabel"></div>
+      <div class="day-detail-title" id="detailTitle"></div>
+      <div class="day-detail-sub" id="detailSub"></div>
+    </div>
+    <div id="detailContent"></div>
+  </div>
+
+</div>
+
+<!-- ===== FOCUS MODE OVERLAY ===== -->
+<div class="focus-overlay" id="focusOverlay">
+  <div id="focusInner"></div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav" id="bottomNav">
+  <div class="bottom-nav-inner">
+    <button class="nav-btn active" data-view="home">בית</button>
+    <button class="nav-btn" data-view="calendar">לוח</button>
+    <button class="nav-btn" data-view="products">מוצרים</button>
+  </div>
+</nav>
+
+<script>
+const days = [
+  { id: 0, name: 'ראשון', short: 'א׳', type: 'רטינואיד', subtype: 'retinoid', summary: 'Ret-A + Retinol Boost+' },
+  { id: 1, name: 'שני', short: 'ב׳', type: 'פפטידים מלא', subtype: 'peptide', summary: 'APIS + Matrixyl + Argireline + Copper' },
+  { id: 2, name: 'שלישי', short: 'ג׳', type: 'רטינואיד', subtype: 'retinoid', summary: 'Ret-A + Retinol Boost+' },
+  { id: 3, name: 'רביעי', short: 'ד׳', type: 'פפטידים + מסכת VT', subtype: 'mask', summary: 'מסכת VT + שלישיית פפטידים' },
+  { id: 4, name: 'חמישי', short: 'ה׳', type: 'רטינואיד', subtype: 'retinoid', summary: 'Ret-A + Retinol Boost+' },
+  { id: 5, name: 'שישי', short: 'ו׳', type: 'לילה מפנק', subtype: 'indulgent', summary: 'פפטידים + Night Wrapping Mask' },
+  { id: 6, name: 'שבת', short: 'ש׳', type: 'פפטידים מלא', subtype: 'peptide', summary: 'APIS + Matrixyl + Argireline + Copper' },
+];
+
+const morningRoutine = {
+  combined: [
+    { name: 'Timeless 20% Vitamin C + E + Ferulic', target: 'both' },
+    { name: 'Anua 7 Rice Ceramide', target: 'both' },
+    { name: 'SPF 50+ Anthelios', target: 'both' },
+  ],
+};
+
+const eveningRoutines = {
+  0: {
+    eye: [{ name: 'Crystal Retinal Eye 3' }],
+    steps: [
+      { name: 'Ret-A 0.025%', target: 'face', tip: 'שכבה דקה · להמתין 15–20 דקות אחרי הניקוי' },
+      { name: 'Retinol Boost+', target: 'neck' },
+      { name: 'Purcell Glow Barrier', target: 'both' },
+      { name: 'CeraVe PM Lotion', target: 'face' },
+      { name: 'Lierac Neck & Décolleté', target: 'neck' },
+    ],
+  },
+  1: {
+    eye: [{ name: 'Crystal Retinal Eye 3' }],
+    steps: [
+      { name: 'APIS Hyaluron 4D', target: 'both' },
+      { name: 'Matrixyl 10%', target: 'both' },
+      { name: 'Argireline 10%', target: 'face' },
+      { name: 'Copper Peptides', target: 'both' },
+      { name: 'Purcell Glow Barrier', target: 'both' },
+      { name: 'CeraVe PM Lotion', target: 'face' },
+      { name: 'Lierac Neck & Décolleté', target: 'neck' },
+    ],
+  },
+  2: {
+    eye: [{ name: 'Crystal Retinal Eye 3' }],
+    steps: [
+      { name: 'Ret-A 0.025%', target: 'face', tip: 'שכבה דקה · להמתין 15–20 דקות אחרי הניקוי' },
+      { name: 'Retinol Boost+', target: 'neck' },
+      { name: 'Purcell Glow Barrier', target: 'both' },
+      { name: 'CeraVe PM Lotion', target: 'face' },
+      { name: 'Lierac Neck & Décolleté', target: 'neck' },
+    ],
+  },
+  3: {
+    eye: [{ name: 'Crystal Retinal Eye 3' }],
+    steps: [
+      { name: 'מסכת VT Cica', target: 'face', tip: '15–20 דקות' },
+      { name: 'APIS Hyaluron 4D', target: 'both' },
+      { name: 'Matrixyl 10%', target: 'face' },
+      { name: 'Argireline 10%', target: 'both' },
+      { name: 'Copper Peptides', target: 'both' },
+      { name: 'Purcell Glow Barrier', target: 'both' },
+      { name: 'CeraVe PM Lotion', target: 'face' },
+      { name: 'Lierac Neck & Décolleté', target: 'neck' },
+    ],
+  },
+  4: {
+    eye: [{ name: 'Crystal Retinal Eye 3' }],
+    steps: [
+      { name: 'Ret-A 0.025%', target: 'face', tip: 'שכבה דקה · להמתין 15–20 דקות אחרי הניקוי' },
+      { name: 'Retinol Boost+', target: 'neck' },
+      { name: 'Purcell Glow Barrier', target: 'both' },
+      { name: 'CeraVe PM Lotion', target: 'face' },
+      { name: 'Lierac Neck & Décolleté', target: 'neck' },
+    ],
+  },
+  5: {
+    eye: [{ name: 'Crystal Retinal Eye 3' }],
+    steps: [
+      { name: 'APIS Hyaluron 4D', target: 'both' },
+      { name: 'Matrixyl 10%', target: 'both' },
+      { name: 'Argireline 10%', target: 'face' },
+      { name: 'Copper Peptides', target: 'both' },
+      { name: 'Purcell Glow Barrier', target: 'both' },
+      { name: 'Night Wrapping Mask', target: 'face' },
+      { name: 'Lierac Neck & Décolleté', target: 'neck' },
+    ],
+  },
+  6: {
+    eye: [{ name: 'Crystal Retinal Eye 3' }],
+    steps: [
+      { name: 'APIS Hyaluron 4D', target: 'both' },
+      { name: 'Matrixyl 10%', target: 'face' },
+      { name: 'Argireline 10%', target: 'both' },
+      { name: 'Copper Peptides', target: 'face' },
+      { name: 'Purcell Glow Barrier', target: 'both' },
+      { name: 'CeraVe PM Lotion', target: 'face' },
+      { name: 'Lierac Neck & Décolleté', target: 'neck' },
+    ],
+  },
+};
+
+const products = [
+  { name: 'Timeless 20% Vitamin C + E + Ferulic', category: 'בוקר', desc: 'ויטמין C 20% + ויטמין E + חומצה פרולית · נוגד חמצון, מגן מ-UV, מבהיר כתמים', tags: ['בוקר', 'כל יום', 'פנים+צוואר'] },
+  { name: 'Anua 7 Rice Ceramide Barrier Serum', category: 'בוקר', desc: '58% מי סובין אורז + קרמיד + ניאצינאמיד + ארבוטין · מחסום, לחות והבהרה', tags: ['בוקר', 'כל יום', 'פנים+צוואר'] },
+  { name: 'SPF 50+ Anthelios UVMune 400', category: 'בוקר', desc: 'הגנה רחבת טווח · UVA + UVB · חובה כל בוקר', tags: ['בוקר', 'כל יום', 'פנים+צוואר'] },
+  { name: 'Crystal Retinal Eye 3', category: 'עיניים', desc: 'רטינל 0.03% · מטפל בקמטים ובהילה כהה · עדין לאזור העין', tags: ['ערב', 'כל ערב', 'שלב ראשון'] },
+  { name: 'Ret-A 0.025%', category: 'רטינואיד', desc: 'טרטינואין · הזהב לאנטי-אייג׳ינג · מחדש קולגן, מפחית קמטים וכתמים', tags: ['ערב', '3 פעמים בשבוע', 'פנים בלבד'] },
+  { name: 'Retinol Boost+', category: 'רטינואיד', desc: 'רטינול 0.23% · לצוואר · עדין יותר מ-Ret-A', tags: ['ערב', '3 פעמים בשבוע', 'צוואר'] },
+  { name: 'APIS Hyaluron 4D', category: 'פפטיד', desc: 'HA במולקולות שונות + SNAP-8 פפטיד · הידרציה עמוקה + אנטי קמט', tags: ['ערב', '4 פעמים בשבוע', 'פנים+צוואר'] },
+  { name: 'Matrixyl 10% + HA', category: 'פפטיד', desc: 'פפטיד מבני · עידוד ייצור קולגן · איפוס קמטים', tags: ['ערב', '4 פעמים בשבוע', 'פנים'] },
+  { name: 'Argireline 10%', category: 'פפטיד', desc: 'נוירומודולטור · מרפה שרירי הבעה · מפחית קמטי הבעה', tags: ['ערב', '4 פעמים בשבוע', 'פנים+צוואר'] },
+  { name: 'Multi-Peptide + Copper', category: 'פפטיד', desc: 'פפטידי נחושת · ריפוי + בניית קולגן · סינרגיה עם הפפטידים האחרים', tags: ['ערב', '4 פעמים בשבוע', 'פנים+צוואר'] },
+  { name: 'Purcell Pixcell Biom Glow Barrier', category: 'מחסום', desc: 'פפטיד + פרוביוטיקה + ניאצינאמיד + B5 · מחזק מחסום · לחות וברק', tags: ['ערב', 'כל ערב', 'פנים+צוואר'] },
+  { name: 'VT Cica Collagen Mask', category: 'מסכה', desc: 'מסכת בד עם Cica · הרגעה ולחות · מעולה אחרי רטינואיד', tags: ['ערב', 'פעם בשבוע', 'יום ד׳'] },
+  { name: 'Medicube Night Wrapping Mask', category: 'מסכה', desc: 'מסכת לילה עוטפת · ניאצינאמיד + קרמיד · שכבה סוגרת לאורך הלילה', tags: ['ערב', 'פעם בשבוע', 'יום ו׳'] },
+  { name: 'CeraVe PM Facial Lotion', category: 'קרם', desc: 'קרם לילה קליל ולא דביק · 3 קרמידים + ניאצינאמיד + HA · שכבה אחרונה על הפנים', tags: ['ערב', 'כל ערב', 'פנים'] },
+  { name: 'Lierac Lift Integral Neck & Décolleté', category: 'קרם', desc: 'קרם ייעודי לצוואר ודקולטה · StructureLift Complex · מהדק וממלא', tags: ['ערב', 'כל ערב', 'צוואר'] },
+];
+
+const monthNames = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
+
+let currentView = 'home';
+let currentDay = new Date().getDay();
+let detailDay = null;
+let checkedSteps = {};
+let focusSession = null;
+let focusStepIdx = 0;
+
+// === AUTO TIME ===
+function getAutoTime() {
+  const hour = new Date().getHours();
+  return hour < 18 ? 'morning' : 'evening';
+}
+
+function applyTimeOfDayTheme() {
+  const time = getAutoTime();
+  if (time === 'evening') {
+    document.body.classList.add('night');
+  } else {
+    document.body.classList.remove('night');
+  }
+}
+
+// === STORAGE ===
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem('shimi-skincare-checked');
+    if (raw) {
+      const data = JSON.parse(raw);
+      const today = new Date().toDateString();
+      if (data.date === today) {
+        checkedSteps = data.checked || {};
+      } else {
+        checkedSteps = {};
+        saveProgress();
+      }
+    }
+  } catch (e) { console.error(e); }
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem('shimi-skincare-checked', JSON.stringify({
+      date: new Date().toDateString(),
+      checked: checkedSteps
+    }));
+  } catch (e) { console.error(e); }
+}
+
+// === HELPERS ===
+function getTargetLabel(target) {
+  if (target === 'both') return { text: 'פנים + צוואר', class: 'both' };
+  if (target === 'face') return { text: 'פנים בלבד', class: 'face' };
+  if (target === 'neck') return { text: 'צוואר בלבד', class: 'neck' };
+  return null;
+}
+
+function getFlatSteps(dayId, time) {
+  const flat = [];
+  if (time === 'morning') {
+    morningRoutine.combined.forEach((step, idx) => {
+      flat.push({ ...step, section: 'combined', idx, sectionLabel: 'בוקר' });
+    });
+  } else {
+    const r = eveningRoutines[dayId];
+    r.eye.forEach((step, idx) => {
+      flat.push({ ...step, section: 'eye', idx, sectionLabel: 'עיניים' });
+    });
+    r.steps.forEach((step, idx) => {
+      flat.push({ ...step, section: 'body', idx, sectionLabel: 'פנים + צוואר' });
+    });
+  }
+  return flat;
+}
+
+function getCheckedCount(dayId, time) {
+  const flat = getFlatSteps(dayId, time);
+  let done = 0;
+  flat.forEach(s => {
+    const key = `${dayId}-${time}-${s.section}-${s.idx}`;
+    if (checkedSteps[key]) done++;
+  });
+  return { done, total: flat.length };
+}
+
+function findNextStep(dayId, time) {
+  const flat = getFlatSteps(dayId, time);
+  for (let i = 0; i < flat.length; i++) {
+    const key = `${dayId}-${time}-${flat[i].section}-${flat[i].idx}`;
+    if (!checkedSteps[key]) return { step: flat[i], idx: i, total: flat.length };
+  }
+  return null;
+}
+
+// === HOME VIEW ===
+function renderHome() {
+  const time = getAutoTime();
+  const day = days[currentDay];
+  const now = new Date();
+
+  // Greeting + ornament
+  document.getElementById('greeting').textContent = time === 'morning' ? 'בוקר טוב,' : 'ערב טוב,';
+  document.getElementById('ornamentSymbol').textContent = time === 'morning' ? '☼' : '☽';
+
+  // Date
+  const dateStr = `${day.name} · ${now.getDate()} ב${monthNames[now.getMonth()]}`;
+  document.getElementById('dateText').textContent = dateStr;
+
+  // Hero
+  renderHero(time, day);
+
+  // Week strip
+  renderWeekStrip();
+
+  // Coming up
+  renderComingUp(time, day);
+}
+
+function renderHero(time, day) {
+  const hero = document.getElementById('heroCard');
+  const next = findNextStep(currentDay, time);
+  const { done, total } = getCheckedCount(currentDay, time);
+
+  if (!next) {
+    // All complete
+    const message = time === 'morning' ? 'הבוקר שלך מוכן' : 'סיימת להיום';
+    const sub = time === 'morning' ? 'מוכנה ליום' : 'לילה טוב, שימי';
+    hero.innerHTML = `
+      <div class="hero-complete">
+        <div class="hero-complete-mark">— הושלם —</div>
+        <div class="hero-complete-title">${message}</div>
+        <div style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; color: var(--accent); margin-bottom: 24px;">${sub}</div>
+        <button class="hero-btn" onclick="startFocus()">
+          <span class="arrow">→</span>
+          לראות שוב
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  // Build progress dots
+  let dotsHtml = '';
+  for (let i = 0; i < total; i++) {
+    let cls = '';
+    if (i < next.idx) cls = 'done';
+    else if (i === next.idx) cls = 'current';
+    dotsHtml += `<div class="hero-dot ${cls}"></div>`;
+  }
+
+  const target = next.step.target ? getTargetLabel(next.step.target) : null;
+  const targetHtml = target ? `<div class="hero-target">${target.text}</div>` : '<div class="hero-target">&nbsp;</div>';
+
+  const label = done === 0 ? 'הריטואל מתחיל' : 'השלב הבא';
+  const btnText = done === 0 ? 'התחילי' : 'המשיכי';
+
+  hero.innerHTML = `
+    <div class="hero-label">${label}</div>
+    <div class="hero-product">${next.step.name}</div>
+    ${targetHtml}
+    <div class="hero-progress">${dotsHtml}</div>
+    <button class="hero-btn" onclick="startFocus()">
+      <span class="arrow">→</span>
+      ${btnText}
+    </button>
+  `;
+}
+
+function renderWeekStrip() {
+  const strip = document.getElementById('weekStrip');
+  strip.innerHTML = '';
+
+  // Calculate the dates of this week (Sunday to Saturday)
+  const today = new Date();
+  const todayDayId = today.getDay();
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() - todayDayId);
+
+  days.forEach(day => {
+    const date = new Date(sunday);
+    date.setDate(sunday.getDate() + day.id);
+
+    const isToday = day.id === todayDayId;
+
+    const el = document.createElement('div');
+    el.className = 'week-day' + (isToday ? ' today' : '');
+    el.innerHTML = `
+      <div class="week-day-name">${day.short}</div>
+      <div class="week-day-num">${date.getDate()}</div>
+      <div class="week-day-type">${day.subtype}</div>
+    `;
+    el.addEventListener('click', () => {
+      detailDay = day.id;
+      showDayDetail();
+    });
+    strip.appendChild(el);
+  });
+}
+
+function renderComingUp(time, day) {
+  const el = document.getElementById('comingUp');
+
+  if (time === 'morning') {
+    const eveningSteps = eveningRoutines[currentDay].eye.length + eveningRoutines[currentDay].steps.length;
+    const mins = Math.max(6, Math.round(eveningSteps * 1.2));
+    el.innerHTML = `
+      <div class="coming-up-label">לקראת הערב</div>
+      <div class="coming-up-text">
+        ערב <span class="accent">${day.type}</span> · ${eveningSteps} שלבים · בערך ${mins} דקות
+      </div>
+    `;
+  } else {
+    // Evening — show tomorrow's morning
+    const tomorrowId = (currentDay + 1) % 7;
+    const tomorrowDay = days[tomorrowId];
+    el.innerHTML = `
+      <div class="coming-up-label">מחר</div>
+      <div class="coming-up-text">
+        ${tomorrowDay.name} · <span class="accent">${tomorrowDay.type}</span>
+      </div>
+    `;
+  }
+}
+
+// === FOCUS MODE ===
+function startFocus() {
+  const time = getAutoTime();
+  focusSession = { time, steps: getFlatSteps(currentDay, time) };
+
+  // Find first unchecked
+  focusStepIdx = 0;
+  for (let i = 0; i < focusSession.steps.length; i++) {
+    const s = focusSession.steps[i];
+    const key = `${currentDay}-${time}-${s.section}-${s.idx}`;
+    if (!checkedSteps[key]) {
+      focusStepIdx = i;
+      break;
+    }
+  }
+
+  const allDone = focusSession.steps.every(s => {
+    const key = `${currentDay}-${time}-${s.section}-${s.idx}`;
+    return checkedSteps[key];
+  });
+  if (allDone) focusStepIdx = focusSession.steps.length;
+
+  document.getElementById('bottomNav').style.display = 'none';
+  document.getElementById('focusOverlay').classList.add('active');
+
+  renderFocusStep();
+}
+
+function exitFocus() {
+  document.getElementById('focusOverlay').classList.remove('active');
+  document.getElementById('bottomNav').style.display = '';
+  renderHome();
+}
+
+function renderFocusStep() {
+  const container = document.getElementById('focusInner');
+  const total = focusSession.steps.length;
+
+  if (focusStepIdx >= total) {
+    // Complete state
+    const time = focusSession.time;
+    const completeTitle = time === 'morning' ? 'הבוקר שלך מוכן' : 'סיימת להיום';
+    const message = time === 'morning' ? 'מוכנה ליום' : 'לילה טוב, שימי';
+
+    container.innerHTML = `
+      <div class="focus-topbar">
+        <button class="focus-exit" onclick="exitFocus()">×</button>
+        <div class="focus-progress">${'<span class="dot done"></span>'.repeat(total)}</div>
+        <div class="focus-counter">${total}/${total}</div>
+      </div>
+      <div class="focus-complete">
+        <div class="focus-complete-ornament">· ✦ ·</div>
+        <div class="focus-complete-title">${completeTitle}</div>
+        <div class="focus-complete-text">${message}</div>
+        <button class="focus-done-btn" onclick="exitFocus()">חזרה הביתה</button>
+      </div>
+    `;
+    return;
+  }
+
+  const step = focusSession.steps[focusStepIdx];
+
+  // Progress dots
+  let dotsHtml = '';
+  for (let i = 0; i < total; i++) {
+    let cls = '';
+    if (i < focusStepIdx) cls = 'done';
+    else if (i === focusStepIdx) cls = 'current';
+    dotsHtml += `<span class="dot ${cls}"></span>`;
+  }
+
+  const target = step.target ? getTargetLabel(step.target) : null;
+  const targetHtml = target ? `<div class="focus-target">${target.text}</div>` : '<div class="focus-target">&nbsp;</div>';
+
+  const tipHtml = step.tip ? `<div class="focus-tip">${step.tip}</div>` : '';
+
+  // Roman numerals for emblem
+  const romans = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+  const num = romans[focusStepIdx] || (focusStepIdx + 1);
+
+  container.innerHTML = `
+    <div class="focus-topbar">
+      <button class="focus-exit" onclick="exitFocus()">×</button>
+      <div class="focus-progress">${dotsHtml}</div>
+      <div class="focus-counter">${focusStepIdx + 1}/${total}</div>
+    </div>
+    <div class="focus-content">
+      <div class="focus-section">— ${step.sectionLabel} —</div>
+      <div class="focus-emblem">
+        <div class="focus-emblem-num">${num}</div>
+      </div>
+      <div class="focus-name">${step.name}</div>
+      ${targetHtml}
+      ${tipHtml}
+    </div>
+    <div class="focus-actions">
+      <button class="focus-done-btn" onclick="completeStep()">${focusStepIdx === total - 1 ? 'סיימתי הכל' : 'סיימתי'}</button>
+      ${focusStepIdx > 0 ? '<button class="focus-skip" onclick="goBackStep()">חזרה לשלב הקודם</button>' : ''}
+    </div>
+  `;
+}
+
+function completeStep() {
+  const step = focusSession.steps[focusStepIdx];
+  const key = `${currentDay}-${focusSession.time}-${step.section}-${step.idx}`;
+  checkedSteps[key] = true;
+  saveProgress();
+  focusStepIdx++;
+  renderFocusStep();
+}
+
+function goBackStep() {
+  if (focusStepIdx > 0) focusStepIdx--;
+  renderFocusStep();
+}
+
+// === CALENDAR ===
+function renderCalendar() {
+  const today = new Date().getDay();
+  const container = document.getElementById('calendarList');
+  container.innerHTML = '';
+
+  // Calculate dates
+  const todayDate = new Date();
+  const sunday = new Date(todayDate);
+  sunday.setDate(todayDate.getDate() - today);
+
+  days.forEach(day => {
+    const date = new Date(sunday);
+    date.setDate(sunday.getDate() + day.id);
+    const isToday = day.id === today;
+
+    const card = document.createElement('div');
+    card.className = 'routine-section';
+    card.style.cursor = 'pointer';
+    if (isToday) {
+      card.style.borderColor = 'var(--accent)';
+      card.style.borderWidth = '1.5px';
+    }
+
+    card.innerHTML = `
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:8px;">
+        <div>
+          <div style="font-family: 'Frank Ruhl Libre', serif; font-size: 22px; color: var(--ink); line-height:1;">${day.name}</div>
+          <div style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--accent); margin-top:4px; letter-spacing:2px; text-transform:uppercase;">${day.type}</div>
+        </div>
+        <div style="text-align:left;">
+          <div style="font-family: 'Frank Ruhl Libre', serif; font-size: 24px; color: var(--ink-mute); line-height:1;">${date.getDate()}</div>
+          ${isToday ? '<div style="font-family: \'Cormorant Garamond\', serif; font-style: italic; font-size: 11px; color: var(--accent); letter-spacing:2px; margin-top:4px; text-transform:uppercase;">היום</div>' : ''}
+        </div>
+      </div>
+      <div style="font-size:13px; color: var(--ink-soft); font-family: 'Inter', sans-serif; margin-top:6px; line-height:1.4;">${day.summary}</div>
+      <div style="text-align:left; margin-top:10px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--accent); letter-spacing:2px;">לפרטים →</div>
+    `;
+    card.addEventListener('click', () => {
+      detailDay = day.id;
+      showDayDetail();
+    });
+    container.appendChild(card);
+  });
+}
+
+// === DAY DETAIL ===
+function showDayDetail() {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-day-detail').classList.add('active');
+
+  const day = days[detailDay];
+  document.getElementById('detailLabel').textContent = `— ${day.subtype} —`;
+  document.getElementById('detailTitle').textContent = day.name;
+  document.getElementById('detailSub').textContent = day.type;
+
+  const container = document.getElementById('detailContent');
+  container.innerHTML = '';
+
+  // Morning section
+  const morningSec = document.createElement('div');
+  morningSec.className = 'routine-section';
+  morningSec.innerHTML = `
+    <div class="routine-section-header">
+      <span class="routine-section-label">— Morning —</span>
+      <span class="routine-section-title">בוקר</span>
+    </div>
+  `;
+  morningRoutine.combined.forEach((step, idx) => {
+    const tag = getTargetLabel(step.target);
+    const tagHtml = tag ? `<span class="target-tag ${tag.class}">${tag.text}</span>` : '';
+    const stepEl = document.createElement('div');
+    stepEl.className = 'routine-step';
+    stepEl.style.cursor = 'default';
+    stepEl.innerHTML = `
+      <div class="routine-step-num">${idx + 1}</div>
+      <div class="routine-step-content">
+        <div class="routine-step-name">${step.name}${tagHtml}</div>
+      </div>
+    `;
+    morningSec.appendChild(stepEl);
+  });
+  container.appendChild(morningSec);
+
+  // Evening - Eye
+  const r = eveningRoutines[detailDay];
+  const eyeSec = document.createElement('div');
+  eyeSec.className = 'routine-section';
+  eyeSec.innerHTML = `
+    <div class="routine-section-header">
+      <span class="routine-section-label">— Eyes · ראשון —</span>
+      <span class="routine-section-title">ערב · עיניים</span>
+    </div>
+  `;
+  r.eye.forEach((step, idx) => {
+    const stepEl = document.createElement('div');
+    stepEl.className = 'routine-step';
+    stepEl.style.cursor = 'default';
+    stepEl.innerHTML = `
+      <div class="routine-step-num">${idx + 1}</div>
+      <div class="routine-step-content">
+        <div class="routine-step-name">${step.name}</div>
+      </div>
+    `;
+    eyeSec.appendChild(stepEl);
+  });
+  container.appendChild(eyeSec);
+
+  // Evening - Body
+  const bodySec = document.createElement('div');
+  bodySec.className = 'routine-section';
+  bodySec.innerHTML = `
+    <div class="routine-section-header">
+      <span class="routine-section-label">— Skin —</span>
+      <span class="routine-section-title">ערב · פנים + צוואר</span>
+    </div>
+  `;
+  r.steps.forEach((step, idx) => {
+    const tag = step.target ? getTargetLabel(step.target) : null;
+    const tagHtml = tag ? `<span class="target-tag ${tag.class}">${tag.text}</span>` : '';
+    const tipHtml = step.tip ? `<div class="routine-step-tip">${step.tip}</div>` : '';
+    const stepEl = document.createElement('div');
+    stepEl.className = 'routine-step';
+    stepEl.style.cursor = 'default';
+    stepEl.style.alignItems = 'flex-start';
+    stepEl.innerHTML = `
+      <div class="routine-step-num" style="padding-top:2px;">${idx + 1}</div>
+      <div class="routine-step-content">
+        <div class="routine-step-name">${step.name}${tagHtml}</div>
+        ${tipHtml}
+      </div>
+    `;
+    bodySec.appendChild(stepEl);
+  });
+  container.appendChild(bodySec);
+}
+
+document.getElementById('backToCalendar').addEventListener('click', () => {
+  switchView('calendar');
+});
+
+// === PRODUCTS ===
+function renderProducts() {
+  const container = document.getElementById('productsContent');
+  container.innerHTML = '';
+
+  const categories = {
+    'בוקר': [],
+    'עיניים': [],
+    'רטינואיד': [],
+    'פפטיד': [],
+    'מחסום': [],
+    'מסכה': [],
+    'קרם': [],
+  };
+
+  products.forEach(p => {
+    if (categories[p.category]) categories[p.category].push(p);
+  });
+
+  Object.entries(categories).forEach(([catName, catProducts]) => {
+    if (catProducts.length === 0) return;
+
+    const title = document.createElement('h2');
+    title.className = 'products-section-title';
+    title.textContent = catName;
+    container.appendChild(title);
+
+    catProducts.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      const tagsHtml = p.tags.map(t => `<span class="product-meta-tag">${t}</span>`).join('');
+      card.innerHTML = `
+        <div class="product-card-header">
+          <div class="product-card-name">${p.name}</div>
+          <div class="product-card-category">${p.category}</div>
+        </div>
+        <div class="product-card-desc">${p.desc}</div>
+        <div class="product-card-meta">${tagsHtml}</div>
+      `;
+      container.appendChild(card);
+    });
+  });
+}
+
+// === NAVIGATION ===
+function switchView(viewName) {
+  currentView = viewName;
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + viewName).classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const navBtn = document.querySelector(`.nav-btn[data-view="${viewName}"]`);
+  if (navBtn) navBtn.classList.add('active');
+
+  window.scrollTo(0, 0);
+
+  if (viewName === 'home') renderHome();
+  if (viewName === 'calendar') renderCalendar();
+  if (viewName === 'products') renderProducts();
+}
+
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchView(btn.dataset.view));
+});
+
+// === INIT ===
+(function init() {
+  applyTimeOfDayTheme();
+  loadProgress();
+  renderHome();
+
+  // Re-apply theme every minute (in case time crosses 18:00 while app is open)
+  setInterval(applyTimeOfDayTheme, 60000);
+})();
+</script>
+
+</body>
+</html>
