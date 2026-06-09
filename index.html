@@ -30,17 +30,36 @@
 
     <main>
       <section class="view active" id="homeView">
-        <section class="hero-card glass-card">
-          <div class="hero-copy">
-            <p class="overline" id="homeOverline">GOOD MORNING, SHIMI ✧</p>
-            <h1 id="greetingTitle">בוקר טוב, שימי</h1>
-            <p id="greetingSub">העור שלך. הטקס שלך. הרגע היומי שלך.</p>
+        <section class="today-card glass-card">
+          <div class="today-head">
+            <div>
+              <p class="overline" id="homeOverline">TODAY’S RITUAL ✧</p>
+              <h1 id="greetingTitle">היום שלך</h1>
+              <p id="greetingSub">כל מה שצריך לעשות היום, בלי לנחש.</p>
+            </div>
+            <div class="today-orb" aria-hidden="true">✦</div>
           </div>
-          <div class="hero-art" aria-hidden="true">
-            <div class="bottle tall"></div>
-            <div class="jar"></div>
-            <div class="sparkle s1">✦</div>
-            <div class="sparkle s2">✧</div>
+
+          <div class="today-grid">
+            <button class="today-mini" id="todayMorningMini">
+              <span class="mini-symbol">☀︎</span>
+              <small>שגרת בוקר</small>
+              <strong id="todayMorningText">3 שלבים</strong>
+            </button>
+            <button class="today-mini" id="todayEveningMini">
+              <span class="mini-symbol">☾</span>
+              <small>שגרת ערב</small>
+              <strong id="todayEveningText">לפי היום</strong>
+            </button>
+          </div>
+
+          <div class="today-next">
+            <div class="next-badge" id="todayNextIcon">♡</div>
+            <div>
+              <small>השלב הבא שלך</small>
+              <strong id="todayNextName">נטען...</strong>
+              <p id="todayNextSub">התקדמות יומית מתעדכנת לפי הסימונים.</p>
+            </div>
           </div>
         </section>
 
@@ -122,6 +141,18 @@
         <div id="weekTimeline" class="week-timeline"></div>
       </section>
 
+      <section class="view" id="dayDetailView">
+        <div class="page-head">
+          <button class="back-btn" data-go="calendarView">‹</button>
+          <div>
+            <h2 id="dayDetailTitle">יום</h2>
+            <p id="dayDetailSub">הרוטינה המלאה</p>
+          </div>
+          <span id="dayDetailIcon">✧</span>
+        </div>
+        <div id="dayDetailContent" class="day-detail-content"></div>
+      </section>
+
       <section class="view" id="profileView">
         <div class="page-head">
           <button class="ghost-menu">♡</button>
@@ -169,6 +200,19 @@
         <p id="dialogProductDesc"></p>
         <div class="tag-row" id="dialogProductTags"></div>
         <button class="main-cta" id="dialogCloseCta">חזרה למוצרים</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="maskReminderDialog">
+    <div class="dialog-inner mask-dialog-inner">
+      <button class="dialog-close" id="closeMaskReminder">×</button>
+      <div class="mask-hero">🧖‍♀️</div>
+      <div class="dialog-content">
+        <p class="overline">SATURDAY MASK ✧</p>
+        <h3>לא לשכוח להתפנק במסיכה מחר</h3>
+        <p>שבת בבוקר = מסיכה לפני רוטינת הבוקר. משהו כיפי, בלי חוקים.</p>
+        <button class="main-cta" id="maskReminderOk">ברור, רשמתי לי ✨</button>
       </div>
     </div>
   </dialog>

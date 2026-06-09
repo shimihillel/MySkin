@@ -13,10 +13,8 @@ const days = [
 ];
 
 const morningRoutine = [
-  { name: 'ניקוי עדין', product:'ג׳ל ניקוי עדין', target:'פנים', icon:'🫧' },
   { name: 'סרום ויטמין C', product:'Timeless 20% Vitamin C', target:'פנים + צוואר', icon:'☀️' },
   { name: 'סרום אורז', product:'Anua 7 Rice Ceramide', target:'פנים + צוואר', icon:'🌾' },
-  { name: 'קרם לחות', product:'לחות והגנה', target:'לפי הצורך', icon:'🤍' },
   { name: 'קרם הגנה SPF 50+', product:'Anthelios UVMune 400', target:'פנים + צוואר', icon:'🧴' },
 ];
 
@@ -85,6 +83,7 @@ let state = {
   routineType:'morning',
   theme:'auto',
   displayName: localStorage.getItem('sr-name') || 'שימי',
+  selectedDay: currentDay(),
   completed: loadCompleted()
 };
 
@@ -101,15 +100,21 @@ function saveCompleted(){
 }
 function currentDay(){ return new Date().getDay(); }
 function currentHour(){ return new Date().getHours(); }
-function dayPlan(){
-  const d = days[currentDay()];
-  if(d.id===0 || d.id===2 || d.id===4) return 'retinoid';
-  if(d.id===3) return 'mask';
-  if(d.id===5) return 'indulgent';
+function dayPlan(){ return eveningPlanForDay(currentDay()); }
+function routineSteps(type=state.routineType, dayId=currentDay()){
+  return type === 'morning' ? morningStepsForDay(dayId) : eveningStepsForDay(dayId);
+}
+function morningStepsForDay(dayId=currentDay()){
+  return dayId === 6 ? [{ name:'מסיכת שבת', product:'מסיכת כיף מתחלפת', target:'לפני רוטינת הבוקר', icon:'🧖‍♀️', special:true }, ...morningRoutine] : [...morningRoutine];
+}
+function eveningPlanForDay(dayId=currentDay()){
+  if(dayId===0 || dayId===2 || dayId===4) return 'retinoid';
+  if(dayId===3) return 'mask';
+  if(dayId===5) return 'indulgent';
   return 'peptide';
 }
-function routineSteps(type=state.routineType){
-  return type === 'morning' ? morningRoutine : eveningRoutines[dayPlan()];
+function eveningStepsForDay(dayId=currentDay()){
+  return eveningRoutines[eveningPlanForDay(dayId)];
 }
 function completionKey(type, index){ return `${new Date().toDateString()}-${type}-${index}`; }
 
@@ -134,9 +139,14 @@ function bind(){
   $$('[data-go]').forEach(btn=>btn.addEventListener('click',()=>showView(btn.dataset.go)));
   $('#startMorningBtn').addEventListener('click',()=>{state.routineType='morning'; showView('routineView');});
   $('#startEveningBtn').addEventListener('click',()=>{state.routineType='evening'; showView('routineView');});
+  $('#todayMorningMini').addEventListener('click',()=>{state.routineType='morning'; showView('routineView');});
+  $('#todayEveningMini').addEventListener('click',()=>{state.routineType='evening'; showView('routineView');});
   $('#completeRoutineBtn').addEventListener('click',()=>{
     routineSteps().forEach((_,i)=>state.completed[completionKey(state.routineType,i)] = true);
     saveCompleted(); renderAll(); toast('השגרה הושלמה. זוהרת ושולטת ✨');
+    if(state.routineType === 'evening' && currentDay() === 5){
+      setTimeout(()=>$('#maskReminderDialog').showModal(), 350);
+    }
   });
   $('#resetTodayBtn').addEventListener('click',()=>{
     if(confirm('לאפס את סימוני היום?')){
@@ -152,6 +162,8 @@ function bind(){
   $('#clearSearchBtn').addEventListener('click',()=>{$('#productSearch').value=''; renderProducts();});
   $('#closeProductDialog').addEventListener('click',()=>$('#productDialog').close());
   $('#dialogCloseCta').addEventListener('click',()=>$('#productDialog').close());
+  $('#closeMaskReminder').addEventListener('click',()=>$('#maskReminderDialog').close());
+  $('#maskReminderOk').addEventListener('click',()=>$('#maskReminderDialog').close());
   $('#saveProfileBtn').addEventListener('click',()=>{
     state.displayName = $('#displayNameInput').value.trim() || 'שימי';
     localStorage.setItem('sr-name', state.displayName);
@@ -173,36 +185,78 @@ function showView(view){
   if(view==='routineView') renderRoutine();
   if(view==='productsView') renderProducts();
   if(view==='calendarView') renderCalendar();
+  if(view==='dayDetailView') renderDayDetail();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function renderAll(){
-  renderHome(); renderRoutine(); renderProducts(); renderCalendar();
+  renderHome(); renderRoutine(); renderProducts(); renderCalendar(); renderDayDetail();
 }
 function renderHome(){
   const isNight = document.body.classList.contains('night');
   const name = state.displayName;
-  $('#homeOverline').textContent = isNight ? `GOOD EVENING, ${name.toUpperCase()} ✧` : `GOOD MORNING, ${name.toUpperCase()} ✧`;
-  $('#greetingTitle').textContent = isNight ? `ערב טוב, ${name}` : `בוקר טוב, ${name}`;
-  $('#greetingSub').textContent = isNight ? 'סיימי את היום ברוגע. העור שלך יודה לך.' : 'העור שלך. הטקס שלך. הרגע היומי שלך.';
+  const today = days[currentDay()];
+  const morningSteps = morningStepsForDay(currentDay());
+  const eveningSteps = eveningStepsForDay(currentDay());
+  const allSteps = [...morningSteps.map((s,i)=>({ ...s, type:'morning', i })), ...eveningSteps.map((s,i)=>({ ...s, type:'evening', i }))];
+  const doneTotal = allSteps.filter(s=>state.completed[completionKey(s.type,s.i)]).length;
+  const total = allSteps.length;
+  const pct = total ? Math.round(doneTotal/total*100) : 0;
+
+  $('#homeOverline').textContent = isNight ? `GOOD EVENING, ${name.toUpperCase()} ✧` : `TODAY’S RITUAL ✧`;
+  $('#greetingTitle').textContent = `היום שלך, ${name}`;
+  $('#greetingSub').textContent = `${today.name} · בוקר ${morningSteps.length} שלבים · ערב ${today.type}`;
+
+  $('#todayMorningText').textContent = `${morningSteps.length} שלבים`;
+  $('#todayEveningText').textContent = today.type;
+
   $('#progressIcon').textContent = isNight ? '☾' : '☀︎';
-  $('#morningCount').textContent = `${morningRoutine.length} שלבים`;
-  $('#eveningCount').textContent = `${eveningRoutines[dayPlan()].length} שלבים`;
-  const type = isNight ? 'evening' : 'morning';
-  const steps = routineSteps(type);
-  const done = steps.filter((_,i)=>state.completed[completionKey(type,i)]).length;
-  const pct = steps.length ? Math.round(done/steps.length*100) : 0;
+  $('#morningCount').textContent = `${morningSteps.length} שלבים`;
+  $('#eveningCount').textContent = `${eveningSteps.length} שלבים`;
   $('#progressPercent').textContent = `${pct}%`;
   $('#progressRing').style.background = `conic-gradient(var(--rose) ${pct*3.6}deg,#f1dfd5 0deg)`;
   $('#progressBar').style.width = `${pct}%`;
-  $('#progressDoneText').textContent = `${done} מתוך ${steps.length} שלבים הושלמו`;
-  $('#progressHint').textContent = pct===100 ? 'היום שלך מסומן ומושלם.' : 'כמה סימונים קטנים ואת שם.';
-  const nextIndex = steps.findIndex((_,i)=>!state.completed[completionKey(type,i)]);
-  const next = nextIndex >= 0 ? steps[nextIndex] : steps[steps.length-1];
+  $('#progressDoneText').textContent = `${doneTotal} מתוך ${total} שלבים הושלמו`;
+  $('#progressHint').textContent = pct===100 ? 'היום שלך מסומן ומושלם.' : 'התקדמות יומית של בוקר + ערב.';
+
+  const preferredType = isNight ? 'evening' : 'morning';
+  let nextType = preferredType;
+  let steps = routineSteps(nextType);
+  let nextIndex = steps.findIndex((_,i)=>!state.completed[completionKey(nextType,i)]);
+  if(nextIndex < 0){
+    nextType = preferredType === 'morning' ? 'evening' : 'morning';
+    steps = routineSteps(nextType);
+    nextIndex = steps.findIndex((_,i)=>!state.completed[completionKey(nextType,i)]);
+  }
+  const next = nextIndex >= 0 ? steps[nextIndex] : null;
+  $('#todayNextIcon').textContent = next ? next.icon : '♡';
+  $('#todayNextName').textContent = next ? next.name : 'השגרה הושלמה';
+  $('#todayNextSub').textContent = next ? `${nextType === 'morning' ? 'בוקר' : 'ערב'} · ${next.product}` : 'אפשר לנוח. עשית את זה יפה.';
+
+  const existingMask = document.querySelector('.saturday-mask-card');
+  if(existingMask) existingMask.remove();
+  if(currentDay() === 6 && !isNight){
+    const maskKey = completionKey('morning',0);
+    const card = document.createElement('section');
+    card.className = 'glass-card saturday-mask-card';
+    card.innerHTML = `
+      <div class="mask-icon">🧖‍♀️</div>
+      <div>
+        <h3>${state.completed[maskKey] ? 'מסיכת שבת סומנה' : 'מסיכת שבת לפני הרוטינה'}</h3>
+        <p>${state.completed[maskKey] ? 'איזה כיף. עכשיו ממשיכים לבוקר הרגיל.' : 'היום מתחילים בפינוק קטן לפני ויטמין C.'}</p>
+      </div>
+    `;
+    card.addEventListener('click',()=>{
+      state.routineType = 'morning';
+      showView('routineView');
+    });
+    document.querySelector('.progress-card').before(card);
+  }
+
   $('#nextStepCard').innerHTML = `
-    <div class="mini-art">${pct===100?'♡':next.icon}</div>
+    <div class="mini-art">${next ? next.icon : '♡'}</div>
     <div>
-      <h3>${pct===100?'השגרה הושלמה': 'השלב הבא שלך'}</h3>
-      <p>${pct===100?'אפשר לנוח. עשית את זה יפה.': `${next.name} · ${next.product}`}</p>
+      <h3>${next ? 'השלב הבא שלך' : 'השגרה הושלמה'}</h3>
+      <p>${next ? `${next.name} · ${next.product}` : 'אפשר לנוח. עשית את זה יפה.'}</p>
     </div>
   `;
 }
@@ -268,17 +322,44 @@ function openProduct(name){
 }
 function renderCalendar(){
   $('#weekTimeline').innerHTML = days.map(d=>{
-    const plan = (d.id===0||d.id===2||d.id===4) ? eveningRoutines.retinoid :
-      d.id===3 ? eveningRoutines.mask : d.id===5 ? eveningRoutines.indulgent : eveningRoutines.peptide;
+    const plan = eveningStepsForDay(d.id);
+    const morning = morningStepsForDay(d.id);
     const today = d.id===currentDay();
-    return `<article class="day-card ${today?'today':''}">
+    const maskNote = d.id===6 ? ' · כולל מסיכת שבת בבוקר' : '';
+    return `<article class="day-card ${today?'today':''}" data-day="${d.id}">
       <div class="day-num">${d.short}</div>
       <div>
         <h3>${d.name}${today?' · היום':''}</h3>
-        <p>${d.type} · ${morningRoutine.length + plan.length} שלבים ביום</p>
+        <p>בוקר ${morning.length} שלבים · ערב ${d.type}${maskNote}</p>
       </div>
     </article>`;
   }).join('');
+  $$('.day-card').forEach(card=>card.onclick=()=>{
+    state.selectedDay = Number(card.dataset.day);
+    showView('dayDetailView');
+  });
+}
+
+function renderDayDetail(){
+  const dayId = state.selectedDay ?? currentDay();
+  const d = days[dayId];
+  const morning = morningStepsForDay(dayId);
+  const evening = eveningStepsForDay(dayId);
+  $('#dayDetailTitle').textContent = d.name + (dayId===currentDay() ? ' · היום' : '');
+  $('#dayDetailSub').textContent = `בוקר ${morning.length} שלבים · ערב ${d.type}`;
+  $('#dayDetailIcon').textContent = dayId===6 ? '🧖‍♀️' : '✧';
+  const section = (title, items, type) => `
+    <section class="detail-section">
+      <h3>${title}</h3>
+      ${items.map((s,i)=>`<div class="detail-step">
+        <div class="detail-step-num">${i+1}</div>
+        <div>
+          <strong>${s.icon || '✧'} ${s.name}</strong>
+          <small>${s.product} · ${s.target}</small>
+        </div>
+      </div>`).join('')}
+    </section>`;
+  $('#dayDetailContent').innerHTML = section(dayId===6 ? 'בוקר · מסיכה לפני הרוטינה' : 'בוקר', morning, 'morning') + section(`ערב · ${d.type}`, evening, 'evening');
 }
 function toast(msg){
   const t=$('#toast');
