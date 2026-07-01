@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Shimi Ritual">
-<title>Shimi Ritual · v17</title>
+<title>Shimi Ritual · v18</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -62,6 +62,31 @@ button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:1
 .search{background:linear-gradient(180deg,#fff,#fffaf7)}
 @media (max-width:380px){.microCards{grid-template-columns:1fr;}.routineCard p{padding-left:24px}}
 
+
+.ring{position:relative;isolation:isolate}
+.ring.is-empty{background:#eadbd5!important;box-shadow:inset 0 0 0 8px #fff,0 10px 24px rgba(141,83,102,.08)}
+.ring.is-empty span{color:#a17384}
+.hero{padding:28px 26px 24px}
+.hero h2{font-size:31px;letter-spacing:-.95px}
+.hero p{max-width:340px}
+.score{margin:18px 0 16px}
+.score-txt{font-size:13.5px}
+.cta{border-radius:20px;letter-spacing:-.2px}
+.microCards{gap:12px;margin:2px 0 18px}
+.microCard{padding:14px 10px 13px;border-radius:24px}
+.mixCard{border-radius:24px;padding:18px}
+.warning{border-radius:22px}
+.card{border-radius:28px;box-shadow:0 10px 24px rgba(58,37,30,.06)}
+.card h3{font-size:17px}
+.cardTop{margin-bottom:7px}
+.day-row{border-radius:24px}
+.nav{border-radius:28px;padding:8px 9px}
+.nav button{border-radius:20px}
+.nav button.active{background:linear-gradient(135deg,#fff6f8,#f5e8ed)}
+.detail h2{font-size:32px}
+.x{border-radius:18px}
+.info,.neckNote{border-radius:22px}
+
 @media (max-width:380px){.title{font-size:31px}.hero{border-radius:30px;padding:22px}.heroHome{padding-top:102px}.grid{gap:10px}.nav button{font-size:11px;padding:8px 6px}}
 
 </style>
@@ -69,7 +94,7 @@ button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:1
 <body>
 <div class="app">
 <section class="screen active" id="home">
-  <div class="top"><div class="brand">SHIMI · RITUAL V17</div><div class="date" id="todayDate"></div></div>
+  <div class="top"><div class="brand">SHIMI · RITUAL V18</div><div class="date" id="todayDate"></div></div>
   <div class="title" id="greeting">בוקר טוב, שימי</div>
   <div class="sub" id="homeSub">השגרה הכי חכמה לעור רגוע וזוהר</div>
   <div class="hero heroHome">
@@ -183,7 +208,7 @@ function saveMaskNote(){let el=$('maskNoteInput');if(!el)return;localStorage.set
 function maskNoteBox(){let v=localStorage.getItem(maskNoteKey())||'';return `<div class="info"><h4>מסיכת שבת פינוק</h4><p>איזו מסכה עשית היום?</p><input class="search" id="maskNoteInput" value="${v.replace(/"/g,'&quot;')}" placeholder="שם המסכה / טרנד / ספא קטן"><button class="cta small" onclick="saveMaskNote()">לשמור</button></div>`}
 function weekBadges(i){let b=[]; if(i===0)b=['Ret-A','צוואר']; if(i===1)b=['LED','פפטידים']; if(i===2)b=['LED','Ret-A']; if(i===3)b=['פילינג','בלי צוואר']; if(i===4)b=['LED','Ret-A','צוואר']; if(i===5)b=['גלואו','פופאפ שבת']; if(i===6)b=['מסיכת פינוק','שיקום']; return b.map(x=>`<span class="weekBadge">${x}</span>`).join('')}
 
-function renderHome(){let now=new Date(),day=now.getDay(),period=currentPeriod(),isM=period==='am',amDone=allComplete('am'),pmDone=allComplete('pm');$('todayDate').textContent=now.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});$('greeting').textContent=isM?'בוקר טוב, שימי':(now.getHours()<18?'הבוקר הושלם · הערב מחכה':'ערב טוב, שימי');$('modePill').textContent=isM?'☀️ בוקר':'🌙 ערב '+evenings[day].type;$('heroTitle').textContent=isM?(day===6?'שבת בבוקר: מסיכת פינוק':'שגרת הבוקר שלך'):'שגרת הערב שלך';$('heroText').textContent=isM?(day===6?'נכנסים לשבת פינוק: מסכה מתחלפת ואז השגרה המדויקת.':'מסך הבית נקי: נכנסים לבוקר, מסמנים שלבים או לוחצים סיימתי בסוף.'):'אחרי שהבוקר סומן, הערב כבר מוצג ומוכן. בימים שני/שלישי/חמישי נכנסת גם מסכת LED אדום 10 דקות.';let s=getSteps(),done=countDone(period),p=Math.round(done/s.length*100);$('ring').style.setProperty('--pct',p+'%');$('ringNum').textContent=p+'%';$('scoreTxt').textContent=done+' מתוך '+s.length+' שלבים · '+(p===100?'סיימת מהממת':'אפשר לסמן אחד אחד או ללחוץ סיימתי');$('startBtn').textContent=isM?'כניסה לשגרת בוקר':'כניסה לשגרת ערב';let html='';if(amDone){html+='<div class="doneBanner">בוקר הושלם ✓ עכשיו מוצגת לך שגרת הערב של היום.</div>';html+=routineCard('pm','שגרת ערב · '+evenings[day].type,'לחצי כדי להיכנס, לסמן שלבים או לסיים הכול.','🌙');}else{html+=routineCard('am',day===6?'שבת בבוקר · מסיכת פינוק':'שגרת בוקר','לחצי כדי להיכנס, לסמן שלבים או ללחוץ סיימתי.','☀️');html+=routineCard('pm','שגרת ערב · '+evenings[day].type,'תיפתח אוטומטית אחרי שסיימת את הבוקר.','🌙',true)}$('routineCards').innerHTML=html;renderNoMix(period);renderSkinState()}
+function renderHome(){let now=new Date(),day=now.getDay(),period=currentPeriod(),isM=period==='am',amDone=allComplete('am'),pmDone=allComplete('pm');$('todayDate').textContent=now.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});$('greeting').textContent=isM?'בוקר טוב, שימי':(now.getHours()<18?'הבוקר הושלם · הערב מחכה':'ערב טוב, שימי');$('modePill').textContent=isM?'☀️ בוקר':'🌙 ערב '+evenings[day].type;$('heroTitle').textContent=isM?(day===6?'שבת בבוקר: מסיכת פינוק':'שגרת הבוקר שלך'):'שגרת הערב שלך';$('heroText').textContent=isM?(day===6?'נכנסים לשבת פינוק: מסכה מתחלפת ואז השגרה המדויקת.':'מסך הבית נקי: נכנסים לבוקר, מסמנים שלבים או לוחצים סיימתי בסוף.'):'אחרי שהבוקר סומן, הערב כבר מוצג ומוכן. בימים שני/שלישי/חמישי נכנסת גם מסכת LED אדום 10 דקות.';let s=getSteps(),done=countDone(period),p=Math.round(done/s.length*100);$('ring').style.setProperty('--pct',p+'%');$('ring').classList.toggle('is-empty',p===0);$('ringNum').textContent=p+'%';$('scoreTxt').textContent=done+' מתוך '+s.length+' שלבים · '+(p===100?'סיימת מהממת':(p===0?'הכול עוד פתוח להיום':'אפשר לסמן אחד אחד או ללחוץ סיימתי'));$('startBtn').textContent=isM?'כניסה לשגרת בוקר':'כניסה לשגרת ערב';let html='';if(amDone){html+='<div class="doneBanner">בוקר הושלם ✓ עכשיו מוצגת לך שגרת הערב של היום.</div>';html+=routineCard('pm','שגרת ערב · '+evenings[day].type,'לחצי כדי להיכנס, לסמן שלבים או לסיים הכול.','🌙');}else{html+=routineCard('am',day===6?'שבת בבוקר · מסיכת פינוק':'שגרת בוקר','לחצי כדי להיכנס, לסמן שלבים או ללחוץ סיימתי.','☀️');html+=routineCard('pm','שגרת ערב · '+evenings[day].type,'תיפתח אוטומטית אחרי שסיימת את הבוקר.','🌙',true)}$('routineCards').innerHTML=html;renderNoMix(period);renderSkinState()}
 function startRoutine(){openRoutine(currentPeriod())}
 function openRoutine(period){let now=new Date(),day=now.getDay(),isM=period==='am',s=stepsFor(period),c=checkedFor(period),title=isM?(day===6?'שבת בבוקר · מסיכת פינוק':'שגרת בוקר'):'שגרת ערב · '+evenings[day].type;$('detail').innerHTML=`<button class="x" onclick="closeDetail()">חזרה</button><div class="detail-emoji">${isM?'☀️':'🌙'}</div><h2>${title}</h2><div class="meta">אפשר לסמן כל שלב בנפרד, או ללחוץ סיימתי בסוף</div><div class="neckNote">הערת צוואר: בכל שלב כתוב בפירוש אם הוא לפנים בלבד, לצוואר, או רק שאריות. לא מאלתרים.</div>${isM&&day===6?maskNoteBox():''}<div class="steps">${s.map((x,i)=>`<div class="step ${c[i]?'done':''}" onclick="toggleRoutineStep('${period}',${i})"><div class="check">${c[i]?'✓':i+1}</div><div><h4>${x[0]}</h4><p>${x[1]} · ${x[2]}</p></div></div>`).join('')}</div><div class="routineActions"><button class="cta secondary" onclick="closeDetail()">חזרה לבית</button><button class="cta" onclick="finishRoutine('${period}')">סיימתי</button></div>`;$('detail').classList.add('active')}
 function toggleRoutineStep(period,i){let c=checkedFor(period);c[i]=!c[i];localStorage.setItem('checks-'+keyFor(period),JSON.stringify(c));openRoutine(period);toast(c[i]?'סומן ✓':'הוחזר')}
