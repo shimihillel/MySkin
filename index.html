@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Shimi Ritual">
-<title>Shimi Ritual · v18</title>
+<title>Shimi Ritual · v19</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -87,6 +87,13 @@ button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:1
 .x{border-radius:18px}
 .info,.neckNote{border-radius:22px}
 
+
+.profileScreen .top{margin-bottom:34px}
+.profileScreen .title{margin-top:10px;margin-bottom:28px;max-width:88%;line-height:1.06}
+.profileScreen .hero{margin-top:6px}
+.profileScreen .info{margin-top:16px}
+.profileScreen .heroHome{padding-top:26px}
+
 @media (max-width:380px){.title{font-size:31px}.hero{border-radius:30px;padding:22px}.heroHome{padding-top:102px}.grid{gap:10px}.nav button{font-size:11px;padding:8px 6px}}
 
 </style>
@@ -94,7 +101,7 @@ button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:1
 <body>
 <div class="app">
 <section class="screen active" id="home">
-  <div class="top"><div class="brand">SHIMI · RITUAL V18</div><div class="date" id="todayDate"></div></div>
+  <div class="top"><div class="brand">SHIMI · RITUAL V19</div><div class="date" id="todayDate"></div></div>
   <div class="title" id="greeting">בוקר טוב, שימי</div>
   <div class="sub" id="homeSub">השגרה הכי חכמה לעור רגוע וזוהר</div>
   <div class="hero heroHome">
@@ -121,7 +128,7 @@ button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:1
 </section>
 <section class="screen" id="calendar"><div class="top"><div class="brand">WEEKLY PLAN</div><div class="date">7 ימים</div></div><div class="title">השבוע שלך</div><div class="sub">כל יום מלא: בוקר + ערב + מדבקות קטנות של מה קורה היום</div><div id="weekPlan"></div></section>
 <section class="screen" id="products"><div class="top"><div class="brand">APOTHECARY</div><div class="date" id="productCount"></div></div><div class="title">המוצרים שלי</div><div class="sub">מדף טיפוח מסודר: מה זה, מתי שמים, ואיך זה משתלב בשגרה</div><input class="search" id="search" placeholder="חפשי מוצר..." oninput="renderProducts()"><div class="tabs" id="tabs"></div><div class="grid" id="productGrid"></div></section>
-<section class="screen" id="profile"><div class="top"><div class="brand">SKIN STRATEGY</div><div class="date">שימי אדישן</div></div><div class="title">האסטרטגיה</div><div class="hero heroHome"><img class="heroLogo" src="app-icon-192.png" alt="Shimi Ritual"><div class="pill">🧴 הכי הכי טוב</div><h2>מה העור שלך מקבל עכשיו?</h2><p>בוקר מדויק בלי בחירות, ערב מסודר לפי ימים, ניקוי כפול בערב, מסכת LED אדום באמצע השבוע 3 פעמים בשבוע, פילינג מנדלי פעם בשבוע, רטאויט לצוואר פעמיים בשבוע, ויומן שמראה את כל היום.</p></div><div class="info"><h4>מה הוצאתי מהשגרה הקבועה</h4><p><b>Retinol Boost</b> — נשאר במדף, לא ברוטינה. יש כבר Ret-A ו-Crystal Retinal Eye. יותר מזה זה עומס רטינואידי.</p></div><div class="info"><h4>ניאצינמיד</h4><p>נכנס קבוע בימים שני, רביעי ושבת. לא כל בוקר כדי לא להעמיס, אבל מספיק כדי לתת עבודה למחסום ולאיזון.</p></div><div class="info"><h4>סדר מריחה בסיסי</h4><ul><li>בוקר רגיל: Vitamin C → Anua → SPF.</li><li>בוקר ניאצינמיד: Vitamin C → Niacinamide → Anua → SPF.</li><li>כל ערב: Oat Balm Cleanser → ניקוי עדין עם מים → הריטואל של אותו יום.</li><li>LED אדום: שני, שלישי וחמישי בערב, על עור נקי ויבש לפני סרומים/רטאויט. 10 דקות קבוע, ואם העור רגיש אפשר לרדת ל־5.</li><li>רטאויט: ניקוי → עור יבש → Ret-A → CeraVe PM. בצוואר רק ראשון וחמישי.</li><li>צוואר בבוקר: שאריות Vitamin C אם רגוע, Anua כן גם צוואר, SPF חובה גם צוואר ומחשוף.</li><li>רביעי ערב: Mandelic Acid בלבד כפעיל מרכזי. בלי Ret-A, בלי Copper, בלי רטינל עיניים ובלי מסכות פעילות.</li></ul></div></section>
+<section class="screen profileScreen" id="profile"><div class="top"><div class="brand">SKIN STRATEGY</div><div class="date">שימי אדישן</div></div><div class="title">האסטרטגיה</div><div class="hero heroHome"><img class="heroLogo" src="app-icon-192.png" alt="Shimi Ritual"><div class="pill">🧴 הכי הכי טוב</div><h2>מה העור שלך מקבל עכשיו?</h2><p>בוקר מדויק בלי בחירות, ערב מסודר לפי ימים, ניקוי כפול בערב, מסכת LED אדום באמצע השבוע 3 פעמים בשבוע, פילינג מנדלי פעם בשבוע, רטאויט לצוואר פעמיים בשבוע, ויומן שמראה את כל היום.</p></div><div class="info"><h4>מה הוצאתי מהשגרה הקבועה</h4><p><b>Retinol Boost</b> — נשאר במדף, לא ברוטינה. יש כבר Ret-A ו-Crystal Retinal Eye. יותר מזה זה עומס רטינואידי.</p></div><div class="info"><h4>ניאצינמיד</h4><p>נכנס קבוע בימים שני, רביעי ושבת. לא כל בוקר כדי לא להעמיס, אבל מספיק כדי לתת עבודה למחסום ולאיזון.</p></div><div class="info"><h4>סדר מריחה בסיסי</h4><ul><li>בוקר רגיל: Vitamin C → Anua → SPF.</li><li>בוקר ניאצינמיד: Vitamin C → Niacinamide → Anua → SPF.</li><li>כל ערב: Oat Balm Cleanser → ניקוי עדין עם מים → הריטואל של אותו יום.</li><li>LED אדום: שני, שלישי וחמישי בערב, על עור נקי ויבש לפני סרומים/רטאויט. 10 דקות קבוע, ואם העור רגיש אפשר לרדת ל־5.</li><li>רטאויט: ניקוי → עור יבש → Ret-A → CeraVe PM. בצוואר רק ראשון וחמישי.</li><li>צוואר בבוקר: שאריות Vitamin C אם רגוע, Anua כן גם צוואר, SPF חובה גם צוואר ומחשוף.</li><li>רביעי ערב: Mandelic Acid בלבד כפעיל מרכזי. בלי Ret-A, בלי Copper, בלי רטינל עיניים ובלי מסכות פעילות.</li></ul></div></section>
 </div>
 <div class="bottom"><div class="nav"><button class="active" onclick="go('home')"><span class="ico">⌂</span>בית</button><button onclick="go('calendar')"><span class="ico">▦</span>יומן</button><button onclick="go('products')"><span class="ico">◱</span>מוצרים</button><button onclick="go('profile')"><span class="ico">♡</span>פרופיל</button></div></div>
 <div class="detail" id="detail"></div><div class="toast" id="toast"></div><div class="popupOverlay" id="fridayPopup"><div class="popupBox"><div class="popupEmoji">🛁✨</div><h2>שישי נסגר מושלם</h2><p>לא לשכוח: מחר בבוקר מסיכת שבת פינוק מתחלפת. משהו טרנדי, כיפי, ספא כזה — לא מהרוטינה הקבועה.</p><button class="cta" onclick="closeFridayPopup()">סגור, שמתי לי בראש</button></div></div>
