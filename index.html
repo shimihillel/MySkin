@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Shimi Ritual">
-<title>Shimi Ritual · v19</title>
+<title>Shimi Ritual · v20</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -94,6 +94,46 @@ button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:1
 .profileScreen .info{margin-top:16px}
 .profileScreen .heroHome{padding-top:26px}
 
+
+/* v20 polish */
+.top{margin-bottom:22px}
+.brand,.date{padding:10px 14px;font-size:11.5px}
+.title{letter-spacing:-1.15px}
+.sub{margin-bottom:20px;line-height:1.55}
+.hero{padding:30px 28px 26px;border-radius:36px;box-shadow:0 12px 30px rgba(68,43,37,.07)}
+.hero:after{left:28px;bottom:20px}
+.pill{padding:9px 13px;font-size:12.5px;margin-bottom:16px}
+.hero h2{font-size:32px;line-height:1.04;margin-bottom:12px}
+.hero p{font-size:14.5px;line-height:1.62}
+.score{gap:16px}
+.ring{width:80px;height:80px}.ring span{width:58px;height:58px;font-size:20px}
+.section-title{margin:22px 4px 13px}
+.mixCard,.warning,.info,.day-row,.step,.card,.microCard,.neckNote{box-shadow:0 10px 22px rgba(68,43,37,.05)}
+.info{padding:20px 20px 18px}.info h4{margin-bottom:10px}.info p,.info li{line-height:1.66}
+.step{padding:17px 16px}.step h4{font-size:16.5px}.step p{font-size:13.6px}
+.microCard strong{font-size:16.5px}.microCard small{line-height:1.35}
+.day-row span{line-height:1.6}.weekBadges{margin-top:11px}
+.card{padding:17px 17px 17px 80px;min-height:110px}.card h3{line-height:1.28}.meta{line-height:1.5}
+.tabs{padding-bottom:16px}.search{margin-bottom:16px}
+.nav{box-shadow:0 14px 30px rgba(68,43,37,.08)}
+.nav button .ico{margin-bottom:1px}
+.popupBox{box-shadow:0 18px 42px rgba(68,43,37,.13)}
+/* profile-specific pinzeta */
+.profileScreen .title{margin-top:14px;margin-bottom:24px;max-width:92%}
+.profileScreen .hero{margin-top:2px;padding:24px 24px 22px 128px;min-height:236px}
+.profileScreen .heroLogo{top:26px;left:22px;width:84px;height:84px;border-radius:26px}
+.profileScreen .pill{margin-bottom:18px;max-width:max-content}
+.profileScreen .hero h2{max-width:none;font-size:31px;line-height:1.06}
+.profileScreen .hero p{max-width:none;font-size:14px;line-height:1.68}
+.profileScreen .info{margin-top:18px;padding:22px 22px 20px}
+.profileScreen .info h4{font-size:12.5px}
+.profileScreen .info p,.profileScreen .info li{font-size:15px}
+@media (max-width:380px){
+  .profileScreen .hero{padding-left:112px;min-height:224px}
+  .profileScreen .heroLogo{width:76px;height:76px}
+  .profileScreen .hero h2{font-size:28px}
+}
+
 @media (max-width:380px){.title{font-size:31px}.hero{border-radius:30px;padding:22px}.heroHome{padding-top:102px}.grid{gap:10px}.nav button{font-size:11px;padding:8px 6px}}
 
 </style>
@@ -101,7 +141,7 @@ button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:1
 <body>
 <div class="app">
 <section class="screen active" id="home">
-  <div class="top"><div class="brand">SHIMI · RITUAL V19</div><div class="date" id="todayDate"></div></div>
+  <div class="top"><div class="brand">SHIMI · RITUAL V20</div><div class="date" id="todayDate"></div></div>
   <div class="title" id="greeting">בוקר טוב, שימי</div>
   <div class="sub" id="homeSub">השגרה הכי חכמה לעור רגוע וזוהר</div>
   <div class="hero heroHome">
