@@ -198,7 +198,7 @@ button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:1
 <body>
 <div class="app">
 <section class="screen active homeScreen" id="home">
-  <div class="top"><div class="brand">SHIMI · RITUAL V25</div><div class="date" id="todayDate"></div></div>
+  <div class="top"><div class="brand">SHIMI · RITUAL V26</div><div class="date" id="todayDate"></div></div>
   <div class="title" id="greeting">בוקר טוב, שימי</div>
   <div class="sub" id="homeSub">השגרה הכי חכמה לעור רגוע וזוהר</div>
   <div class="hero heroHome">
@@ -294,12 +294,14 @@ function routineCard(period,title,subtitle,emoji,locked=false){let s=stepsFor(pe
 
 
 const NO_CHANGE_DAYS=56;
-const noChangeKey='shimi-no-change-start-v25';
-function parseLocalDate(str){let [y,m,d]=str.split('-').map(Number);return new Date(y,m-1,d)}
-function fmtDate(d){return d.toISOString().slice(0,10)}
-function ensureNoChangeStart(){let v=localStorage.getItem(noChangeKey);if(!v){v=dateKey();localStorage.setItem(noChangeKey,v)}return v}
-function noChangeState(){let start=parseLocalDate(ensureNoChangeStart()),today=parseLocalDate(dateKey());let passed=Math.max(0,Math.floor((today-start)/86400000));let left=Math.max(0,NO_CHANGE_DAYS-passed);let end=new Date(start);end.setDate(end.getDate()+NO_CHANGE_DAYS);let pct=Math.min(100,Math.round(passed/NO_CHANGE_DAYS*100));return {passed,left,end,pct,done:left===0}}
-function resetNoChange(){localStorage.setItem(noChangeKey,dateKey());renderNoChangeLock();toast('הספירה התחילה מהיום · 8 שבועות שקט')}
+const noChangeKey='shimi-no-change-start-v26';
+const oldNoChangeKey='shimi-no-change-start-v25';
+function localISODate(d=new Date()){let z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)}
+function parseLocalDate(str){if(!/^\d{4}-\d{2}-\d{2}$/.test(str||''))return null;let [y,m,d]=str.split('-').map(Number);let out=new Date(y,m-1,d);return isNaN(out.getTime())?null:out}
+function fmtDate(d){return localISODate(d)}
+function ensureNoChangeStart(){let v=localStorage.getItem(noChangeKey);let parsed=parseLocalDate(v);if(!parsed){let old=localStorage.getItem(oldNoChangeKey);parsed=parseLocalDate(old);v=parsed?old:localISODate();localStorage.setItem(noChangeKey,v)}return v}
+function noChangeState(){let start=parseLocalDate(ensureNoChangeStart())||parseLocalDate(localISODate()),today=parseLocalDate(localISODate());let passed=Math.max(0,Math.floor((today-start)/86400000));let left=Math.max(0,NO_CHANGE_DAYS-passed);let end=new Date(start);end.setDate(end.getDate()+NO_CHANGE_DAYS);let pct=Math.min(100,Math.max(0,Math.round(passed/NO_CHANGE_DAYS*100)));return {passed,left,end,pct,done:left===0}}
+function resetNoChange(){localStorage.setItem(noChangeKey,localISODate());renderNoChangeLock();toast('הספירה התחילה מהיום · 8 שבועות שקט')}
 function noChangeCard(compact=false){let s=noChangeState();let endTxt=s.end.toLocaleDateString('he-IL',{day:'numeric',month:'long'});if(s.done){return `<div class="lockCard done"><div class="lockTop"><div class="lockIcon">📸</div><div><div class="lockTitle">ניסוי 8 השבועות הסתיים</div><div class="lockSub">הגיע זמן צילום חדש באותה תאורה וזווית, ואז משווים בלי דרמות.</div></div></div><div class="lockDays"><strong>היום</strong><span>ביקורת עור<br>וצילום השוואה</span></div><div class="lockProgress" style="--w:100%"><i></i></div><div class="lockRules"><span>לצלם</span><span>להשוות</span><span>ורק אז להחליט</span></div></div>`}
  return `<div class="lockCard"><div class="lockTop"><div class="lockIcon">🔒</div><div><div class="lockTitle">מצב 8 שבועות בלי שינויים</div><div class="lockSub">אנחנו בניסוי קליני ביתי: לא מוסיפים מוצרים, לא מחליפים חוקים, לא נכנעים לאלגוריתם.</div></div></div><div class="lockDays"><strong>${s.left}</strong><span>ימים נשארו<br>עד ${endTxt}</span></div><div class="lockProgress" style="--w:${s.pct}%"><i></i></div><div class="lockRules"><span>בלי קניות</span><span>בלי אקטיבים חדשים</span><span>ערב הצלה מותר</span>${compact?'':`<span onclick="resetNoChange()">איפוס ספירה</span>`}</div></div>`}
 function renderNoChangeLock(){let h=$('noChangeLock'),p=$('noChangeProfile');if(h)h.innerHTML=noChangeCard(true);if(p)p.innerHTML=noChangeCard(false)}
