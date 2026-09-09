@@ -2,347 +2,151 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Shimi Ritual">
-<title>Shimi Ritual · v24</title>
+<meta name="theme-color" content="#fbf5ef">
+<title>Shimi Ritual · v29</title>
 <link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
-
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Heebo:wght@400;500;700;800&display=swap');
 :root{
-  --cream:#fbf7f2;--ivory:#fffdf9;--paper:#fffaf5;--ink:#30231f;--muted:#88736d;
-  --rose:#b66f83;--rose2:#8d5366;--roseLight:#f3dfe5;--peach:#efd1c2;--taupe:#6f5a53;
-  --line:#eadbd4;--shadow:0 14px 38px rgba(58,37,30,.10);--shadow2:0 8px 22px rgba(58,37,30,.07);
-  --good:#6f9877;--warn:#8a5a20;--danger:#99474f;--safe-bottom:env(safe-area-inset-bottom,0px)
+ --bg:#f8f0ea;--paper:#fffdf9;--paper2:#fff8f3;--ink:#4b211e;--text:#322523;--muted:#947871;
+ --rose:#b66476;--rose2:#985467;--rose3:#dba6a5;--peach:#ead1c1;--line:#ead8cf;
+ --green:#758d72;--shadow:0 18px 45px rgba(82,50,42,.10);--shadow2:0 8px 24px rgba(82,50,42,.07);
+ --safe:env(safe-area-inset-bottom,0px)
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{min-height:100%;font-family:Assistant,Heebo,-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);overflow-x:hidden;background:var(--cream)}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 92% 2%,rgba(182,111,131,.18),transparent 260px),radial-gradient(circle at 4% 10%,rgba(255,255,255,.9),transparent 200px),linear-gradient(180deg,#fffaf7 0,#f7eee9 55%,#f3e8e2 100%)}
-button,input{font-family:inherit}.app{max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:calc(104px + var(--safe-bottom));position:relative}.screen{display:none;padding:calc(18px + env(safe-area-inset-top,0px)) 18px 24px;animation:fade .22s ease}.screen.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.top{display:flex;align-items:center;justify-content:space-between;margin:2px 0 22px}.brand,.date{border:1px solid rgba(255,255,255,.95);background:rgba(255,255,255,.78);backdrop-filter:blur(14px);border-radius:999px;padding:9px 13px;color:var(--rose2);font-size:10.5px;font-weight:800;letter-spacing:1.4px;box-shadow:0 8px 26px rgba(58,37,30,.055)}.date{letter-spacing:.1px;color:var(--muted);font-size:11.5px}
-.title{font-size:36px;line-height:.98;font-weight:800;letter-spacing:-1.25px;margin:0 2px 8px;color:#2d211e}.sub{font-size:14px;line-height:1.45;color:var(--muted);font-weight:700;margin:0 2px 18px}.section-title{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:800;margin:22px 3px 12px}.section-title:before{content:"";width:18px;height:2px;border-radius:99px;background:linear-gradient(90deg,var(--rose),var(--peach))}
-.hero{position:relative;overflow:hidden;border-radius:34px;background:linear-gradient(180deg,#fffdf9,#fff7f2);border:1px solid rgba(255,255,255,.98);box-shadow:var(--shadow);padding:26px;margin-bottom:18px}.heroHome{padding-top:112px}.heroLogo{position:absolute;top:18px;left:20px;width:78px;height:78px;border-radius:23px;box-shadow:0 12px 28px rgba(137,82,97,.18);object-fit:cover}.hero:before{content:"";position:absolute;right:-68px;top:-70px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(239,209,194,.56),transparent 70%)}.hero:after{content:"RITUAL";position:absolute;left:26px;bottom:18px;font-size:10px;letter-spacing:3px;color:rgba(141,83,102,.16);font-weight:800}.pill{position:relative;z-index:1;display:inline-flex;align-items:center;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;color:var(--rose2);margin-bottom:13px}.hero h2{position:relative;z-index:1;font-size:30px;line-height:1.02;letter-spacing:-.75px;margin-bottom:10px;max-width:310px}.hero p{position:relative;z-index:1;font-size:14px;line-height:1.56;color:var(--muted);font-weight:700;max-width:330px}
-.score{position:relative;z-index:1;display:flex;align-items:center;gap:14px;margin:20px 0 18px}.ring{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--rose) var(--pct),#eadbd5 0);box-shadow:inset 0 0 0 8px #fff,0 10px 24px rgba(141,83,102,.14)}.ring span{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#fff;font-size:20px;font-weight:800;color:var(--rose2)}.score-txt{font-size:13px;line-height:1.5;color:var(--muted);font-weight:800}.cta{width:100%;border:0;border-radius:18px;padding:16px 18px;background:linear-gradient(135deg,var(--rose),var(--rose2));color:white;font-size:16px;font-weight:800;box-shadow:0 14px 28px rgba(141,83,102,.26)}.cta.secondary{background:white;color:var(--rose2);border:1px solid var(--line);box-shadow:var(--shadow2)}.cta.small{width:auto;padding:10px 14px;border-radius:14px;font-size:13px}.cta:active{transform:translateY(1px)}
-.steps{display:flex;flex-direction:column;gap:12px}.step{position:relative;display:flex;gap:13px;align-items:flex-start;padding:16px;border-radius:24px;background:rgba(255,253,249,.95);border:1px solid rgba(255,255,255,.98);box-shadow:var(--shadow2)}.step:before{content:"";position:absolute;right:0;top:16px;bottom:16px;width:3px;border-radius:99px;background:linear-gradient(var(--roseLight),transparent)}.step h4{font-size:16.5px;line-height:1.15;margin-bottom:5px}.step p{font-size:13.5px;line-height:1.48;color:var(--muted);font-weight:700}.check{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;background:#fff;border:1.5px solid var(--line);color:var(--rose2);font-weight:800}.step.done{background:linear-gradient(180deg,#fbfffc,#f1faf3)}.step.done .check{background:var(--good);border-color:var(--good);color:#fff}.routineCard .emoji{width:48px;height:48px;border-radius:17px;background:linear-gradient(180deg,#fff,#fff4f0);display:grid;place-items:center;font-size:25px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8);margin:0}.routineCard.locked{opacity:.52}.badge,.weekBadge{display:inline-flex;border-radius:999px;border:1px solid var(--line);background:#fff;padding:5px 9px;color:var(--rose2);font-size:11px;font-weight:800}.miniProgress{height:8px;background:#eee1dc;border-radius:999px;overflow:hidden;margin-top:10px}.miniProgress i{display:block;height:100%;background:linear-gradient(90deg,var(--good),#a8caa9);width:var(--w)}
-.mixCard,.warning,.doneBanner,.info,.neckNote,.day-row,.card{border-radius:24px;background:rgba(255,253,249,.94);border:1px solid rgba(255,255,255,.98);box-shadow:var(--shadow2)}.mixCard{padding:17px 18px}.mixCard h3{font-size:16px;margin-bottom:6px}.mixCard p{font-size:13.5px;line-height:1.52;color:var(--muted);font-weight:800}.warning{padding:14px 16px;margin:10px 0;font-size:13.5px;line-height:1.52;color:var(--warn);font-weight:800;background:#fffaf0;border-color:#f0dfc4}.warning.danger{background:#fff3f4;border-color:#edd2d6;color:var(--danger)}.doneBanner{padding:14px 16px;color:#4d7b58;background:#f3fbf4;border-color:#d7e9da;font-weight:800;font-size:13.5px;line-height:1.45}.skinRow,.tabs{display:flex;gap:9px;overflow:auto;padding:2px 1px 12px;scrollbar-width:none}.skinRow::-webkit-scrollbar,.tabs::-webkit-scrollbar{display:none}.skinChip,.tab{white-space:nowrap;border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:999px;padding:11px 15px;color:var(--muted);font-size:13px;font-weight:800;box-shadow:0 5px 14px rgba(58,37,30,.04)}.skinChip.active,.tab.active{background:linear-gradient(135deg,var(--rose),var(--rose2));color:#fff;border-color:transparent}.grid{display:grid;grid-template-columns:1fr;gap:12px}.card{min-height:96px;padding:15px 16px 15px 72px;display:block;position:relative;cursor:pointer}.card .emoji{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:15px;display:grid;place-items:center;background:#fff6f3;font-size:23px}.heart{position:absolute;top:13px;right:15px;color:#c58da0;font-size:18px}.card h3{text-align:right;font-size:17px;line-height:1.22;padding-left:5px}.meta{text-align:right;color:var(--muted);font-size:12.5px;font-weight:800;line-height:1.4;margin-top:7px}.search{width:100%;border:1px solid var(--line);background:#fff;border-radius:18px;padding:14px 16px;font-size:15px;color:var(--ink);box-shadow:var(--shadow2);outline:none;margin-bottom:14px}.day-row{padding:16px 17px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative}.day-row:before{content:"";position:absolute;right:0;top:15px;bottom:15px;width:4px;border-radius:999px;background:linear-gradient(var(--peach),var(--rose))}.day-row b{font-size:18px}.day-row span{font-size:12.5px;line-height:1.5;color:var(--muted);font-weight:800}.weekBadges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.detail{position:fixed;inset:0;z-index:200;display:none;overflow:auto;background:linear-gradient(180deg,#fffaf7,#f5ece7);padding:calc(18px + env(safe-area-inset-top,0px)) 18px calc(116px + var(--safe-bottom))}.detail.active{display:block}.x{border:1px solid var(--line);background:#fff;border-radius:16px;padding:11px 16px;font-weight:800;color:var(--rose2);box-shadow:var(--shadow2);margin-bottom:18px}.detail-emoji{width:70px;height:70px;border-radius:24px;margin:8px auto 12px;display:grid;place-items:center;background:#fff;font-size:34px;box-shadow:var(--shadow2)}.detail h2{text-align:center;font-size:31px;line-height:1.05;letter-spacing:-.7px;margin-bottom:8px}.detail .meta{text-align:center;margin-bottom:16px}.info,.neckNote{padding:16px;margin:13px 0}.info h4{font-size:12px;color:var(--rose2);letter-spacing:1px;margin-bottom:9px;text-transform:uppercase}.info p,.info li{font-size:15px;line-height:1.58;color:var(--ink);font-weight:650}.info ul{padding-right:18px}.neckNote{font-size:13.5px;line-height:1.48;color:var(--rose2);font-weight:800;background:#fff8f5}.routineActions{display:flex;gap:10px;margin-top:18px;position:sticky;bottom:0;padding-top:18px;background:linear-gradient(180deg,rgba(250,246,243,0),rgba(250,246,243,1) 34%)}.routineActions .cta{flex:1}.bottom{position:fixed;left:0;right:0;bottom:0;z-index:100;padding:10px 10px calc(12px + var(--safe-bottom));background:linear-gradient(180deg,transparent,rgba(248,240,235,.96) 44%);backdrop-filter:blur(14px)}.nav{max-width:430px;margin:0 auto;display:flex;gap:8px;padding:7px;border-radius:26px;background:rgba(255,255,255,.84);border:1px solid rgba(255,255,255,.98);box-shadow:0 14px 36px rgba(58,37,30,.12)}.nav button{flex:1;border:0;background:transparent;border-radius:18px;padding:9px 8px;color:#806961;font-size:11.5px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:3px}.nav button .ico{font-size:18px}.nav button.active{background:#fff1f4;color:var(--rose2);box-shadow:inset 0 0 0 1px rgba(182,111,131,.10)}.popupOverlay{position:fixed;inset:0;background:rgba(48,35,31,.20);backdrop-filter:blur(10px);z-index:1000;display:none;align-items:center;justify-content:center;padding:22px}.popupOverlay.show{display:flex}.popupBox{max-width:380px;width:100%;border-radius:30px;padding:25px;text-align:center;background:#fffdf9;box-shadow:0 24px 70px rgba(58,37,30,.18)}.popupEmoji{width:68px;height:68px;border-radius:23px;display:grid;place-items:center;background:#fff4f2;margin:0 auto 10px;font-size:34px}.popupBox h2{font-size:26px;line-height:1.08;margin-bottom:10px}.popupBox p{font-size:15px;line-height:1.5;color:var(--muted);font-weight:800;margin-bottom:18px}.toast{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%) translateY(-80px);background:#332520;color:white;border-radius:999px;padding:12px 18px;z-index:999;font-size:14px;font-weight:800;box-shadow:0 16px 36px rgba(51,37,32,.22);transition:.25s;white-space:nowrap}.toast.show{transform:translateX(-50%) translateY(0)}.empty{padding:30px;text-align:center;color:var(--muted);font-weight:800}
-.heroHome{padding-top:114px}
-.heroLogo{width:82px;height:82px;border-radius:24px;border:1px solid rgba(255,255,255,.92);background:#fff}
-.microCards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:-2px 0 18px}
-.microCard{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.96);box-shadow:var(--shadow2);border-radius:22px;padding:13px 10px 12px;text-align:center;backdrop-filter:blur(10px)}
-.microCard strong{display:block;font-size:16px;line-height:1.1;margin-bottom:4px;color:#30231f}
-.microCard small{display:block;font-size:11.5px;font-weight:800;color:var(--muted)}
-.microLabel{display:inline-block;font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--rose2);margin-bottom:7px}
-.routineCard{padding:18px 16px 16px 16px}
-.routineCard .emoji{box-shadow:none;background:linear-gradient(180deg,#fff,#fff2ee)}
-.routineCard:after{content:"‹";position:absolute;left:16px;top:18px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#fff6f3;color:var(--rose2);font-size:18px;font-weight:800}
-.routineCard h4{font-size:17px}
-.routineCard p{padding-left:28px}
-.mixCard{background:linear-gradient(180deg,#fffdfb,#fff8f4)}
-.skinChip,.tab{padding:10px 14px}
-.grid{gap:14px}
-.card{padding:16px 16px 16px 78px;min-height:104px;border-radius:26px;background:linear-gradient(180deg,#fffefd,#fff8f4)}
-.card .emoji{width:46px;height:46px;border-radius:16px;background:linear-gradient(180deg,#fffaf7,#fff2ec);box-shadow:0 6px 16px rgba(58,37,30,.06)}
-.cardTop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px;padding-left:8px}
-.prodPill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:10.5px;font-weight:800}
-.prodPill.cat{background:#fff0f3;color:var(--rose2);border:1px solid #f2d8df}
-.prodPill.status{background:#fff9f2;color:#9b6c3a;border:1px solid #f2dfc8}
-.card h3{font-size:16.5px;line-height:1.25}
-.cardArrow{position:absolute;left:16px;bottom:15px;color:#c49aaa;font-size:18px;font-weight:800}
-.meta{font-size:12px;line-height:1.45;padding-left:10px}
-.day-row{padding:17px 18px 17px 18px}
-.dayArrow{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#fff3ef;color:var(--rose2);font-size:18px;font-weight:800;flex:0 0 auto}
-.weekBadge{background:#fff7f2}
-.nav button{padding:10px 8px 9px}
-.nav button.active{background:linear-gradient(135deg,#fff4f6,#f7e9ee);box-shadow:inset 0 0 0 1px rgba(182,111,131,.12),0 8px 20px rgba(58,37,30,.05)}
-.info{background:linear-gradient(180deg,#fffefd,#fff8f4)}
-.search{background:linear-gradient(180deg,#fff,#fffaf7)}
-@media (max-width:380px){.microCards{grid-template-columns:1fr;}.routineCard p{padding-left:24px}}
-
-
-.ring{position:relative;isolation:isolate}
-.ring.is-empty{background:#eadbd5!important;box-shadow:inset 0 0 0 8px #fff,0 10px 24px rgba(141,83,102,.08)}
-.ring.is-empty span{color:#a17384}
-.hero{padding:28px 26px 24px}
-.hero h2{font-size:31px;letter-spacing:-.95px}
-.hero p{max-width:340px}
-.score{margin:18px 0 16px}
-.score-txt{font-size:13.5px}
-.cta{border-radius:20px;letter-spacing:-.2px}
-.microCards{gap:12px;margin:2px 0 18px}
-.microCard{padding:14px 10px 13px;border-radius:24px}
-.mixCard{border-radius:24px;padding:18px}
-.warning{border-radius:22px}
-.card{border-radius:28px;box-shadow:0 10px 24px rgba(58,37,30,.06)}
-.card h3{font-size:17px}
-.cardTop{margin-bottom:7px}
-.day-row{border-radius:24px}
-.nav{border-radius:28px;padding:8px 9px}
-.nav button{border-radius:20px}
-.nav button.active{background:linear-gradient(135deg,#fff6f8,#f5e8ed)}
-.detail h2{font-size:32px}
-.x{border-radius:18px}
-.info,.neckNote{border-radius:22px}
-
-
-.profileScreen .top{margin-bottom:34px}
-.profileScreen .title{margin-top:10px;margin-bottom:28px;max-width:88%;line-height:1.06}
-.profileScreen .hero{margin-top:6px}
-.profileScreen .info{margin-top:16px}
-.profileScreen .heroHome{padding-top:26px}
-
-
-/* v20 polish */
-.top{margin-bottom:22px}
-.brand,.date{padding:10px 14px;font-size:11.5px}
-.title{letter-spacing:-1.15px}
-.sub{margin-bottom:20px;line-height:1.55}
-.hero{padding:30px 28px 26px;border-radius:36px;box-shadow:0 12px 30px rgba(68,43,37,.07)}
-.hero:after{left:28px;bottom:20px}
-.pill{padding:9px 13px;font-size:12.5px;margin-bottom:16px}
-.hero h2{font-size:32px;line-height:1.04;margin-bottom:12px}
-.hero p{font-size:14.5px;line-height:1.62}
-.score{gap:16px}
-.ring{width:80px;height:80px}.ring span{width:58px;height:58px;font-size:20px}
-.section-title{margin:22px 4px 13px}
-.mixCard,.warning,.info,.day-row,.step,.card,.microCard,.neckNote{box-shadow:0 10px 22px rgba(68,43,37,.05)}
-.info{padding:20px 20px 18px}.info h4{margin-bottom:10px}.info p,.info li{line-height:1.66}
-.step{padding:17px 16px}.step h4{font-size:16.5px}.step p{font-size:13.6px}
-.microCard strong{font-size:16.5px}.microCard small{line-height:1.35}
-.day-row span{line-height:1.6}.weekBadges{margin-top:11px}
-.card{padding:17px 17px 17px 80px;min-height:110px}.card h3{line-height:1.28}.meta{line-height:1.5}
-.tabs{padding-bottom:16px}.search{margin-bottom:16px}
-.nav{box-shadow:0 14px 30px rgba(68,43,37,.08)}
-.nav button .ico{margin-bottom:1px}
-.popupBox{box-shadow:0 18px 42px rgba(68,43,37,.13)}
-/* profile-specific pinzeta */
-.profileScreen .title{margin-top:14px;margin-bottom:24px;max-width:92%}
-.profileScreen .hero{margin-top:2px;padding:24px 24px 22px 128px;min-height:236px}
-.profileScreen .heroLogo{top:26px;left:22px;width:84px;height:84px;border-radius:26px}
-.profileScreen .pill{margin-bottom:18px;max-width:max-content}
-.profileScreen .hero h2{max-width:none;font-size:31px;line-height:1.06}
-.profileScreen .hero p{max-width:none;font-size:14px;line-height:1.68}
-.profileScreen .info{margin-top:18px;padding:22px 22px 20px}
-.profileScreen .info h4{font-size:12.5px}
-.profileScreen .info p,.profileScreen .info li{font-size:15px}
-@media (max-width:380px){
-  .profileScreen .hero{padding-left:112px;min-height:224px}
-  .profileScreen .heroLogo{width:76px;height:76px}
-  .profileScreen .hero h2{font-size:28px}
-}
-
-
-/* v21 products heart polish */
-.card{overflow:hidden}
-.heart{
-  position:absolute;
-  top:14px;
-  left:16px;
-  right:auto;
-  width:30px;
-  height:30px;
-  border-radius:999px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(180deg,#fff8fa,#fff1f4);
-  border:1px solid #f0d8df;
-  color:#c0869a;
-  font-size:17px;
-  box-shadow:0 6px 14px rgba(192,134,154,.10);
-  z-index:2;
-}
-.card .emoji{top:54%;}
-.cardTop{padding-left:42px}
-.cardArrow{left:18px}
-
-
-/* v22 home hero title/icon fix */
-.homeScreen .heroHome{min-height:278px}
-.homeScreen .heroHome .pill,
-.homeScreen .heroHome h2,
-.homeScreen .heroHome p{margin-left:100px}
-.homeScreen .heroHome h2{max-width:none}
-.homeScreen .heroHome p{max-width:none}
-@media (max-width:380px){
-  .homeScreen .heroHome{min-height:266px}
-  .homeScreen .heroHome .pill,
-  .homeScreen .heroHome h2,
-  .homeScreen .heroHome p{margin-left:88px}
-}
-
-/* v25 no-change 8 week lock */
-.lockCard{position:relative;overflow:hidden;border-radius:28px;background:linear-gradient(180deg,#fffefd,#fff5f1);border:1px solid rgba(255,255,255,.98);box-shadow:var(--shadow2);padding:18px 17px;margin:0 0 18px}
-.lockCard:before{content:"";position:absolute;right:-50px;top:-58px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(182,111,131,.18),transparent 70%)}
-.lockTop{position:relative;z-index:1;display:flex;align-items:flex-start;gap:13px;margin-bottom:12px}
-.lockIcon{width:46px;height:46px;border-radius:17px;display:grid;place-items:center;background:#fff3f6;border:1px solid #f0d8df;font-size:24px;box-shadow:0 8px 18px rgba(141,83,102,.08);flex:0 0 auto}
-.lockTitle{font-size:18px;font-weight:900;line-height:1.18;color:var(--ink);margin-bottom:4px}
-.lockSub{font-size:13.5px;line-height:1.5;color:var(--muted);font-weight:800}
-.lockDays{position:relative;z-index:1;display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-radius:20px;background:rgba(255,255,255,.72);border:1px solid var(--line);padding:12px 13px;margin:11px 0 10px}
-.lockDays strong{font-size:25px;color:var(--rose2);letter-spacing:-.5px}
-.lockDays span{font-size:12px;color:var(--muted);font-weight:900;line-height:1.35}
-.lockProgress{position:relative;z-index:1;height:9px;background:#eadbd5;border-radius:999px;overflow:hidden;margin:8px 0 11px}
-.lockProgress i{display:block;height:100%;background:linear-gradient(90deg,var(--rose),var(--peach));width:var(--w)}
-.lockRules{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
-.lockRules span{display:inline-flex;border-radius:999px;padding:7px 10px;font-size:11.5px;font-weight:900;border:1px solid var(--line);background:#fff;color:var(--rose2)}
-.lockCard.done{background:linear-gradient(180deg,#fbfffc,#f1faf3)}
-.lockCard.done .lockIcon{background:#f3fbf4;border-color:#d7e9da}
-.lockCard.done .lockDays strong{color:#4d7b58}
-
-@media (max-width:380px){.title{font-size:31px}.hero{border-radius:30px;padding:22px}.heroHome{padding-top:102px}.grid{gap:10px}.nav button{font-size:11px;padding:8px 6px}}
-
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);background:var(--bg);-webkit-tap-highlight-color:transparent}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:
+ radial-gradient(circle at 10% 2%,rgba(255,255,255,.92),transparent 260px),
+ radial-gradient(circle at 100% 18%,rgba(221,174,169,.20),transparent 320px),
+ radial-gradient(circle at 0% 88%,rgba(219,195,172,.18),transparent 320px),
+ linear-gradient(180deg,#fffaf6 0%,#f8efe9 58%,#f4e9e2 100%);z-index:-2}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:radial-gradient(#9c6e65 .45px,transparent .45px);background-size:7px 7px;z-index:-1}
+button,input{font:inherit}.app{max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:calc(96px + var(--safe));position:relative}.screen{display:none;padding:calc(18px + env(safe-area-inset-top,0px)) 17px 26px}.screen.active{display:block;animation:fade .2s ease}@keyframes fade{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.brandWrap{display:flex;align-items:center;gap:12px}.brandIcon{width:64px;height:64px;border-radius:20px;box-shadow:0 12px 26px rgba(126,73,64,.14);object-fit:cover}.brandName{font-family:Georgia,"Times New Roman",serif;font-size:29px;line-height:1;color:var(--ink);letter-spacing:-.4px}.brandTag{margin-top:5px;font-size:11px;color:var(--rose2);letter-spacing:1.7px;font-weight:700}.hello{text-align:left}.hello b{display:block;color:var(--ink);font-size:14px}.hello span{display:block;margin-top:4px;color:var(--muted);font-size:11px;font-weight:700}
+.segment{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:5px;box-shadow:var(--shadow2);margin-bottom:18px}.seg{padding:11px 10px;border-radius:999px;text-align:center;color:var(--muted);font-weight:800}.seg small{display:block;font-size:10px;margin-top:2px}.seg.active{background:linear-gradient(135deg,var(--rose),var(--rose2));color:white;box-shadow:0 9px 24px rgba(152,84,103,.22)}
+.mainCard{background:rgba(255,253,249,.90);border:1px solid rgba(255,255,255,.98);border-radius:34px;padding:22px 17px 19px;box-shadow:var(--shadow);overflow:hidden;position:relative}.mainCard:before{content:"";position:absolute;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(222,174,173,.18),transparent 70%);left:-70px;top:-60px}.eyebrow{position:relative;z-index:1;font-size:11px;letter-spacing:2px;color:var(--rose2);font-weight:800;text-align:center}.mainTitle{position:relative;z-index:1;text-align:center;font-family:Georgia,"Times New Roman",serif;color:var(--ink);font-size:34px;line-height:1.05;margin:8px 0 4px}.mainSub{text-align:center;color:var(--muted);font-size:13px;font-weight:700;margin-bottom:17px}.steps{display:flex;flex-direction:column;gap:11px;position:relative;z-index:1}.step{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.88);border:1px solid #f0e2db;border-radius:23px;padding:12px 12px;box-shadow:0 7px 18px rgba(78,48,40,.045)}.step.done{background:linear-gradient(180deg,#fbfffb,#f1f8f2);border-color:#d6e4d5}.check{width:37px;height:37px;border-radius:50%;border:1.5px solid #dfc3ba;background:#fff;color:var(--rose2);font-weight:900;flex:0 0 37px;display:grid;place-items:center}.step.done .check{background:var(--green);border-color:var(--green);color:#fff}.prodMark{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;flex:0 0 48px;font-size:25px;background:linear-gradient(145deg,#fff9f5,#f8e8e2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.85)}.stepBody{flex:1;min-width:0}.stepName{font-size:17px;font-weight:850;color:#171210;line-height:1.15}.stepMeta{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 3px}.pill{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:10.5px;font-weight:800;border:1px solid var(--line);background:#fff;color:var(--rose2)}.stepTip{font-size:12px;line-height:1.35;color:var(--muted);font-weight:650}.progressRow{display:flex;align-items:center;gap:10px;margin-top:15px}.progress{height:9px;background:#eadbd4;border-radius:999px;overflow:hidden;flex:1}.progress i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--rose),#d6ab9f)}.progressTxt{font-size:12px;font-weight:850;color:var(--rose2);white-space:nowrap}.doneAll{width:100%;border:0;border-radius:22px;padding:15px 18px;margin-top:14px;background:linear-gradient(135deg,var(--rose),var(--rose2));color:#fff;font-size:16px;font-weight:850;box-shadow:0 13px 26px rgba(152,84,103,.22)}.doneAll:active{transform:translateY(1px)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.mini{background:rgba(255,253,249,.88);border:1px solid rgba(255,255,255,.95);border-radius:25px;padding:15px 14px;box-shadow:var(--shadow2);min-height:128px}.miniIcon{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;background:#fff5f2;font-size:22px;margin-bottom:10px}.mini h3{font-size:15px;line-height:1.2;margin:0 0 5px;color:var(--ink)}.mini p{font-size:11.5px;line-height:1.42;color:var(--muted);font-weight:700;margin:0}.mini strong{display:block;font-size:26px;color:var(--rose2);line-height:1;margin-bottom:5px}.mini .bar{height:7px;background:#eadbd4;border-radius:999px;overflow:hidden;margin-top:10px}.mini .bar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--rose),var(--peach))}
+.pageTitle{font-family:Georgia,"Times New Roman",serif;font-size:34px;line-height:1;color:var(--ink);margin:4px 0 7px}.pageSub{font-size:13px;line-height:1.45;color:var(--muted);font-weight:700;margin-bottom:17px}.dayCard,.productCard,.infoCard{background:rgba(255,253,249,.9);border:1px solid rgba(255,255,255,.98);border-radius:25px;padding:16px;margin-bottom:11px;box-shadow:var(--shadow2)}.dayCard{cursor:pointer}.dayTop{display:flex;justify-content:space-between;align-items:center;gap:10px}.dayTop b{font-size:18px;color:var(--ink)}.dayArrow{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#fff4f1;color:var(--rose2);font-size:20px}.summary{margin-top:8px;font-size:12px;line-height:1.48;color:var(--muted);font-weight:700}.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.badge{font-size:10.5px;font-weight:800;color:var(--rose2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 8px}
+.search{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.9);border-radius:18px;padding:13px 15px;font-size:14px;outline:0;color:var(--text);box-shadow:var(--shadow2);margin-bottom:11px}.tabs{display:flex;gap:7px;overflow:auto;padding:2px 0 10px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;color:var(--muted);font-size:11px;font-weight:800}.tab.active{background:var(--rose2);border-color:var(--rose2);color:#fff}.productCard{display:flex;gap:12px;align-items:center;cursor:pointer}.pIcon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:#fff4f1;font-size:25px;flex:0 0 auto}.pBody{flex:1;min-width:0}.pBody b{display:block;font-size:15.5px;line-height:1.2}.pBody span{display:block;margin-top:5px;color:var(--muted);font-size:11.5px;font-weight:700}.status{font-size:10px;font-weight:850;color:var(--rose2);border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 8px;white-space:nowrap}
+.infoCard h3{margin:0 0 7px;font-size:17px;color:var(--ink)}.infoCard p,.infoCard li{font-size:13px;line-height:1.55;color:var(--muted);font-weight:700}.infoCard ul{margin:0;padding-right:18px}.lockCard{background:linear-gradient(180deg,#fff9f8,#fffdf9);border:1px solid #f0dfda;border-radius:27px;padding:17px;box-shadow:var(--shadow2);margin-bottom:12px}.lockTop{display:flex;align-items:center;justify-content:space-between;gap:12px}.lockTop strong{font-size:34px;color:var(--rose2);line-height:1}.lockTop b{font-size:17px;color:var(--ink)}.lockTop span{display:block;margin-top:4px;font-size:11.5px;color:var(--muted);font-weight:700}.lockBar{height:8px;background:#eadbd4;border-radius:999px;overflow:hidden;margin-top:13px}.lockBar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--rose),var(--peach))}
+.bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(430px,100%);padding:0 14px calc(10px + var(--safe));z-index:80;background:linear-gradient(180deg,transparent,rgba(248,240,234,.94) 26%)}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;background:rgba(255,253,249,.94);border:1px solid rgba(255,255,255,.98);border-radius:28px;padding:7px;box-shadow:0 14px 40px rgba(67,44,38,.14);backdrop-filter:blur(16px)}.nav button{border:0;background:transparent;border-radius:20px;padding:8px 4px;color:#7f6963;font-size:10.5px;font-weight:850}.nav button .ico{display:block;font-size:21px;line-height:1;margin-bottom:4px}.nav button.active{background:#f8e7e8;color:var(--rose2)}
+.detail{position:fixed;inset:0;z-index:120;display:none;overflow:auto;padding:calc(18px + env(safe-area-inset-top,0px)) 17px calc(36px + var(--safe));background:linear-gradient(180deg,#fffaf6,#f6ece6)}.detail.active{display:block}.close{border:1px solid var(--line);background:white;border-radius:16px;padding:10px 14px;color:var(--rose2);font-weight:850;box-shadow:var(--shadow2)}.detailHero{text-align:center;margin:14px 0 16px}.detailHero .big{font-size:40px}.detailHero h2{font-family:Georgia,"Times New Roman",serif;color:var(--ink);font-size:31px;margin:7px 0}.detailHero p{font-size:12px;color:var(--muted);font-weight:700}.detail .steps{margin-top:10px}.toast{position:fixed;left:50%;bottom:105px;transform:translateX(-50%) translateY(12px);opacity:0;pointer-events:none;background:#3e2c29;color:white;padding:10px 14px;border-radius:999px;font-size:12px;font-weight:800;transition:.2s;z-index:200}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.popup{position:fixed;inset:0;background:rgba(65,42,36,.3);display:none;place-items:center;z-index:220;padding:24px}.popup.show{display:grid}.popupBox{max-width:350px;background:#fffaf6;border-radius:30px;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(45,29,24,.2)}.popupBox h2{font-family:Georgia,"Times New Roman",serif;color:var(--ink);font-size:27px;margin:10px 0}.popupBox p{font-size:13px;line-height:1.55;color:var(--muted);font-weight:700}.popupBox button{margin-top:13px}
+@media(max-width:370px){.brandName{font-size:25px}.brandIcon{width:58px;height:58px}.mainTitle{font-size:30px}.duo{grid-template-columns:1fr}.stepName{font-size:16px}}
 </style>
 </head>
 <body>
 <div class="app">
-<section class="screen active homeScreen" id="home">
-  <div class="top"><div class="brand">SHIMI · RITUAL V27</div><div class="date" id="todayDate"></div></div>
-  <div class="title" id="greeting">בוקר טוב, שימי</div>
-  <div class="sub" id="homeSub">השגרה הכי חכמה לעור רגוע וזוהר</div>
-  <div class="hero heroHome">
-    <img class="heroLogo" src="app-icon-192.png" alt="Shimi Ritual">
-    <div class="pill" id="modePill">✨ היום</div>
-    <h2 id="heroTitle">הריטואל שלך להיום</h2>
-    <p id="heroText"></p>
-    <div class="score"><div class="ring" id="ring" style="--pct:0%"><span id="ringNum">0%</span></div><div class="score-txt" id="scoreTxt"></div></div>
-    <button class="cta" onclick="startRoutine()" id="startBtn">כניסה לריטואל</button>
-  </div>
-  <div class="microCards">
-    <div class="microCard"><span class="microLabel">בוקר</span><strong>מדויק</strong><small>בלי בחירות</small></div>
-    <div class="microCard"><span class="microLabel">ערב</span><strong>מסודר</strong><small>לפי הימים</small></div>
-    <div class="microCard"><span class="microLabel">צוואר</span><strong>VIP</strong><small>כתוב במפורש</small></div>
-  </div>
-  <div id="noChangeLock"></div>
-  <div id="routineCards" class="steps"></div>
-  <div class="section-title">מה לא לערבב היום</div>
-  <div class="mixCard"><h3 id="mixTitle">היום בלי דרמות</h3><p id="mixText"></p></div>
-  <div class="section-title">מצב עור היום</div>
-  <div class="skinRow" id="skinState"></div>
-  <div class="section-title">כללי הזהב</div>
-  <div class="warning danger">לא משלבים באותו ערב: Ret-A + פילינג / רטינל עיניים / מסכות פעילות. Numbuzin מחליף פפטידים, ואזלאית נכנסת בבקרים בלבד ובזהירות.</div><div class="warning">ערב הצלה: אם העור רגיש/שורף/מתקלף — ניקוי עדין → Anua או היאלורונית → CeraVe PM. וזהו.</div><div class="warning">מסכת LED: רק על עור נקי ויבש, לפני סרומים. לא ביום פילינג ולא על עור מגורה/שורף/מתקלף.</div>
-  <div class="warning">SPF בבוקר הוא לא מוצר, הוא ביטוח חיים לגלואו. גם בבית, גם “רק קפיצה”.</div>
+<section class="screen active" id="home">
+ <div class="header">
+  <div class="brandWrap"><img class="brandIcon" src="app-icon-192.png" alt="Shimi Ritual"><div><div class="brandName">Shimi Ritual</div><div class="brandTag">טיפוח שהוא רגע שלך</div></div></div>
+  <div class="hello"><b id="helloText">בוקר טוב</b><span id="dateText"></span></div>
+ </div>
+ <div class="segment"><div class="seg" id="segAm">☀️ בוקר<small>עד 14:00</small></div><div class="seg" id="segPm">🌙 ערב<small>מ־14:00</small></div></div>
+ <div class="mainCard">
+  <div class="eyebrow" id="eyebrow">TODAY</div>
+  <div class="mainTitle">מה לשים עכשיו</div>
+  <div class="mainSub" id="routineSub"></div>
+  <div class="steps" id="todaySteps"></div>
+  <div class="progressRow"><div class="progress" id="todayProgress" style="--w:0%"><i></i></div><div class="progressTxt" id="progressText">0/0 הושלם</div></div>
+  <button class="doneAll" onclick="finishCurrent()">✓ סיימתי את הכל</button>
+ </div>
+ <div class="duo">
+   <div class="mini" id="nextMini"></div>
+   <div class="mini" id="lockMini"></div>
+ </div>
 </section>
-<section class="screen" id="calendar"><div class="top"><div class="brand">WEEKLY PLAN</div><div class="date">7 ימים</div></div><div class="title">השבוע שלך</div><div class="sub">כל יום מלא: בוקר + ערב + מדבקות קטנות של מה קורה היום</div><div id="weekPlan"></div></section>
-<section class="screen" id="products"><div class="top"><div class="brand">APOTHECARY</div><div class="date" id="productCount"></div></div><div class="title">המוצרים שלי</div><div class="sub">מדף טיפוח מסודר: מה זה, מתי שמים, ואיך זה משתלב בשגרה</div><input class="search" id="search" placeholder="חפשי מוצר..." oninput="renderProducts()"><div class="tabs" id="tabs"></div><div class="grid" id="productGrid"></div></section>
-<section class="screen profileScreen" id="profile"><div class="top"><div class="brand">SKIN STRATEGY</div><div class="date">שימי אדישן</div></div><div class="title">האסטרטגיה</div><div class="hero heroHome"><img class="heroLogo" src="app-icon-192.png" alt="Shimi Ritual"><div class="pill">🧴 הכי הכי טוב</div><h2>מה העור שלך מקבל עכשיו?</h2><p>בוקר מדויק בלי בחירות, אזלאית 10% בבקרים נבחרים, ערב מסודר לפי ימים, ניקוי כפול בערב, LED אדום באמצע השבוע, פילינג מנדלי פעם בשבוע, רטאויט לצוואר פעמיים בשבוע, Numbuzin במקום Matrixyl/Copper, וערב הצלה אם העור רגיש.</p></div><div id="noChangeProfile"></div><div class="info"><h4>מה הוצאתי מהשגרה הקבועה</h4><p><b>Retinol Boost</b> — נשאר במדף, לא ברוטינה. יש כבר Ret-A ו-Crystal Retinal Eye. יותר מזה זה עומס רטינואידי.<br><b>Purcell</b> — הוסר לגמרי מהאפליקציה כרגע בגלל עניין הריח. לא משתמשים עד שנחליט אחרת.<br><b>Matrixyl + Copper</b> — בהשהיה כרגע, כי Numbuzin No.9+ נכנס במקומם כדי שלא תהיה פפטידיאדה.</p></div><div class="info"><h4>ניאצינמיד</h4><p>נשאר קבוע ברביעי ושבת. שני בבוקר פינה מקום לאזלאית רק אחרי שהעור עבר שבועיים רגועים עם שישי בוקר.</p></div><div class="info"><h4>Numbuzin במקום פפטידיאדה</h4><p>שני ושבת בערב מקבלים Numbuzin No.9+ כאסנס פפטידים/שיקום. Matrixyl ו-Copper בהשהיה כדי שנדע מי עושה מה.</p></div><div class="info"><h4>חומצה אזלאית 10%</h4><p>נכנסת בזהירות בבוקר, לא בערבי רטאויט/פילינג. בשבועיים הראשונים שישי בלבד; אם העור רגוע — מוסיפים גם שני בבוקר. תמיד SPF מעל.</p></div><div class="info"><h4>סדר מריחה בסיסי</h4><ul><li>בוקר רגיל: Vitamin C → Anua → SPF.</li><li>בוקר ניאצינמיד: Vitamin C → Niacinamide → Anua → SPF.</li><li>בוקר אזלאית: Azelaic Acid 10% → Anua → SPF. בלי Vitamin C וניאצינמיד באותו בוקר בהתחלה.</li><li>כל ערב: Oat Balm Cleanser → ניקוי עדין עם מים → הריטואל של אותו יום.</li><li>LED אדום: שני, שלישי וחמישי בערב, על עור נקי ויבש לפני סרומים/רטאויט. 10 דקות קבוע, ואם העור רגיש אפשר לרדת ל־5.</li><li>רטאויט: ניקוי → עור יבש → Ret-A → CeraVe PM. בצוואר רק ראשון וחמישי.</li><li>צוואר בבוקר: שאריות Vitamin C אם רגוע, Anua כן גם צוואר, SPF חובה גם צוואר ומחשוף.</li><li>רביעי ערב: Mandelic Acid בלבד כפעיל מרכזי. בלי Ret-A, בלי Numbuzin, בלי רטינל עיניים ובלי מסכות פעילות.</li><li>ערב הצלה: כשיש יובש/צריבה/קילוף — ניקוי עדין → Anua או APIS Hyaluron → CeraVe PM. לדלג על כל הפעילים.</li></ul></div></section>
+
+<section class="screen" id="calendar">
+ <div class="header"><div class="brandWrap"><img class="brandIcon" src="app-icon-192.png"><div><div class="brandName">השבוע שלך</div><div class="brandTag">בוקר + ערב בלי לנחש</div></div></div></div>
+ <div class="pageTitle">7 ימים</div><div class="pageSub">לחצי על יום כדי לראות את כל השלבים המלאים.</div><div id="weekList"></div>
+</section>
+
+<section class="screen" id="products">
+ <div class="header"><div class="brandWrap"><img class="brandIcon" src="app-icon-192.png"><div><div class="brandName">המוצרים</div><div class="brandTag">המדף של שימי</div></div></div></div>
+ <div class="pageTitle">מה יש לנו</div><div class="pageSub">פעיל, בהשהיה או בהמתנה — הכול כתוב ברור.</div>
+ <input class="search" id="search" placeholder="חפשי מוצר..." oninput="renderProducts()"><div class="tabs" id="tabs"></div><div id="productList"></div>
+</section>
+
+<section class="screen" id="profile">
+ <div class="header"><div class="brandWrap"><img class="brandIcon" src="app-icon-192.png"><div><div class="brandName">האסטרטגיה</div><div class="brandTag">פחות רעש, יותר עקביות</div></div></div></div>
+ <div class="pageTitle">השגרה שלנו</div><div class="pageSub">הבסיס החזק נשאר. החדשים נכנסים בתפקיד ברור.</div>
+ <div id="profileLock"></div>
+ <div class="infoCard"><h3>הבסיס שלא נוגעים בו</h3><ul><li>SPF כל בוקר — פנים, צוואר ומחשוף.</li><li>Ret-A 0.025% שלוש פעמים בשבוע כרגע.</li><li>ניקוי כפול בערב + CeraVe PM לסגירה.</li><li>פילינג מנדלי פעם בשבוע בלבד.</li></ul></div>
+ <div class="infoCard"><h3>Numbuzin No.9+</h3><p>מחליף כרגע את Matrixyl ואת Copper. מופיע בשני ושבת בערב. בצוואר רק אחרי טסט קטן.</p></div>
+ <div class="infoCard"><h3>Azelaic Acid 10%</h3><p>בשבועיים הראשונים מופיעה בשישי בבוקר בלבד. אחרי 14 ימים רגועים האפליקציה מוסיפה אותה אוטומטית גם לשני בבוקר. בבוקר אזלאית — בלי Vitamin C וניאצינמיד בהתחלה.</p></div>
+ <div class="infoCard"><h3>Ret-A 0.05%</h3><p>יש לך בבית אבל הוא בהמתנה. ממשיכים עם 0.025% עד שנגמר; לא מחליפים אוטומטית. כשיגיע הזמן נעשה מעבר מסודר.</p></div>
+ <div class="infoCard"><h3>ערב הצלה</h3><p>אם יש צריבה, יובש משמעותי או קילופים: ניקוי עדין → Anua או APIS Hyaluron → CeraVe PM. בלי אקטיבים.</p></div>
+</section>
 </div>
-<div class="bottom"><div class="nav"><button class="active" onclick="go('home')"><span class="ico">⌂</span>בית</button><button onclick="go('calendar')"><span class="ico">▦</span>יומן</button><button onclick="go('products')"><span class="ico">◱</span>מוצרים</button><button onclick="go('profile')"><span class="ico">♡</span>פרופיל</button></div></div>
-<div class="detail" id="detail"></div><div class="toast" id="toast"></div><div class="popupOverlay" id="fridayPopup"><div class="popupBox"><div class="popupEmoji">🛁✨</div><h2>שישי נסגר מושלם</h2><p>לא לשכוח: מחר בבוקר מסיכת שבת פינוק מתחלפת. משהו טרנדי, כיפי, ספא כזה — לא מהרוטינה הקבועה.</p><button class="cta" onclick="closeFridayPopup()">סגור, שמתי לי בראש</button></div></div>
+
+<div class="bottom"><div class="nav">
+ <button class="active" onclick="go('home')"><span class="ico">⌂</span>בית</button>
+ <button onclick="go('calendar')"><span class="ico">▦</span>יומן</button>
+ <button onclick="go('products')"><span class="ico">◫</span>מוצרים</button>
+ <button onclick="go('profile')"><span class="ico">♡</span>פרופיל</button>
+</div></div>
+<div class="detail" id="detail"></div><div class="toast" id="toast"></div>
+<div class="popup" id="fridayPopup"><div class="popupBox"><div style="font-size:38px">🛁✨</div><h2>מחר שבת</h2><p>מסיכת פינוק מתחלפת בבוקר. כיפית ונעימה, לא טיפול אגרסיבי.</p><button class="doneAll" onclick="closeFridayPopup()">סגור, זכרתי</button></div></div>
 <script>
 const dayNames=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+const E={clean1:['The Inkey List Oat Balm Cleanser','🫧','ניקוי ראשון','על עור יבש. ממיס SPF ואיפור.'],clean2:['ניקוי עדין עם מים','💦','ניקוי שני','לשטוף טוב, בלי לקרצף.'],cerave:['CeraVe PM Facial Lotion','🤍','פנים','סגירה ולחות.'],lierac:['Lierac Lift Integral Neck & Décolleté','🪞','צוואר + מחשוף','קרם צוואר בסוף.']};
+const baseMorning={
+0:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','ויטמין C לזוהר והגנה נוגדת חמצון.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום, רכות ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
+1:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','עד שהאזלאית עולה לפעמיים בשבוע.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
+2:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','זוהר והגנה נוגדת חמצון.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
+3:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','זוהר והגנה.'],['Niacinamide Serum','🍚','פנים','יום ניאצינמיד קבוע.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
+4:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','זוהר והגנה.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
+5:[['Anua Azelaic Acid 10+ Hyaluron Redness Soothing Serum','🌿','פנים בלבד','בוקר אזלאית. בלי Vitamin C וניאצינמיד בהתחלה.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','חובה נדיבה.']],
+6:[['מסיכת פינוק מתחלפת','🛁','פנים','מסכת ספא/פינוק אחת, לא אגרסיבית.'],['Niacinamide Serum','🍚','פנים','איזון עדין אחרי המסכה.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','חובה גם ביום פינוק.']]
+};
+const evening={
+0:{type:'רטאויט + צוואר',steps:[[...E.clean1],[...E.clean2],['Ret-A 0.025%','🌙','פנים','כמות אפונה על עור יבש.'],['Ret-A 0.025%','🌙','צוואר','מעט ממש. ראשון וחמישי בלבד.'],[...E.cerave],[...E.lierac]]},
+1:{type:'LED + Numbuzin',steps:[[...E.clean1],[...E.clean2],['Nanoleaf LED Red','🔴','פנים','10 דקות על עור נקי ויבש.'],['Crystal Retinal Eye 3','👁️','עיניים','גרגר אורז לכל עין. פעם בשבוע.'],['numbuzin No.9+ NAD+ BIO Lifting-sil Essence','💜','פנים + צוואר אם עבר טסט','שכבה דקה במקום Matrixyl/Copper.'],[...E.cerave],[...E.lierac]]},
+2:{type:'LED + רטאויט פנים',steps:[[...E.clean1],[...E.clean2],['Nanoleaf LED Red','🔴','פנים','10 דקות לפני Ret-A.'],['Ret-A 0.025%','🌙','פנים בלבד','בלי צוואר היום.'],[...E.cerave],[...E.lierac]]},
+3:{type:'פילינג עדין',steps:[[...E.clean1],[...E.clean2],['The Ordinary Mandelic Acid 10% + HA','🍋','פנים בלבד','פעם בשבוע. לא צוואר ולא עיניים.'],[...E.cerave],[...E.lierac]]},
+4:{type:'LED + רטאויט + צוואר',steps:[[...E.clean1],[...E.clean2],['Nanoleaf LED Red','🔴','פנים','10 דקות על עור נקי ויבש.'],['Ret-A 0.025%','🌙','פנים','כמות אפונה.'],['Ret-A 0.025%','🌙','צוואר','מעט ממש. הפעם השנייה השבוע.'],[...E.cerave],[...E.lierac]]},
+5:{type:'גלואו לילה',steps:[[...E.clean1],[...E.clean2],['Medicube Night Wrapping Mask','✨','פנים','מסכת לילה. בלי בופה סרומים.'],[...E.lierac]]},
+6:{type:'Numbuzin + שיקום',steps:[[...E.clean1],[...E.clean2],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','אפשר לדלג אם מרגיש עמוס.'],['numbuzin No.9+ NAD+ BIO Lifting-sil Essence','💜','פנים + צוואר אם עבר טסט','במקום Copper.'],[...E.cerave],[...E.lierac]]}
+};
 const products=[
-{name:'The Inkey List Oat Balm Cleanser',emoji:'🫧',cat:'ניקוי',when:'ערב',status:'כל ערב',desc:'ניקוי ראשון שממיס SPF ואיפור. מתאים לך במיוחד בגלל ה-SPF הרציני.',how:'על עור יבש בערב, לעסות 30–60 שניות, להוסיף מעט מים עד שנהיה חלבי ולשטוף. אחריו ניקוי עדין עם מים. לא צריך מיסלריים אחרי.',tags:['ניקוי','SPF','ערב','באלם']},
-{name:'ניקוי עדין עם מים',emoji:'💦',cat:'ניקוי',when:'ערב',status:'כל ערב אחרי הבאלם',desc:'השלב השני של הניקוי הכפול כדי שלא תישאר תחושה שומנית.',how:'אחרי Oat Balm Cleanser. ניקוי עדין, בלי לקרצף ובלי דרמות.',tags:['ניקוי','ערב','עדין']},
-{name:'Nanoleaf LED Light Therapy Face Mask',emoji:'🔴',cat:'LED',when:'ערב',status:'ב׳ ג׳ ה׳',desc:'מסכת LED במצב אדום כתוספת ביוטי־טק לאנטי־אייג׳ינג, זוהר ומרקם — בלי להוסיף עוד חומרים פעילים על העור.',how:'שני, שלישי וחמישי בערב אחרי ניקוי כפול ועל עור נקי ויבש. 10 דקות. אם יש רגישות/פעם ראשונה אחרי הפסקה — לרדת ל־5 דקות. אחריה ממשיכים לשגרת הערב. בימי רטאויט זה לפני הרטאויט. לא ביום פילינג ולא על עור מגורה/שורף/מתקלף.',tags:['LED','אדום','אנטי אייג׳ינג','זוהר','ביוטי טק']},
-{name:'Timeless 20% Vitamin C + E + Ferulic',emoji:'🟠',cat:'בוקר',when:'בוקר',status:'כל בוקר רגיל',desc:'ויטמין C חזק לזוהר, כתמים ואנטי־אייג׳ינג.',how:'אחרי ניקוי/מים בבוקר. פנים מלאות, ואת השאריות בלבד להעביר בעדינות לצוואר/מחשוף אם אין רגישות. בשבת בבוקר מדלגים כי יש מסיכת פינוק מתחלפת.',tags:['זוהר','כתמים','נוגד חמצון']},
-{name:'Niacinamide Serum',emoji:'🍚',cat:'בוקר',when:'בוקר',status:'ב׳ ד׳ שבת',desc:'ניאצינמיד למחסום עור, איזון ונקבוביות.',how:'בימים שני, רביעי ושבת בבוקר. אחרי ויטמין C, לפני Anua. אפשר להעביר שאריות לצוואר אם הוא רגוע; אם צורב — פנים בלבד ולעדכן את גוגי.',tags:['מחסום','איזון','קבוע']},
-{name:'Anua 7 Rice Ceramide Barrier Serum',emoji:'🌾',cat:'מחסום',when:'בוקר',status:'כל בוקר',desc:'סרמידים ואורז למחסום עור, רכות ולחות.',how:'בבוקר אחרי Vitamin C/ניאצינמיד. למרוח גם על הצוואר — זה סרום מחסום עדין. בשבת אחרי מסיכת הפינוק.',tags:['מחסום','לחות','רגוע']},
-{name:'SPF 50+ Anthelios UVMune 400',emoji:'🧴',cat:'הגנה',when:'בוקר',status:'חובה יומית',desc:'השלב הכי חשוב נגד כתמים והזדקנות שמש.',how:'כמות נדיבה כל בוקר על פנים, צוואר ומחשוף. לחדש בחוץ/ים/נהיגה ארוכה.',tags:['SPF','כתמים','חובה']},
-{name:'Ret-A 0.025%',emoji:'🌙',cat:'רטינואידים',when:'ערב',status:'א׳ ג׳ ה׳',desc:'הכוכב האמיתי: מרקם, כתמים, אנטי־אייג׳ינג.',how:'על עור יבש בלבד. כמות אפונה לכל הפנים. בצוואר רק ראשון וחמישי, מעט ממש.',tags:['רטאויט','אנטי אייג׳ינג','פעיל','צוואר']},
-{name:'CeraVe PM Facial Lotion',emoji:'🤍',cat:'קרמים',when:'ערב',status:'כל ערב',desc:'קרם לחות שיקומי עם ניאצינמיד וצרמידים.',how:'כל ערב כסגירה. בלילות רטאויט — אחרי Ret-A.',tags:['לחות','מחסום','סגירה']},
-{name:'Crystal Retinal Eye 3',emoji:'👁️',cat:'עיניים',when:'שני ערב',status:'פעם בשבוע',desc:'רטינל עדין לאזור העיניים. נשאר מינון צנוע כדי לא להעמיס רטינואידים ליד Ret-A.',how:'שני בערב בלבד. גרגר אורז לכל עין, לא להצמיד לקו הריסים ולא לשלב עם Ret-A/פילינג. Numbuzin בא אחרי, לא לפני העיניים.',tags:['עיניים','רטינל','זהיר']},
-{name:'numbuzin No.9+ NAD+ BIO Lifting-sil Essence',emoji:'💜',cat:'פפטידים',when:'שני + שבת ערב',status:'במקום Matrixyl/Copper',desc:'אסנס פפטידים + NAD+ לערבי שיקום, פלמפ וזוהר עדין. נכנס במקום Matrixyl ו-Copper כדי לא להעמיס פפטידים.',how:'שני ושבת בערב אחרי ניקוי. בשני אחרי LED ו-Crystal Retinal Eye; בשבת אחרי ניקוי, אפשר מעל Anua אם צריך. אפשר גם צוואר אחרי טסט קטן. לא בערבי Ret-A או פילינג.',tags:['פפטידים','NAD','שיקום','חדש']},
-{name:'Anua Azelaic Acid 10+ Hyaluron Redness Soothing Serum',emoji:'🌿',cat:'בוקר',when:'שישי בוקר → אחר כך שני + שישי',status:'חדש בזהירות',desc:'חומצה אזלאית 10% עם היאלורון להרגעה, אדמומיות, פצעונים קטנים וחוסר אחידות. אקטיב חדש, לכן נכנסת לאט.',how:'בשבועיים הראשונים: שישי בבוקר בלבד אחרי מים/ניקוי קל, לפני Anua ו-SPF. אם רגוע — להוסיף גם שני בבוקר. בהתחלה לא באותו בוקר עם Vitamin C או Niacinamide.',tags:['אזלאית','אדמומיות','אחידות','חדש']},
-{name:'Matrixyl 10% + HA',emoji:'🧬',cat:'פפטידים',when:'מדף',status:'בהשהיה',desc:'פפטיד עם חומצה היאלורונית. כרגע בהשהיה כי Numbuzin נכנס במקומו.',how:'לא להשתמש בשגרה כרגע. אם נחזור אליו בעתיד — הוא יחליף את Numbuzin, לא יתווסף מעליו.',tags:['פפטידים','בהשהיה','מדף']},
-{name:'Multi-Peptide + Copper Peptides 1%',emoji:'🧪',cat:'פפטידים',when:'מדף',status:'בהשהיה',desc:'פפטידים + נחושת. כרגע בהשהיה כדי לא לערבב עם Numbuzin ולא להעמיס.',how:'לא להשתמש בשגרה כרגע. אם נחזור לנחושת בעתיד — רק בערב נפרד, לא עם Ret-A/פילינג/רטינל עיניים.',tags:['Copper','בהשהיה','מדף']},
-{name:'APIS Hyaluron 4D',emoji:'💧',cat:'לחות',when:'SOS / ערב הצלה',status:'לפי צורך',desc:'סרום לחות לערב שיקום רגוע או כשיש יובש/מתיחה.',how:'בערב הצלה או שבת שיקום: אחרי ניקוי, לפני CeraVe. אפשר גם במקום אקטיבים כשהעור עושה פרצופים.',tags:['לחות','שיקום','SOS']},
-{name:'The Ordinary Mandelic Acid 10% + HA',emoji:'🍋',cat:'פילינג',when:'רביעי ערב',status:'פעם בשבוע',desc:'פילינג כימי עדין ממשפחת AHA. עוזר לזוהר, מרקם חלק יותר, עור פחות עמום וגוון אחיד יותר.',how:'רביעי בערב אחרי ניקוי כפול, על פנים בלבד. לא צוואר בהתחלה, לא ליד העיניים. אחריו CeraVe PM. באותו ערב בלי Ret-A, Numbuzin, רטינל עיניים או מסכות פעילות.',tags:['פילינג','מנדלית','זוהר','מרקם']},
-{name:'Lierac Lift Integral Neck & Décolleté',emoji:'🪞',cat:'קרמים',when:'ערב',status:'כל ערב',desc:'קרם ייעודי לצוואר ולמחשוף.',how:'כל ערב בסוף באזור הצוואר והמחשוף. גם בימי רטאויט לצוואר, מעליו אחרי המתנה קצרה.',tags:['צוואר','מחשוף','קרם']},
-{name:'Medicube Night Wrapping Mask',emoji:'🌙',cat:'מסכות',when:'שישי',status:'פעם בשבוע',desc:'מסכת לילה לגלואו וסגירה.',how:'שישי בערב בלבד. בלי Ret-A ובלי בופה סרומים.',tags:['מסכה','גלואו','לילה']},
-{name:'מסיכת פינוק מתחלפת של שבת בבוקר',emoji:'🛁',cat:'מסכות',when:'שבת בבוקר',status:'טקס חופשי',desc:'לא מוצר קבוע מהרשימה — כל פעם מסכת טרנד/ספא/פינוק אחרת.',how:'שבת בבוקר אחרי ניקוי עדין. לבחור מסכה נעימה אחת, לא טיפול אגרסיבי. אחריה Anua ו-SPF.',tags:['שבת','פינוק','ספא','חופשי']},
-{name:'VT Cica Collagen Mask',emoji:'🧖‍♀️',cat:'מסכות',when:'לפי צורך',status:'לא ברוטינה',desc:'מסכת הרגעה/לחות. לא חלק מטקס שבת הקבוע — רק כשבא לעור רוגע.',how:'להשתמש רק כפינוק/הרגעה אם בא. לא נכנסת ליומן הקבוע.',tags:['מסכה','הרגעה','מדף']},
-{name:'Argireline 10%',emoji:'〰️',cat:'פפטידים',when:'מדף',status:'לא ברוטינה',desc:'פפטיד לאזורי הבעה. נחמד, אבל לא חובה בשגרה הנוכחית.',how:'כרגע נשאר בחוץ כדי שהרוטינה תהיה מדויקת ולא עמוסה.',tags:['להוריד','הבעה']},
-{name:'+Retinol Boost',emoji:'✨',cat:'רטינואידים',when:'מדף',status:'לא ברוטינה',desc:'לא נכנס לשגרה כי יש כבר Ret-A ו-Crystal Retinal Eye.',how:'לא להשתמש בשבוע רגיל. יותר מדי רטינואידים = יובש ועצבנות.',tags:['להוריד','רטינול']}
+['The Inkey List Oat Balm Cleanser','🫧','ניקוי','פעיל','ניקוי ראשון בכל ערב.'],['ניקוי עדין עם מים','💦','ניקוי','פעיל','ניקוי שני בכל ערב.'],['Timeless 20% Vitamin C + E + Ferulic','🟠','בוקר','פעיל','ויטמין C בבקרים הרגילים.'],['Anua Azelaic Acid 10+ Hyaluron','🌿','בוקר','חדש','שישי בבוקר; אחרי 14 ימים רגועים גם שני.'],['Niacinamide Serum','🍚','בוקר','פעיל','רביעי ושבת בבוקר.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','מחסום','פעיל','לחות ותמיכה במחסום.'],['SPF 50+ Anthelios UVMune 400','🧴','הגנה','חובה','כל בוקר, גם צוואר ומחשוף.'],['Ret-A 0.025%','🌙','רטינואיד','פעיל','ראשון, שלישי וחמישי.'],['Ret-A 0.05%','🌙','רטינואיד','בהמתנה','לא בשגרה עד ש-0.025 נגמר.'],['Nanoleaf LED Light Therapy Face Mask','🔴','LED','פעיל','שני, שלישי וחמישי בערב.'],['Crystal Retinal Eye 3','👁️','עיניים','פעיל','שני בערב בלבד.'],['numbuzin No.9+ NAD+ BIO Lifting-sil Essence','💜','פפטידים','חדש','שני ושבת בערב במקום Matrixyl/Copper.'],['Matrixyl 10% + HA','🧬','פפטידים','בהשהיה','לא בשגרה כרגע.'],['Multi-Peptide + Copper Peptides 1%','🧪','פפטידים','בהשהיה','לא בשגרה כרגע.'],['APIS Hyaluron 4D','💧','לחות','SOS','לערב הצלה לפי צורך.'],['The Ordinary Mandelic Acid 10% + HA','🍋','פילינג','פעיל','רביעי בערב בלבד.'],['CeraVe PM Facial Lotion','🤍','קרם','פעיל','סגירת ערב ולחות.'],['Lierac Lift Integral Neck & Décolleté','🪞','צוואר','פעיל','כל ערב לצוואר ומחשוף.'],['Medicube Night Wrapping Mask','✨','מסכה','פעיל','שישי בערב.'],['VT Cica Collagen Mask','🧖‍♀️','מסכה','מדף','לפי צורך, לא קבוע.'],['Argireline 10%','〰️','פפטידים','מדף','לא ברוטינה.'],['Retinol Boost','⭐','רטינואיד','מדף','לא ברוטינה כי יש Ret-A.']
 ];
-const mornings={
-0:[['Timeless 20% Vitamin C + E + Ferulic','פנים + שאריות לצוואר','זוהר וכתמים. לא מנה מלאה לצוואר — רק שאריות עדינות.'],['Anua 7 Rice Ceramide Barrier Serum','פנים + צוואר','מחסום ולחות. כן, גם צוואר.'],['SPF 50+ Anthelios UVMune 400','פנים + צוואר + מחשוף','כמות נדיבה. לא לשכוח צוואר.']],
-1:[['Anua Azelaic Acid 10+ Hyaluron Redness Soothing Serum','פנים בלבד','רק אם עברו שבועיים רגועים עם שישי בוקר. בלי Vitamin C ובלי ניאצינמיד באותו בוקר בהתחלה.'],['Anua 7 Rice Ceramide Barrier Serum','פנים + צוואר','מחסום ולחות. אם האזלאית עקצצה — שכבה רגועה.'],['SPF 50+ Anthelios UVMune 400','פנים + צוואר + מחשוף','כמות נדיבה. אזלאית בלי SPF זה לא קורה.']],
-2:[['Timeless 20% Vitamin C + E + Ferulic','פנים + שאריות לצוואר','זוהר וכתמים. לא מנה מלאה לצוואר — רק שאריות עדינות.'],['Anua 7 Rice Ceramide Barrier Serum','פנים + צוואר','מחסום ולחות. כן, גם צוואר.'],['SPF 50+ Anthelios UVMune 400','פנים + צוואר + מחשוף','כמות נדיבה. לא לשכוח צוואר.']],
-3:[['Timeless 20% Vitamin C + E + Ferulic','פנים + שאריות לצוואר','זוהר וכתמים. לא מנה מלאה לצוואר — רק שאריות עדינות.'],['Niacinamide Serum','פנים + אפשר שאריות לצוואר','יום ניאצינמיד קבוע. אם הצוואר רגיש — פנים בלבד.'],['Anua 7 Rice Ceramide Barrier Serum','פנים + צוואר','מחסום ולחות. כן, גם צוואר.'],['SPF 50+ Anthelios UVMune 400','פנים + צוואר + מחשוף','כמות נדיבה. לא לשכוח צוואר.']],
-4:[['Timeless 20% Vitamin C + E + Ferulic','פנים + שאריות לצוואר','זוהר וכתמים. לא מנה מלאה לצוואר — רק שאריות עדינות.'],['Anua 7 Rice Ceramide Barrier Serum','פנים + צוואר','מחסום ולחות. כן, גם צוואר.'],['SPF 50+ Anthelios UVMune 400','פנים + צוואר + מחשוף','כמות נדיבה. לא לשכוח צוואר.']],
-5:[['Anua Azelaic Acid 10+ Hyaluron Redness Soothing Serum','פנים בלבד','בוקר אזלאית קבוע להתחלה. כמות קטנה, לא עיניים ולא צוואר בשלב ראשון.'],['Anua 7 Rice Ceramide Barrier Serum','פנים + צוואר','מחסום ולחות. כן, גם צוואר — אבל האזלאית פנים בלבד.'],['SPF 50+ Anthelios UVMune 400','פנים + צוואר + מחשוף','חובה נדיבה. זה היום של האזלאית.']],
-6:[['מסיכת פינוק מתחלפת','פנים','כל פעם מסכת טרנד/ספא אחרת. לא מהרוטינה הקבועה.'],['Niacinamide Serum','פנים + אפשר שאריות לצוואר','איזון עדין אחרי הפינוק. אם הצוואר רגיש — פנים בלבד.'],['Anua 7 Rice Ceramide Barrier Serum','פנים + צוואר','מחסום ולחות. כן, גם צוואר.'],['SPF 50+ Anthelios UVMune 400','פנים + צוואר + מחשוף','חובה גם ביום פינוק.']]
-};
-const cleanse=[['The Inkey List Oat Balm Cleanser','ניקוי ראשון','על עור יבש. ממיס SPF ואיפור.'],['ניקוי עדין עם מים','ניקוי שני','לשטוף טוב, בלי מיסלריים אחרי.']];
-const evenings={
-0:{type:'רטאויט + צוואר',steps:[...cleanse,['Ret-A 0.025%','פנים','על עור יבש. כמות אפונה.'],['Ret-A 0.025%','צוואר','פעמיים בשבוע בלבד: ראשון וחמישי. כמות מיקרוסקופית, מעל עצמות הבריח לא להשתולל.'],['CeraVe PM Facial Lotion','פנים','סגירה ולחות.'],['Lierac Lift Integral Neck & Décolleté','צוואר ומחשוף','מעל הרטאויט אחרי כמה דקות.']]},
-1:{type:'LED + Numbuzin',steps:[...cleanse,['Nanoleaf LED Light Therapy Face Mask','פנים','מצב אדום. 10 דקות על עור נקי ויבש.'],['Crystal Retinal Eye 3','עיניים','גרגר אורז לכל עין. פעם בשבוע בלבד כרגע.'],['numbuzin No.9+ NAD+ BIO Lifting-sil Essence','פנים + צוואר אם עבר טסט','אסנס פפטידים במקום Matrixyl/Copper. שכבה דקה, לא בופה.'],['CeraVe PM Facial Lotion','פנים','סגירה ולחות.'],['Lierac Lift Integral Neck & Décolleté','צוואר ומחשוף','קרם צוואר מעל, אם הצוואר רגוע.']]},
-2:{type:'LED + רטאויט פנים',steps:[...cleanse,['Nanoleaf LED Light Therapy Face Mask','פנים','מצב אדום. 10 דקות על עור נקי ויבש, לפני Ret-A.'],['Ret-A 0.025%','פנים בלבד','בלי צוואר היום. על עור יבש.'],['CeraVe PM Facial Lotion','פנים','אפשר שכבה נדיבה.'],['Lierac Lift Integral Neck & Décolleté','צוואר ומחשוף','רך ועדין.']]},
-3:{type:'פילינג עדין',steps:[...cleanse,['The Ordinary Mandelic Acid 10% + HA','פנים בלבד','פילינג עדין פעם בשבוע. לא צוואר, לא עיניים.'],['CeraVe PM Facial Lotion','פנים','סגירה רגועה אחרי החומצה.'],['Lierac Lift Integral Neck & Décolleté','צוואר ומחשוף','צוואר רגוע — בלי חומצות היום.']]},
-4:{type:'LED + רטאויט + צוואר',steps:[...cleanse,['Nanoleaf LED Light Therapy Face Mask','פנים','מצב אדום. 10 דקות על עור נקי ויבש, לפני Ret-A.'],['Ret-A 0.025%','פנים','הפעיל המרכזי של השבוע.'],['Ret-A 0.025%','צוואר','הפעם השנייה השבוע. מעט ממש.'],['CeraVe PM Facial Lotion','פנים','לחות ושיקום.'],['Lierac Lift Integral Neck & Décolleté','צוואר ומחשוף','מעל הרטאויט אחרי כמה דקות.']]},
-5:{type:'גלואו לילה',steps:[...cleanse,['Medicube Night Wrapping Mask','פנים','מסכת לילה. בלי Ret-A ובלי בופה סרומים.'],['Lierac Lift Integral Neck & Décolleté','צוואר ומחשוף','קרם צוואר.']]},
-6:{type:'Numbuzin + שיקום נקי',steps:[...cleanse,['Anua 7 Rice Ceramide Barrier Serum','פנים + צוואר','מחסום ולחות. אפשר לדלג אם העור מרגיש עמוס.'],['numbuzin No.9+ NAD+ BIO Lifting-sil Essence','פנים + צוואר אם עבר טסט','במקום Copper. שכבה דקה, שיקום ופלמפ בלי רטינואידים.'],['CeraVe PM Facial Lotion','פנים','סגירה רגועה.'],['Lierac Lift Integral Neck & Décolleté','צוואר ומחשוף','סיום רגוע.']]}
-};
 let currentCat='הכל';
 function $(id){return document.getElementById(id)}
-function dateKey(){return new Date().toDateString()}
-function keyFor(period){return dateKey()+'-'+period}
-function stepsFor(period,day=new Date().getDay()){return period==='am'?mornings[day]:evenings[day].steps}
-function isMorningComplete(){let s=stepsFor('am'),c=checkedFor('am');return s.length>0 && s.every((_,i)=>c[i])}
-function currentPeriod(){let n=new Date();if(n.getHours()>=18)return 'pm';return isMorningComplete()?'pm':'am'}
-function todayKey(){return keyFor(currentPeriod())}
-function checkedFor(period){try{return JSON.parse(localStorage.getItem('checks-'+keyFor(period))||'{}')}catch(e){return {}}}
-function checked(){return checkedFor(currentPeriod())}
-function getSteps(){return stepsFor(currentPeriod())}
-function setChecked(i){let period=currentPeriod();let c=checkedFor(period);c[i]=!c[i];localStorage.setItem('checks-'+keyFor(period),JSON.stringify(c));let s=stepsFor(period),done=s.every((_,idx)=>c[idx]);renderHome();if(c[i]&&done){if(period==='am')toast('בוקר סומן ✓ הערב כבר מחכה לך');else maybeFridayPopup();}else{toast(c[i]?'סומן ✓':'הוחזר')}}
-function maybeFridayPopup(){let n=new Date();let key='friday-mask-popup-'+n.toDateString();if(n.getDay()===5&&localStorage.getItem(key)!=='shown'){localStorage.setItem(key,'shown');setTimeout(()=>$('fridayPopup').classList.add('show'),350)}}
-function closeFridayPopup(){$('fridayPopup').classList.remove('show')}
-function allComplete(period){let s=stepsFor(period),c=checkedFor(period);return s.length>0 && s.every((_,i)=>c[i])}
-function countDone(period){let s=stepsFor(period),c=checkedFor(period);return s.filter((_,i)=>c[i]).length}
-
-function routineCard(period,title,subtitle,emoji,locked=false){let s=stepsFor(period),done=countDone(period),p=Math.round(done/s.length*100);return `<div class="step routineCard ${locked?'locked':''}" onclick="${locked?'toast(\'קודם מסיימים בוקר ואז הערב נפתח\')':`openRoutine('${period}')`}"><div class="emoji" style="font-size:29px;margin:0">${emoji}</div><div style="width:100%"><h4>${title}</h4><p>${subtitle}</p><div class="cardTop"><span class="badge">${done}/${s.length} שלבים</span></div><div class="miniProgress" style="--w:${p}%"><i></i></div></div></div>`}
-
-
-const NO_CHANGE_DAYS=56;
-const noChangeKey='shimi-no-change-start-v26';
-const oldNoChangeKey='shimi-no-change-start-v25';
-function localISODate(d=new Date()){let z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)}
-function parseLocalDate(str){if(!/^\d{4}-\d{2}-\d{2}$/.test(str||''))return null;let [y,m,d]=str.split('-').map(Number);let out=new Date(y,m-1,d);return isNaN(out.getTime())?null:out}
-function fmtDate(d){return localISODate(d)}
-function ensureNoChangeStart(){let v=localStorage.getItem(noChangeKey);let parsed=parseLocalDate(v);if(!parsed){let old=localStorage.getItem(oldNoChangeKey);parsed=parseLocalDate(old);v=parsed?old:localISODate();localStorage.setItem(noChangeKey,v)}return v}
-function noChangeState(){let start=parseLocalDate(ensureNoChangeStart())||parseLocalDate(localISODate()),today=parseLocalDate(localISODate());let passed=Math.max(0,Math.floor((today-start)/86400000));let left=Math.max(0,NO_CHANGE_DAYS-passed);let end=new Date(start);end.setDate(end.getDate()+NO_CHANGE_DAYS);let pct=Math.min(100,Math.max(0,Math.round(passed/NO_CHANGE_DAYS*100)));return {passed,left,end,pct,done:left===0}}
-function resetNoChange(){localStorage.setItem(noChangeKey,localISODate());renderNoChangeLock();toast('הספירה התחילה מהיום · 8 שבועות שקט')}
-function noChangeCard(compact=false){let s=noChangeState();let endTxt=s.end.toLocaleDateString('he-IL',{day:'numeric',month:'long'});if(s.done){return `<div class="lockCard done"><div class="lockTop"><div class="lockIcon">📸</div><div><div class="lockTitle">ניסוי 8 השבועות הסתיים</div><div class="lockSub">הגיע זמן צילום חדש באותה תאורה וזווית, ואז משווים בלי דרמות.</div></div></div><div class="lockDays"><strong>היום</strong><span>ביקורת עור<br>וצילום השוואה</span></div><div class="lockProgress" style="--w:100%"><i></i></div><div class="lockRules"><span>לצלם</span><span>להשוות</span><span>ורק אז להחליט</span></div></div>`}
- return `<div class="lockCard"><div class="lockTop"><div class="lockIcon">🔒</div><div><div class="lockTitle">מצב 8 שבועות בלי שינויים</div><div class="lockSub">אחרי עדכון Numbuzin + אזלאית אנחנו שוב נועלות שגרה: לא מוסיפים עוד מוצרים, לא מחליפים חוקים, לא נכנעים לאלגוריתם.</div></div></div><div class="lockDays"><strong>${s.left}</strong><span>ימים נשארו<br>עד ${endTxt}</span></div><div class="lockProgress" style="--w:${s.pct}%"><i></i></div><div class="lockRules"><span>בלי עוד קניות</span><span>בלי עוד אקטיבים</span><span>ערב הצלה מותר</span>${compact?'':`<span onclick="resetNoChange()">איפוס ספירה</span>`}</div></div>`}
-function renderNoChangeLock(){let h=$('noChangeLock'),p=$('noChangeProfile');if(h)h.innerHTML=noChangeCard(true);if(p)p.innerHTML=noChangeCard(false)}
-
-const skinOptions=['רגוע','יבש','רגיש','פצעון','זוהר'];
-function skinKey(){return 'skin-'+dateKey()}
-function setSkinState(v){localStorage.setItem(skinKey(),v);renderSkinState();toast('מצב עור: '+v)}
-function renderSkinState(){let el=$('skinState');if(!el)return;let cur=localStorage.getItem(skinKey())||'';el.innerHTML=skinOptions.map(x=>`<button class="skinChip ${cur===x?'active':''}" onclick="setSkinState('${x}')">${x}</button>`).join('')}
-function noMixFor(day,period){
- if(period==='am') return {t:'בוקר נקי',x:'בוקר רגיל: Vitamin C או Azelaic לפי היום — לא מערבבים ביניהם בהתחלה. Anua כן גם לצוואר. SPF חובה על פנים, צוואר ומחשוף.'};
- if(day===0) return {t:'היום רטאויט + צוואר',x:'בלי פילינג, בלי Numbuzin, בלי אזלאית בערב, בלי רטינל עיניים ובלי מסכות פעילות. Ret-A בצוואר רק מעט ממש, ואז Lierac.'};
- if(day===1) return {t:'היום LED + Numbuzin',x:'LED אדום 10 דקות על עור נקי ויבש. Numbuzin מחליף את Matrixyl/Copper. בלי Ret-A, בלי פילינג ובלי בופה סרומים.'};
- if(day===2) return {t:'היום LED + רטאויט פנים',x:'LED אדום 10 דקות לפני Ret-A. רטאויט פנים בלבד — לא צוואר היום. בלי פילינג/Numbuzin/מסכות פעילות.'};
- if(day===3) return {t:'היום פילינג מנדלי',x:'Mandelic על פנים בלבד. בלי Ret-A, בלי Numbuzin, בלי אזלאית בערב, בלי רטינל עיניים, בלי LED ובלי מסכות פעילות. צוואר: Lierac בלבד.'};
- if(day===4) return {t:'היום LED + רטאויט + צוואר',x:'LED אדום 10 דקות ואז Ret-A. צוואר מקבל Ret-A מעט ממש. בלי פילינג, בלי Numbuzin ובלי מסכות פעילות.'};
- if(day===5) return {t:'היום גלואו לילה',x:'בוקר אזלאית, ערב Medicube בלבד כמסכת לילה. בלי Ret-A, בלי פילינג, בלי Numbuzin ובלי בופה סרומים.'};
- return {t:'היום Numbuzin + שיקום נקי',x:'Numbuzin במקום Copper: בלי Ret-A, בלי פילינג, בלי רטינל עיניים. אם העור רגיש — ערב הצלה במקום.'};
-}
-function renderNoMix(period){let n=new Date(),m=noMixFor(n.getDay(),period);$('mixTitle').textContent=m.t;$('mixText').textContent=m.x}
-function maskNoteKey(){return 'saturday-mask-'+dateKey()}
-function saveMaskNote(){let el=$('maskNoteInput');if(!el)return;localStorage.setItem(maskNoteKey(),el.value);toast('מסיכת שבת נשמרה 🛁')}
-function maskNoteBox(){let v=localStorage.getItem(maskNoteKey())||'';return `<div class="info"><h4>מסיכת שבת פינוק</h4><p>איזו מסכה עשית היום?</p><input class="search" id="maskNoteInput" value="${v.replace(/"/g,'&quot;')}" placeholder="שם המסכה / טרנד / ספא קטן"><button class="cta small" onclick="saveMaskNote()">לשמור</button></div>`}
-function weekBadges(i){let b=[]; if(i===0)b=['Ret-A','צוואר']; if(i===1)b=['LED','Numbuzin']; if(i===2)b=['LED','Ret-A']; if(i===3)b=['פילינג','בלי צוואר']; if(i===4)b=['LED','Ret-A','צוואר']; if(i===5)b=['גלואו','פופאפ שבת']; if(i===6)b=['מסיכת פינוק','Numbuzin','שיקום']; return b.map(x=>`<span class="weekBadge">${x}</span>`).join('')}
-
-function renderHome(){let now=new Date(),day=now.getDay(),period=currentPeriod(),isM=period==='am',amDone=allComplete('am'),pmDone=allComplete('pm');$('todayDate').textContent=now.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});$('greeting').textContent=isM?'בוקר טוב, שימי':(now.getHours()<18?'הבוקר הושלם · הערב מחכה':'ערב טוב, שימי');$('modePill').textContent=isM?'☀️ בוקר':'🌙 ערב '+evenings[day].type;$('heroTitle').textContent=isM?(day===6?'שבת בבוקר: מסיכת פינוק':'שגרת הבוקר שלך'):'שגרת הערב שלך';$('heroText').textContent=isM?(day===6?'נכנסים לשבת פינוק: מסכה מתחלפת ואז השגרה המדויקת.':'מסך הבית נקי: נכנסים לבוקר, מסמנים שלבים או לוחצים סיימתי בסוף.'):'אחרי שהבוקר סומן, הערב כבר מוצג ומוכן. בימים שני/שלישי/חמישי נכנסת גם מסכת LED אדום 10 דקות. שני ושבת הם ערבי Numbuzin.';let s=getSteps(),done=countDone(period),p=Math.round(done/s.length*100);$('ring').style.setProperty('--pct',p+'%');$('ring').classList.toggle('is-empty',p===0);$('ringNum').textContent=p+'%';$('scoreTxt').textContent=done+' מתוך '+s.length+' שלבים · '+(p===100?'סיימת מהממת':(p===0?'הכול עוד פתוח להיום':'אפשר לסמן אחד אחד או ללחוץ סיימתי'));$('startBtn').textContent=isM?'כניסה לשגרת בוקר':'כניסה לשגרת ערב';let html='';if(amDone){html+='<div class="doneBanner">בוקר הושלם ✓ עכשיו מוצגת לך שגרת הערב של היום.</div>';html+=routineCard('pm','שגרת ערב · '+evenings[day].type,'לחצי כדי להיכנס, לסמן שלבים או לסיים הכול.','🌙');}else{html+=routineCard('am',day===6?'שבת בבוקר · מסיכת פינוק':'שגרת בוקר','לחצי כדי להיכנס, לסמן שלבים או ללחוץ סיימתי.','☀️');html+=routineCard('pm','שגרת ערב · '+evenings[day].type,'תיפתח אוטומטית אחרי שסיימת את הבוקר.','🌙',true)}$('routineCards').innerHTML=html;renderNoMix(period);renderSkinState();renderNoChangeLock()}
-function startRoutine(){openRoutine(currentPeriod())}
-function openRoutine(period){let now=new Date(),day=now.getDay(),isM=period==='am',s=stepsFor(period),c=checkedFor(period),title=isM?(day===6?'שבת בבוקר · מסיכת פינוק':'שגרת בוקר'):'שגרת ערב · '+evenings[day].type;$('detail').innerHTML=`<button class="x" onclick="closeDetail()">חזרה</button><div class="detail-emoji">${isM?'☀️':'🌙'}</div><h2>${title}</h2><div class="meta">אפשר לסמן כל שלב בנפרד, או ללחוץ סיימתי בסוף</div><div class="neckNote">הערת צוואר: בכל שלב כתוב בפירוש אם הוא לפנים בלבד, לצוואר, או רק שאריות. לא מאלתרים.</div>${isM&&day===6?maskNoteBox():''}<div class="steps">${s.map((x,i)=>`<div class="step ${c[i]?'done':''}" onclick="toggleRoutineStep('${period}',${i})"><div class="check">${c[i]?'✓':i+1}</div><div><h4>${x[0]}</h4><p>${x[1]} · ${x[2]}</p></div></div>`).join('')}</div><div class="routineActions"><button class="cta secondary" onclick="closeDetail()">חזרה לבית</button><button class="cta" onclick="finishRoutine('${period}')">סיימתי</button></div>`;$('detail').classList.add('active')}
-function toggleRoutineStep(period,i){let c=checkedFor(period);c[i]=!c[i];localStorage.setItem('checks-'+keyFor(period),JSON.stringify(c));openRoutine(period);toast(c[i]?'סומן ✓':'הוחזר')}
-function finishRoutine(period){let s=stepsFor(period),c={};s.forEach((_,i)=>c[i]=true);localStorage.setItem('checks-'+keyFor(period),JSON.stringify(c));closeDetail();renderHome();if(period==='am'){toast('בוקר סומן ✓ הערב כבר מוצג לך')}else{toast('ערב הושלם ✓');maybeFridayPopup()}}
-function renderWeek(){let html='';for(let i=0;i<7;i++){let am=mornings[i].map(x=>x[0]).join(' · ');let pm=evenings[i].type;html+=`<div class="day-row" onclick="showDay(${i})"><div><b>${dayNames[i]}</b><br><span>בוקר: ${am}</span><br><span>ערב: ${pm}</span><div class="weekBadges">${weekBadges(i)}</div></div><div class="dayArrow">‹</div></div>`}$('weekPlan').innerHTML=html}
-function block(title,arr,start=1){return `<div class="section-title">${title}</div><div class="steps">${arr.map((x,k)=>`<div class="step"><div class="check">${start+k}</div><div><h4>${x[0]}</h4><p>${x[1]} · ${x[2]}</p></div></div>`).join('')}</div>`}
-function showDay(i){let am=mornings[i],pm=evenings[i].steps;$('detail').innerHTML=`<button class="x" onclick="closeDetail()">חזרה</button><div class="detail-emoji">${i===6?'🛁':'🧴'}</div><h2>${dayNames[i]} · כל היום</h2><div class="meta">בוקר ${am.length} שלבים · ערב ${pm.length} שלבים</div><div class="neckNote">צוואר: Vitamin C רק שאריות בבוקר אם רגוע; Anua ו-SPF כן לצוואר; Ret-A לצוואר רק ראשון וחמישי; פילינג לא לצוואר.</div>${i===6&&localStorage.getItem(maskNoteKey())?`<div class="info"><h4>מסיכת שבת שנשמרה</h4><p>${localStorage.getItem(maskNoteKey())}</p></div>`:''}${block('בוקר',am,1)}${block('ערב · '+evenings[i].type,pm,1)}`;$('detail').classList.add('active')}
-function cats(){return ['הכל','ניקוי','בוקר','הגנה','LED','רטינואידים','פילינג','עיניים','פפטידים','מחסום','לחות','מסכות','קרמים']}
-function renderProducts(){let q=$('search')?$('search').value.trim().toLowerCase():'';$('productCount').textContent=products.length+' מוצרים';$('tabs').innerHTML=cats().map(c=>`<button class="tab ${c===currentCat?'active':''}" onclick="currentCat='${c}';renderProducts()">${c}</button>`).join('');let arr=products.filter(p=>(currentCat==='הכל'||p.cat===currentCat)&&(!q||p.name.toLowerCase().includes(q)||p.cat.includes(q)||p.tags.join(' ').toLowerCase().includes(q)));$('productGrid').innerHTML=arr.length?arr.map((p,i)=>`<div class="card" onclick="showProduct('${p.name.replace(/'/g,"\'")}')"><div class="heart">♡</div><div class="emoji">${p.emoji}</div><div class="cardTop"><span class="prodPill cat">${p.cat}</span><span class="prodPill status">${p.status}</span></div><h3>${p.name}</h3><div class="meta">${p.when} · ${p.tags.slice(0,2).map(t=>'#'+t).join(' · ')}</div><div class="cardArrow">‹</div></div>`).join(''):'<div class="empty">לא מצאתי מוצר כזה</div>'}
-function showProduct(name){let p=products.find(x=>x.name===name);$('detail').innerHTML=`<button class="x" onclick="closeDetail()">חזרה</button><div class="detail-emoji">${p.emoji}</div><h2>${p.name}</h2><div class="meta">${p.cat} · ${p.when} · ${p.status}</div><div class="info"><h4>למה הוא כאן</h4><p>${p.desc}</p></div><div class="info"><h4>איך להשתמש</h4><p>${p.how}</p></div><div class="info"><h4>תגיות</h4><p>${p.tags.map(t=>'#'+t).join(' · ')}</p></div>`;$('detail').classList.add('active')}
+function localDate(d=new Date()){let z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)}
+function dateKey(){return localDate()}
+function currentPeriod(){return new Date().getHours()<14?'am':'pm'}
+function azStart(){let k='shimi-azelaic-start-v29',v=localStorage.getItem(k);if(!v){v=localDate();localStorage.setItem(k,v)}return new Date(v+'T00:00:00')}
+function azReady(){return (new Date(new Date().setHours(0,0,0,0))-azStart())/86400000>=14}
+function morning(day){if(day===1&&azReady())return [['Anua Azelaic Acid 10+ Hyaluron Redness Soothing Serum','🌿','פנים בלבד','אזלאית. בלי Vitamin C וניאצינמיד בבוקר הזה.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']];return baseMorning[day]}
+function steps(period,day=new Date().getDay()){return period==='am'?morning(day):evening[day].steps}
+function checkKey(period){return 'shimi-v29-check-'+dateKey()+'-'+period}
+function checks(period){try{return JSON.parse(localStorage.getItem(checkKey(period))||'{}')}catch{return {}}}
+function toggleStep(i){let p=currentPeriod(),c=checks(p);c[i]=!c[i];localStorage.setItem(checkKey(p),JSON.stringify(c));renderHome();toast(c[i]?'סומן ✓':'הוחזר')}
+function finishCurrent(){let p=currentPeriod(),s=steps(p),c={};s.forEach((_,i)=>c[i]=true);localStorage.setItem(checkKey(p),JSON.stringify(c));renderHome();toast(p==='am'?'בוקר הושלם ✓':'ערב הושלם ✓');if(p==='pm')maybeFridayPopup()}
+function resetEight(){localStorage.setItem('shimi-eight-v29',localDate())}
+function eightState(){let k='shimi-eight-v29',v=localStorage.getItem(k);if(!v){resetEight();v=localStorage.getItem(k)}let start=new Date(v+'T00:00:00'),today=new Date();today.setHours(0,0,0,0);let passed=Math.max(0,Math.floor((today-start)/86400000)),left=Math.max(0,56-passed),pct=Math.min(100,Math.round(passed/56*100));return{left,pct,start}}
+function renderHome(){let n=new Date(),day=n.getDay(),p=currentPeriod(),s=steps(p,day),c=checks(p),done=s.filter((_,i)=>c[i]).length,pct=s.length?Math.round(done/s.length*100):0;$('helloText').textContent=p==='am'?'בוקר טוב':'ערב טוב';$('dateText').textContent=n.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});$('segAm').classList.toggle('active',p==='am');$('segPm').classList.toggle('active',p==='pm');$('eyebrow').textContent=p==='am'?'MORNING · עד 14:00':'EVENING · מ־14:00';$('routineSub').textContent=p==='am'?(day===6?'שבת פינוק · '+s.length+' צעדים':'שגרת הבוקר שלך · '+s.length+' צעדים'):'שגרת ערב · '+evening[day].type+' · '+s.length+' צעדים';$('todaySteps').innerHTML=s.map((x,i)=>`<div class="step ${c[i]?'done':''}"><button class="check" onclick="toggleStep(${i})">${c[i]?'✓':i+1}</button><div class="prodMark">${x[1]}</div><div class="stepBody"><div class="stepName">${x[0]}</div><div class="stepMeta"><span class="pill">${x[2]}</span></div><div class="stepTip">${x[3]}</div></div></div>`).join('');$('todayProgress').style.setProperty('--w',pct+'%');$('progressText').textContent=done+'/'+s.length+' הושלם';let es=eightState();$('lockMini').innerHTML=`<div class="miniIcon">🔒</div><strong>${es.left}</strong><h3>ימים לביקורת</h3><p>מצב 8 שבועות בלי עוד שינויים.</p><div class="bar" style="--w:${es.pct}%"><i></i></div>`;if(p==='am'){$('nextMini').innerHTML=`<div class="miniIcon">🌙</div><h3>הערב שמחכה לך</h3><p>${evening[day].type}. ב־14:00 הבית יתחלף אוטומטית.</p>`}else{let nd=(day+1)%7;$('nextMini').innerHTML=`<div class="miniIcon">☀️</div><h3>מחר בבוקר</h3><p>${morning(nd).map(x=>x[0]).join(' · ')}</p>`}}
+function dayBadges(i){let m={0:['Ret-A','צוואר'],1:['LED','Numbuzin'],2:['LED','Ret-A'],3:['Mandelic'],4:['LED','Ret-A','צוואר'],5:['Azelaic','Medicube'],6:['מסכה','Numbuzin']};return m[i].map(x=>`<span class="badge">${x}</span>`).join('')}
+function renderWeek(){$('weekList').innerHTML=dayNames.map((d,i)=>`<div class="dayCard" onclick="showDay(${i})"><div class="dayTop"><b>${d}</b><div class="dayArrow">‹</div></div><div class="summary"><b>בוקר:</b> ${morning(i).map(x=>x[0]).join(' · ')}<br><b>ערב:</b> ${evening[i].type}</div><div class="badges">${dayBadges(i)}</div></div>`).join('')}
+function cats(){return ['הכל',...new Set(products.map(x=>x[2]))]}
+function renderProducts(){let q=($('search').value||'').toLowerCase();$('tabs').innerHTML=cats().map(c=>`<button class="tab ${c===currentCat?'active':''}" onclick="currentCat='${c}';renderProducts()">${c}</button>`).join('');let arr=products.filter(x=>(currentCat==='הכל'||x[2]===currentCat)&&(!q||x[0].toLowerCase().includes(q)||x[2].includes(q)||x[3].includes(q)));$('productList').innerHTML=arr.map(x=>`<div class="productCard" onclick="showProduct('${esc(x[0])}')"><div class="pIcon">${x[1]}</div><div class="pBody"><b>${x[0]}</b><span>${x[2]} · ${x[4]}</span></div><div class="status">${x[3]}</div></div>`).join('')||'<div class="infoCard">לא מצאתי מוצר כזה.</div>'}
+function esc(s){return s.replace(/'/g,"\\'")}
+function showDay(i){let am=morning(i),pm=evening[i].steps;$('detail').innerHTML=`<button class="close" onclick="closeDetail()">חזרה</button><div class="detailHero"><div class="big">${i===6?'🛁':'✨'}</div><h2>${dayNames[i]}</h2><p>כל היום במקום אחד</p></div><div class="infoCard"><h3>בוקר</h3><div class="steps">${renderStatic(am)}</div></div><div class="infoCard"><h3>ערב · ${evening[i].type}</h3><div class="steps">${renderStatic(pm)}</div></div>`;$('detail').classList.add('active')}
+function renderStatic(a){return a.map((x,i)=>`<div class="step"><div class="check">${i+1}</div><div class="prodMark">${x[1]}</div><div class="stepBody"><div class="stepName">${x[0]}</div><div class="stepMeta"><span class="pill">${x[2]}</span></div><div class="stepTip">${x[3]}</div></div></div>`).join('')}
+function showProduct(name){let x=products.find(p=>p[0]===name);$('detail').innerHTML=`<button class="close" onclick="closeDetail()">חזרה</button><div class="detailHero"><div class="big">${x[1]}</div><h2>${x[0]}</h2><p>${x[2]} · ${x[3]}</p></div><div class="infoCard"><h3>למה הוא כאן</h3><p>${x[4]}</p></div>`;$('detail').classList.add('active')}
 function closeDetail(){$('detail').classList.remove('active')}
-function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));[...document.querySelectorAll('.nav button')][['home','calendar','products','profile'].indexOf(id)].classList.add('active');if(id==='calendar')renderWeek();if(id==='products')renderProducts();if(id==='profile')renderNoChangeLock();window.scrollTo(0,0)}
-function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1600)}
-renderHome();renderWeek();renderProducts();renderNoChangeLock();
+function renderProfile(){let e=eightState(),el=$('profileLock');el.innerHTML=`<div class="lockCard"><div class="lockTop"><div><b>מצב 8 שבועות</b><span>הספירה מתחילה מהגרסה החדשה הזאת.</span></div><strong>${e.left}</strong></div><div class="lockBar" style="--w:${e.pct}%"><i></i></div></div>`}
+function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));let ids=['home','calendar','products','profile'];document.querySelectorAll('.nav button')[ids.indexOf(id)].classList.add('active');if(id==='home')renderHome();if(id==='calendar')renderWeek();if(id==='products')renderProducts();if(id==='profile')renderProfile();window.scrollTo(0,0)}
+function toast(t){let el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1400)}
+function maybeFridayPopup(){if(new Date().getDay()===5)$('fridayPopup').classList.add('show')}
+function closeFridayPopup(){$('fridayPopup').classList.remove('show')}
+let lastPhase=currentPeriod();setInterval(()=>{let p=currentPeriod();if(p!==lastPhase){lastPhase=p;renderHome()}},30000);
+renderHome();renderWeek();renderProducts();renderProfile();
 </script>
-</body>
-</html>
+</body></html>

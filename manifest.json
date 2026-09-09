@@ -3,8 +3,9 @@
   "short_name": "Ritual",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f8eee9",
-  "theme_color": "#bd6f83",
+  "background_color": "#fbf5ef",
+  "theme_color": "#a95f70",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "app-icon-192.png",
@@ -14,11 +15,6 @@
     {
       "src": "app-icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "app-icon-1024.png",
-      "sizes": "1024x1024",
       "type": "image/png"
     }
   ]
