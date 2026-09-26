@@ -1,155 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Shimi Ritual">
-<meta name="theme-color" content="#fbf5ef">
-<title>Shimi Ritual · v30</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="favicon-32.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<style>
-:root{
- --bg:#f8f0ea;--paper:#fffdf9;--paper2:#fff8f3;--ink:#4b211e;--text:#322523;--muted:#947871;
- --rose:#b66476;--rose2:#985467;--rose3:#dba6a5;--peach:#ead1c1;--line:#ead8cf;
- --green:#758d72;--shadow:0 18px 45px rgba(82,50,42,.10);--shadow2:0 8px 24px rgba(82,50,42,.07);
- --safe:env(safe-area-inset-bottom,0px)
-}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);background:var(--bg);-webkit-tap-highlight-color:transparent}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:
- radial-gradient(circle at 10% 2%,rgba(255,255,255,.92),transparent 260px),
- radial-gradient(circle at 100% 18%,rgba(221,174,169,.20),transparent 320px),
- radial-gradient(circle at 0% 88%,rgba(219,195,172,.18),transparent 320px),
- linear-gradient(180deg,#fffaf6 0%,#f8efe9 58%,#f4e9e2 100%);z-index:-2}
-body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:radial-gradient(#9c6e65 .45px,transparent .45px);background-size:7px 7px;z-index:-1}
-button,input{font:inherit}.app{max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:calc(96px + var(--safe));position:relative}.screen{display:none;padding:calc(18px + env(safe-area-inset-top,0px)) 17px 26px}.screen.active{display:block;animation:fade .2s ease}@keyframes fade{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}
-.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.brandWrap{display:flex;align-items:center;gap:12px}.brandIcon{width:64px;height:64px;border-radius:20px;box-shadow:0 12px 26px rgba(126,73,64,.14);object-fit:cover}.brandName{font-family:Georgia,"Times New Roman",serif;font-size:29px;line-height:1;color:var(--ink);letter-spacing:-.4px}.brandTag{margin-top:5px;font-size:11px;color:var(--rose2);letter-spacing:1.7px;font-weight:700}.hello{text-align:left}.hello b{display:block;color:var(--ink);font-size:14px}.hello span{display:block;margin-top:4px;color:var(--muted);font-size:11px;font-weight:700}
-.segment{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:5px;box-shadow:var(--shadow2);margin-bottom:18px}.seg{padding:11px 10px;border-radius:999px;text-align:center;color:var(--muted);font-weight:800;cursor:pointer;user-select:none;transition:.18s ease}.seg:active{transform:scale(.985)}.seg small{display:block;font-size:10px;margin-top:2px}.seg.active{background:linear-gradient(135deg,var(--rose),var(--rose2));color:white;box-shadow:0 9px 24px rgba(152,84,103,.22)}
-.mainCard{background:rgba(255,253,249,.90);border:1px solid rgba(255,255,255,.98);border-radius:34px;padding:22px 17px 19px;box-shadow:var(--shadow);overflow:hidden;position:relative}.mainCard:before{content:"";position:absolute;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(222,174,173,.18),transparent 70%);left:-70px;top:-60px}.eyebrow{position:relative;z-index:1;font-size:11px;letter-spacing:2px;color:var(--rose2);font-weight:800;text-align:center}.mainTitle{position:relative;z-index:1;text-align:center;font-family:Georgia,"Times New Roman",serif;color:var(--ink);font-size:34px;line-height:1.05;margin:8px 0 4px}.mainSub{text-align:center;color:var(--muted);font-size:13px;font-weight:700;margin-bottom:17px}.steps{display:flex;flex-direction:column;gap:11px;position:relative;z-index:1}.step{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.88);border:1px solid #f0e2db;border-radius:23px;padding:12px 12px;box-shadow:0 7px 18px rgba(78,48,40,.045)}.step.done{background:linear-gradient(180deg,#fbfffb,#f1f8f2);border-color:#d6e4d5}.check{width:37px;height:37px;border-radius:50%;border:1.5px solid #dfc3ba;background:#fff;color:var(--rose2);font-weight:900;flex:0 0 37px;display:grid;place-items:center}.step.done .check{background:var(--green);border-color:var(--green);color:#fff}.prodMark{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;flex:0 0 48px;font-size:25px;background:linear-gradient(145deg,#fff9f5,#f8e8e2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.85)}.stepBody{flex:1;min-width:0}.stepName{font-size:17px;font-weight:850;color:#171210;line-height:1.15}.stepMeta{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 3px}.pill{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:10.5px;font-weight:800;border:1px solid var(--line);background:#fff;color:var(--rose2)}.stepTip{font-size:12px;line-height:1.35;color:var(--muted);font-weight:650}.progressRow{display:flex;align-items:center;gap:10px;margin-top:15px}.progress{height:9px;background:#eadbd4;border-radius:999px;overflow:hidden;flex:1}.progress i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--rose),#d6ab9f)}.progressTxt{font-size:12px;font-weight:850;color:var(--rose2);white-space:nowrap}.doneAll{width:100%;border:0;border-radius:22px;padding:15px 18px;margin-top:14px;background:linear-gradient(135deg,var(--rose),var(--rose2));color:#fff;font-size:16px;font-weight:850;box-shadow:0 13px 26px rgba(152,84,103,.22)}.doneAll:active{transform:translateY(1px)}
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.mini{background:rgba(255,253,249,.88);border:1px solid rgba(255,255,255,.95);border-radius:25px;padding:15px 14px;box-shadow:var(--shadow2);min-height:128px}.miniIcon{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;background:#fff5f2;font-size:22px;margin-bottom:10px}.mini h3{font-size:15px;line-height:1.2;margin:0 0 5px;color:var(--ink)}.mini p{font-size:11.5px;line-height:1.42;color:var(--muted);font-weight:700;margin:0}.mini strong{display:block;font-size:26px;color:var(--rose2);line-height:1;margin-bottom:5px}.mini .bar{height:7px;background:#eadbd4;border-radius:999px;overflow:hidden;margin-top:10px}.mini .bar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--rose),var(--peach))}
-.pageTitle{font-family:Georgia,"Times New Roman",serif;font-size:34px;line-height:1;color:var(--ink);margin:4px 0 7px}.pageSub{font-size:13px;line-height:1.45;color:var(--muted);font-weight:700;margin-bottom:17px}.dayCard,.productCard,.infoCard{background:rgba(255,253,249,.9);border:1px solid rgba(255,255,255,.98);border-radius:25px;padding:16px;margin-bottom:11px;box-shadow:var(--shadow2)}.dayCard{cursor:pointer}.dayTop{display:flex;justify-content:space-between;align-items:center;gap:10px}.dayTop b{font-size:18px;color:var(--ink)}.dayArrow{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#fff4f1;color:var(--rose2);font-size:20px}.summary{margin-top:8px;font-size:12px;line-height:1.48;color:var(--muted);font-weight:700}.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.badge{font-size:10.5px;font-weight:800;color:var(--rose2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 8px}
-.search{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.9);border-radius:18px;padding:13px 15px;font-size:14px;outline:0;color:var(--text);box-shadow:var(--shadow2);margin-bottom:11px}.tabs{display:flex;gap:7px;overflow:auto;padding:2px 0 10px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;color:var(--muted);font-size:11px;font-weight:800}.tab.active{background:var(--rose2);border-color:var(--rose2);color:#fff}.productCard{display:flex;gap:12px;align-items:center;cursor:pointer}.pIcon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:#fff4f1;font-size:25px;flex:0 0 auto}.pBody{flex:1;min-width:0}.pBody b{display:block;font-size:15.5px;line-height:1.2}.pBody span{display:block;margin-top:5px;color:var(--muted);font-size:11.5px;font-weight:700}.status{font-size:10px;font-weight:850;color:var(--rose2);border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 8px;white-space:nowrap}
-.infoCard h3{margin:0 0 7px;font-size:17px;color:var(--ink)}.infoCard p,.infoCard li{font-size:13px;line-height:1.55;color:var(--muted);font-weight:700}.infoCard ul{margin:0;padding-right:18px}.lockCard{background:linear-gradient(180deg,#fff9f8,#fffdf9);border:1px solid #f0dfda;border-radius:27px;padding:17px;box-shadow:var(--shadow2);margin-bottom:12px}.lockTop{display:flex;align-items:center;justify-content:space-between;gap:12px}.lockTop strong{font-size:34px;color:var(--rose2);line-height:1}.lockTop b{font-size:17px;color:var(--ink)}.lockTop span{display:block;margin-top:4px;font-size:11.5px;color:var(--muted);font-weight:700}.lockBar{height:8px;background:#eadbd4;border-radius:999px;overflow:hidden;margin-top:13px}.lockBar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--rose),var(--peach))}
-.bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(430px,100%);padding:0 14px calc(10px + var(--safe));z-index:80;background:linear-gradient(180deg,transparent,rgba(248,240,234,.94) 26%)}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;background:rgba(255,253,249,.94);border:1px solid rgba(255,255,255,.98);border-radius:28px;padding:7px;box-shadow:0 14px 40px rgba(67,44,38,.14);backdrop-filter:blur(16px)}.nav button{border:0;background:transparent;border-radius:20px;padding:8px 4px;color:#7f6963;font-size:10.5px;font-weight:850}.nav button .ico{display:block;font-size:21px;line-height:1;margin-bottom:4px}.nav button.active{background:#f8e7e8;color:var(--rose2)}
-.detail{position:fixed;inset:0;z-index:120;display:none;overflow:auto;padding:calc(18px + env(safe-area-inset-top,0px)) 17px calc(36px + var(--safe));background:linear-gradient(180deg,#fffaf6,#f6ece6)}.detail.active{display:block}.close{border:1px solid var(--line);background:white;border-radius:16px;padding:10px 14px;color:var(--rose2);font-weight:850;box-shadow:var(--shadow2)}.detailHero{text-align:center;margin:14px 0 16px}.detailHero .big{font-size:40px}.detailHero h2{font-family:Georgia,"Times New Roman",serif;color:var(--ink);font-size:31px;margin:7px 0}.detailHero p{font-size:12px;color:var(--muted);font-weight:700}.detail .steps{margin-top:10px}.toast{position:fixed;left:50%;bottom:105px;transform:translateX(-50%) translateY(12px);opacity:0;pointer-events:none;background:#3e2c29;color:white;padding:10px 14px;border-radius:999px;font-size:12px;font-weight:800;transition:.2s;z-index:200}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.popup{position:fixed;inset:0;background:rgba(65,42,36,.3);display:none;place-items:center;z-index:220;padding:24px}.popup.show{display:grid}.popupBox{max-width:350px;background:#fffaf6;border-radius:30px;padding:24px;text-align:center;box-shadow:0 20px 60px rgba(45,29,24,.2)}.popupBox h2{font-family:Georgia,"Times New Roman",serif;color:var(--ink);font-size:27px;margin:10px 0}.popupBox p{font-size:13px;line-height:1.55;color:var(--muted);font-weight:700}.popupBox button{margin-top:13px}
-@media(max-width:370px){.brandName{font-size:25px}.brandIcon{width:58px;height:58px}.mainTitle{font-size:30px}.duo{grid-template-columns:1fr}.stepName{font-size:16px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f5ef">
+  <meta name="description" content="Shimi Ritual — שגרת הבוקר והערב שלך, בפשטות.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Shimi Ritual">
+  <title>Shimi Ritual — הרגע שלך</title>
+  <link rel="icon" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-<div class="app">
-<section class="screen active" id="home">
- <div class="header">
-  <div class="brandWrap"><img class="brandIcon" src="app-icon-192.png" alt="Shimi Ritual"><div><div class="brandName">Shimi Ritual</div><div class="brandTag">טיפוח שהוא רגע שלך</div></div></div>
-  <div class="hello"><b id="helloText">בוקר טוב</b><span id="dateText"></span></div>
- </div>
- <div class="segment"><div class="seg" id="segAm" role="button" tabindex="0" onclick="selectPeriod('am')">☀️ בוקר<small>עד 14:00</small></div><div class="seg" id="segPm" role="button" tabindex="0" onclick="selectPeriod('pm')">🌙 ערב<small>מ־14:00</small></div></div>
- <div class="mainCard">
-  <div class="eyebrow" id="eyebrow">TODAY</div>
-  <div class="mainTitle">מה לשים עכשיו</div>
-  <div class="mainSub" id="routineSub"></div>
-  <div class="steps" id="todaySteps"></div>
-  <div class="progressRow"><div class="progress" id="todayProgress" style="--w:0%"><i></i></div><div class="progressTxt" id="progressText">0/0 הושלם</div></div>
-  <button class="doneAll" onclick="finishCurrent()">✓ סיימתי את הכל</button>
- </div>
- <div class="duo">
-   <div class="mini" id="nextMini"></div>
-   <div class="mini" id="lockMini"></div>
- </div>
-</section>
+  <a class="skip-link" href="#routine">לשגרת הטיפוח</a>
+  <div class="app">
+    <header class="header">
+      <a class="brand" href="./index.html" aria-label="Shimi Ritual — בית" dir="ltr">shimi<span>ritual</span><i aria-hidden="true">✳</i></a>
+      <span class="header-note">רגע קטן לעצמך</span>
+    </header>
 
-<section class="screen" id="calendar">
- <div class="header"><div class="brandWrap"><img class="brandIcon" src="app-icon-192.png"><div><div class="brandName">השבוע שלך</div><div class="brandTag">בוקר + ערב בלי לנחש</div></div></div></div>
- <div class="pageTitle">7 ימים</div><div class="pageSub">לחצי על יום כדי לראות את כל השלבים המלאים.</div><div id="weekList"></div>
-</section>
+    <main>
+      <section class="intro" aria-labelledby="pageTitle">
+        <div class="intro-copy">
+          <p class="eyebrow" id="dateText"></p>
+          <h1 id="pageTitle">הערב שלך.</h1>
+          <p class="intro-sub" id="introSub">להוריד את היום. לתת לעור לנוח.</p>
+        </div>
+        <div class="cream-art" aria-hidden="true"><img src="app-icon-512.png" alt=""><span>the daily ritual</span></div>
+      </section>
 
-<section class="screen" id="products">
- <div class="header"><div class="brandWrap"><img class="brandIcon" src="app-icon-192.png"><div><div class="brandName">המוצרים</div><div class="brandTag">המדף של שימי</div></div></div></div>
- <div class="pageTitle">מה יש לנו</div><div class="pageSub">פעיל, בהשהיה או בהמתנה — הכול כתוב ברור.</div>
- <input class="search" id="search" placeholder="חפשי מוצר..." oninput="renderProducts()"><div class="tabs" id="tabs"></div><div id="productList"></div>
-</section>
+      <div class="periods" role="group" aria-label="זמן ביום">
+        <button class="period" id="segAm" data-period="am" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>בוקר<span dir="ltr">AM</span></button>
+        <button class="period" id="segPm" data-period="pm" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.4A9 9 0 0 1 9.6 3.5a9 9 0 1 0 10.9 10.9Z"/></svg>ערב<span dir="ltr">PM</span></button>
+      </div>
 
-<section class="screen" id="profile">
- <div class="header"><div class="brandWrap"><img class="brandIcon" src="app-icon-192.png"><div><div class="brandName">האסטרטגיה</div><div class="brandTag">פחות רעש, יותר עקביות</div></div></div></div>
- <div class="pageTitle">השגרה שלנו</div><div class="pageSub">הבסיס החזק נשאר. החדשים נכנסים בתפקיד ברור.</div>
- <div id="profileLock"></div>
- <div class="infoCard"><h3>הבסיס שלא נוגעים בו</h3><ul><li>SPF כל בוקר — פנים, צוואר ומחשוף.</li><li>Ret-A 0.025% שלוש פעמים בשבוע כרגע.</li><li>ניקוי כפול בערב + CeraVe PM לסגירה.</li><li>פילינג מנדלי פעם בשבוע בלבד.</li></ul></div>
- <div class="infoCard"><h3>Numbuzin No.9+</h3><p>מחליף כרגע את Matrixyl ואת Copper. מופיע בשני ושבת בערב. בצוואר רק אחרי טסט קטן.</p></div>
- <div class="infoCard"><h3>Azelaic Acid 10%</h3><p>בשבועיים הראשונים מופיעה בשישי בבוקר בלבד. אחרי 14 ימים רגועים האפליקציה מוסיפה אותה אוטומטית גם לשני בבוקר. בבוקר אזלאית — בלי Vitamin C וניאצינמיד בהתחלה.</p></div>
- <div class="infoCard"><h3>Ret-A 0.05%</h3><p>יש לך בבית אבל הוא בהמתנה. ממשיכים עם 0.025% עד שנגמר; לא מחליפים אוטומטית. כשיגיע הזמן נעשה מעבר מסודר.</p></div>
- <div class="infoCard"><h3>ערב הצלה</h3><p>אם יש צריבה, יובש משמעותי או קילופים: ניקוי עדין → Anua או APIS Hyaluron → CeraVe PM. בלי אקטיבים.</p></div>
-</section>
-</div>
+      <div class="week" role="group" aria-label="ימי השבוע" id="week"></div>
 
-<div class="bottom"><div class="nav">
- <button class="active" onclick="go('home')"><span class="ico">⌂</span>בית</button>
- <button onclick="go('calendar')"><span class="ico">▦</span>יומן</button>
- <button onclick="go('products')"><span class="ico">◫</span>מוצרים</button>
- <button onclick="go('profile')"><span class="ico">♡</span>פרופיל</button>
-</div></div>
-<div class="detail" id="detail"></div><div class="toast" id="toast"></div>
-<div class="popup" id="fridayPopup"><div class="popupBox"><div style="font-size:38px">🛁✨</div><h2>מחר שבת</h2><p>מסיכת פינוק מתחלפת בבוקר. כיפית ונעימה, לא טיפול אגרסיבי.</p><button class="doneAll" onclick="closeFridayPopup()">סגור, זכרתי</button></div></div>
-<script>
-const dayNames=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
-const E={clean1:['The Inkey List Oat Balm Cleanser','🫧','ניקוי ראשון','על עור יבש. ממיס SPF ואיפור.'],clean2:['ניקוי עדין עם מים','💦','ניקוי שני','לשטוף טוב, בלי לקרצף.'],cerave:['CeraVe PM Facial Lotion','🤍','פנים','סגירה ולחות.'],lierac:['Lierac Lift Integral Neck & Décolleté','🪞','צוואר + מחשוף','קרם צוואר בסוף.']};
-const baseMorning={
-0:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','ויטמין C לזוהר והגנה נוגדת חמצון.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום, רכות ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
-1:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','עד שהאזלאית עולה לפעמיים בשבוע.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
-2:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','זוהר והגנה נוגדת חמצון.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
-3:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','זוהר והגנה.'],['Niacinamide Serum','🍚','פנים','יום ניאצינמיד קבוע.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
-4:[['Timeless 20% Vitamin C + E + Ferulic','🟠','פנים + שאריות לצוואר','זוהר והגנה.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']],
-5:[['Anua Azelaic Acid 10+ Hyaluron Redness Soothing Serum','🌿','פנים בלבד','בוקר אזלאית. בלי Vitamin C וניאצינמיד בהתחלה.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','חובה נדיבה.']],
-6:[['מסיכת פינוק מתחלפת','🛁','פנים','מסכת ספא/פינוק אחת, לא אגרסיבית.'],['Niacinamide Serum','🍚','פנים','איזון עדין אחרי המסכה.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','חובה גם ביום פינוק.']]
-};
-const evening={
-0:{type:'רטאויט + צוואר',steps:[[...E.clean1],[...E.clean2],['Ret-A 0.025%','🌙','פנים','כמות אפונה על עור יבש.'],['Ret-A 0.025%','🌙','צוואר','מעט ממש. ראשון וחמישי בלבד.'],[...E.cerave],[...E.lierac]]},
-1:{type:'LED + Numbuzin',steps:[[...E.clean1],[...E.clean2],['Nanoleaf LED Red','🔴','פנים','10 דקות על עור נקי ויבש.'],['Crystal Retinal Eye 3','👁️','עיניים','גרגר אורז לכל עין. פעם בשבוע.'],['numbuzin No.9+ NAD+ BIO Lifting-sil Essence','💜','פנים + צוואר אם עבר טסט','שכבה דקה במקום Matrixyl/Copper.'],[...E.cerave],[...E.lierac]]},
-2:{type:'LED + רטאויט פנים',steps:[[...E.clean1],[...E.clean2],['Nanoleaf LED Red','🔴','פנים','10 דקות לפני Ret-A.'],['Ret-A 0.025%','🌙','פנים בלבד','בלי צוואר היום.'],[...E.cerave],[...E.lierac]]},
-3:{type:'פילינג עדין',steps:[[...E.clean1],[...E.clean2],['The Ordinary Mandelic Acid 10% + HA','🍋','פנים בלבד','פעם בשבוע. לא צוואר ולא עיניים.'],[...E.cerave],[...E.lierac]]},
-4:{type:'LED + רטאויט + צוואר',steps:[[...E.clean1],[...E.clean2],['Nanoleaf LED Red','🔴','פנים','10 דקות על עור נקי ויבש.'],['Ret-A 0.025%','🌙','פנים','כמות אפונה.'],['Ret-A 0.025%','🌙','צוואר','מעט ממש. הפעם השנייה השבוע.'],[...E.cerave],[...E.lierac]]},
-5:{type:'גלואו לילה',steps:[[...E.clean1],[...E.clean2],['Medicube Night Wrapping Mask','✨','פנים','מסכת לילה. בלי בופה סרומים.'],[...E.lierac]]},
-6:{type:'Numbuzin + שיקום',steps:[[...E.clean1],[...E.clean2],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','אפשר לדלג אם מרגיש עמוס.'],['numbuzin No.9+ NAD+ BIO Lifting-sil Essence','💜','פנים + צוואר אם עבר טסט','במקום Copper.'],[...E.cerave],[...E.lierac]]}
-};
-const products=[
-['The Inkey List Oat Balm Cleanser','🫧','ניקוי','פעיל','ניקוי ראשון בכל ערב.'],['ניקוי עדין עם מים','💦','ניקוי','פעיל','ניקוי שני בכל ערב.'],['Timeless 20% Vitamin C + E + Ferulic','🟠','בוקר','פעיל','ויטמין C בבקרים הרגילים.'],['Anua Azelaic Acid 10+ Hyaluron','🌿','בוקר','חדש','שישי בבוקר; אחרי 14 ימים רגועים גם שני.'],['Niacinamide Serum','🍚','בוקר','פעיל','רביעי ושבת בבוקר.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','מחסום','פעיל','לחות ותמיכה במחסום.'],['SPF 50+ Anthelios UVMune 400','🧴','הגנה','חובה','כל בוקר, גם צוואר ומחשוף.'],['Ret-A 0.025%','🌙','רטינואיד','פעיל','ראשון, שלישי וחמישי.'],['Ret-A 0.05%','🌙','רטינואיד','בהמתנה','לא בשגרה עד ש-0.025 נגמר.'],['Nanoleaf LED Light Therapy Face Mask','🔴','LED','פעיל','שני, שלישי וחמישי בערב.'],['Crystal Retinal Eye 3','👁️','עיניים','פעיל','שני בערב בלבד.'],['numbuzin No.9+ NAD+ BIO Lifting-sil Essence','💜','פפטידים','חדש','שני ושבת בערב במקום Matrixyl/Copper.'],['Matrixyl 10% + HA','🧬','פפטידים','בהשהיה','לא בשגרה כרגע.'],['Multi-Peptide + Copper Peptides 1%','🧪','פפטידים','בהשהיה','לא בשגרה כרגע.'],['APIS Hyaluron 4D','💧','לחות','SOS','לערב הצלה לפי צורך.'],['The Ordinary Mandelic Acid 10% + HA','🍋','פילינג','פעיל','רביעי בערב בלבד.'],['CeraVe PM Facial Lotion','🤍','קרם','פעיל','סגירת ערב ולחות.'],['Lierac Lift Integral Neck & Décolleté','🪞','צוואר','פעיל','כל ערב לצוואר ומחשוף.'],['Medicube Night Wrapping Mask','✨','מסכה','פעיל','שישי בערב.'],['VT Cica Collagen Mask','🧖‍♀️','מסכה','מדף','לפי צורך, לא קבוע.'],['Argireline 10%','〰️','פפטידים','מדף','לא ברוטינה.'],['Retinol Boost','⭐','רטינואיד','מדף','לא ברוטינה כי יש Ret-A.']
-];
-let currentCat='הכל';
-function $(id){return document.getElementById(id)}
-function localDate(d=new Date()){let z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)}
-function dateKey(){return localDate()}
-function clockPeriod(){return new Date().getHours()<14?'am':'pm'}
-let selectedPeriod=null;
-function currentPeriod(){return selectedPeriod||clockPeriod()}
-function selectPeriod(period){selectedPeriod=period;renderHome();toast(period==='am'?'עברנו לבוקר ☀️':'עברנו לערב 🌙')}
-function azStart(){let k='shimi-azelaic-start-v29',v=localStorage.getItem(k);if(!v){v=localDate();localStorage.setItem(k,v)}return new Date(v+'T00:00:00')}
-function azReady(){return (new Date(new Date().setHours(0,0,0,0))-azStart())/86400000>=14}
-function morning(day){if(day===1&&azReady())return [['Anua Azelaic Acid 10+ Hyaluron Redness Soothing Serum','🌿','פנים בלבד','אזלאית. בלי Vitamin C וניאצינמיד בבוקר הזה.'],['Anua 7 Rice Ceramide Barrier Serum','🌾','פנים + צוואר','מחסום ולחות.'],['SPF 50+ Anthelios UVMune 400','🧴','פנים + צוואר + מחשוף','כמות נדיבה.']];return baseMorning[day]}
-function steps(period,day=new Date().getDay()){return period==='am'?morning(day):evening[day].steps}
-function checkKey(period){return 'shimi-v29-check-'+dateKey()+'-'+period}
-function checks(period){try{return JSON.parse(localStorage.getItem(checkKey(period))||'{}')}catch{return {}}}
-function toggleStep(i){let p=currentPeriod(),c=checks(p);c[i]=!c[i];localStorage.setItem(checkKey(p),JSON.stringify(c));renderHome();toast(c[i]?'סומן ✓':'הוחזר')}
-function finishCurrent(){let p=currentPeriod(),s=steps(p),c={};s.forEach((_,i)=>c[i]=true);localStorage.setItem(checkKey(p),JSON.stringify(c));if(p==='am'){selectedPeriod='pm';renderHome();toast('בוקר הושלם ✓ עברנו לערב 🌙')}else{renderHome();toast('ערב הושלם ✓');maybeFridayPopup()}}
-function resetEight(){localStorage.setItem('shimi-eight-v29',localDate())}
-function eightState(){let k='shimi-eight-v29',v=localStorage.getItem(k);if(!v){resetEight();v=localStorage.getItem(k)}let start=new Date(v+'T00:00:00'),today=new Date();today.setHours(0,0,0,0);let passed=Math.max(0,Math.floor((today-start)/86400000)),left=Math.max(0,56-passed),pct=Math.min(100,Math.round(passed/56*100));return{left,pct,start}}
-function renderHome(){let n=new Date(),day=n.getDay(),p=currentPeriod(),s=steps(p,day),c=checks(p),done=s.filter((_,i)=>c[i]).length,pct=s.length?Math.round(done/s.length*100):0;$('helloText').textContent=p==='am'?'בוקר טוב':'ערב טוב';$('dateText').textContent=n.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});$('segAm').classList.toggle('active',p==='am');$('segPm').classList.toggle('active',p==='pm');$('eyebrow').textContent=p==='am'?'MORNING · עד 14:00':'EVENING · מ־14:00';$('routineSub').textContent=p==='am'?(day===6?'שבת פינוק · '+s.length+' צעדים':'שגרת הבוקר שלך · '+s.length+' צעדים'):'שגרת ערב · '+evening[day].type+' · '+s.length+' צעדים';$('todaySteps').innerHTML=s.map((x,i)=>`<div class="step ${c[i]?'done':''}"><button class="check" onclick="toggleStep(${i})">${c[i]?'✓':i+1}</button><div class="prodMark">${x[1]}</div><div class="stepBody"><div class="stepName">${x[0]}</div><div class="stepMeta"><span class="pill">${x[2]}</span></div><div class="stepTip">${x[3]}</div></div></div>`).join('');$('todayProgress').style.setProperty('--w',pct+'%');$('progressText').textContent=done+'/'+s.length+' הושלם';let es=eightState();$('lockMini').innerHTML=`<div class="miniIcon">🔒</div><strong>${es.left}</strong><h3>ימים לביקורת</h3><p>מצב 8 שבועות בלי עוד שינויים.</p><div class="bar" style="--w:${es.pct}%"><i></i></div>`;if(p==='am'){$('nextMini').innerHTML=`<div class="miniIcon">🌙</div><h3>הערב שמחכה לך</h3><p>${evening[day].type}. ב־14:00 הבית יתחלף אוטומטית.</p>`}else{let nd=(day+1)%7;$('nextMini').innerHTML=`<div class="miniIcon">☀️</div><h3>מחר בבוקר</h3><p>${morning(nd).map(x=>x[0]).join(' · ')}</p>`}}
-function dayBadges(i){let m={0:['Ret-A','צוואר'],1:['LED','Numbuzin'],2:['LED','Ret-A'],3:['Mandelic'],4:['LED','Ret-A','צוואר'],5:['Azelaic','Medicube'],6:['מסכה','Numbuzin']};return m[i].map(x=>`<span class="badge">${x}</span>`).join('')}
-function renderWeek(){$('weekList').innerHTML=dayNames.map((d,i)=>`<div class="dayCard" onclick="showDay(${i})"><div class="dayTop"><b>${d}</b><div class="dayArrow">‹</div></div><div class="summary"><b>בוקר:</b> ${morning(i).map(x=>x[0]).join(' · ')}<br><b>ערב:</b> ${evening[i].type}</div><div class="badges">${dayBadges(i)}</div></div>`).join('')}
-function cats(){return ['הכל',...new Set(products.map(x=>x[2]))]}
-function renderProducts(){let q=($('search').value||'').toLowerCase();$('tabs').innerHTML=cats().map(c=>`<button class="tab ${c===currentCat?'active':''}" onclick="currentCat='${c}';renderProducts()">${c}</button>`).join('');let arr=products.filter(x=>(currentCat==='הכל'||x[2]===currentCat)&&(!q||x[0].toLowerCase().includes(q)||x[2].includes(q)||x[3].includes(q)));$('productList').innerHTML=arr.map(x=>`<div class="productCard" onclick="showProduct('${esc(x[0])}')"><div class="pIcon">${x[1]}</div><div class="pBody"><b>${x[0]}</b><span>${x[2]} · ${x[4]}</span></div><div class="status">${x[3]}</div></div>`).join('')||'<div class="infoCard">לא מצאתי מוצר כזה.</div>'}
-function esc(s){return s.replace(/'/g,"\\'")}
-function showDay(i){let am=morning(i),pm=evening[i].steps;$('detail').innerHTML=`<button class="close" onclick="closeDetail()">חזרה</button><div class="detailHero"><div class="big">${i===6?'🛁':'✨'}</div><h2>${dayNames[i]}</h2><p>כל היום במקום אחד</p></div><div class="infoCard"><h3>בוקר</h3><div class="steps">${renderStatic(am)}</div></div><div class="infoCard"><h3>ערב · ${evening[i].type}</h3><div class="steps">${renderStatic(pm)}</div></div>`;$('detail').classList.add('active')}
-function renderStatic(a){return a.map((x,i)=>`<div class="step"><div class="check">${i+1}</div><div class="prodMark">${x[1]}</div><div class="stepBody"><div class="stepName">${x[0]}</div><div class="stepMeta"><span class="pill">${x[2]}</span></div><div class="stepTip">${x[3]}</div></div></div>`).join('')}
-function showProduct(name){let x=products.find(p=>p[0]===name);$('detail').innerHTML=`<button class="close" onclick="closeDetail()">חזרה</button><div class="detailHero"><div class="big">${x[1]}</div><h2>${x[0]}</h2><p>${x[2]} · ${x[3]}</p></div><div class="infoCard"><h3>למה הוא כאן</h3><p>${x[4]}</p></div>`;$('detail').classList.add('active')}
-function closeDetail(){$('detail').classList.remove('active')}
-function renderProfile(){let e=eightState(),el=$('profileLock');el.innerHTML=`<div class="lockCard"><div class="lockTop"><div><b>מצב 8 שבועות</b><span>הספירה מתחילה מהגרסה החדשה הזאת.</span></div><strong>${e.left}</strong></div><div class="lockBar" style="--w:${e.pct}%"><i></i></div></div>`}
-function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));let ids=['home','calendar','products','profile'];document.querySelectorAll('.nav button')[ids.indexOf(id)].classList.add('active');if(id==='home')renderHome();if(id==='calendar')renderWeek();if(id==='products')renderProducts();if(id==='profile')renderProfile();window.scrollTo(0,0)}
-function toast(t){let el=$('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1400)}
-function maybeFridayPopup(){if(new Date().getDay()===5)$('fridayPopup').classList.add('show')}
-function closeFridayPopup(){$('fridayPopup').classList.remove('show')}
-let lastClockPhase=clockPeriod();setInterval(()=>{let p=clockPeriod();if(p!==lastClockPhase){lastClockPhase=p;if(selectedPeriod===null)renderHome()}},30000);
-renderHome();renderWeek();renderProducts();renderProfile();
-</script>
-</body></html>
+      <section class="routine" id="routine" aria-labelledby="routineTitle" tabindex="-1">
+        <div class="routine-heading"><div><span class="overline" id="routineLabel">בסדר הזה</span><h2 id="routineTitle">ניקוי, לחות, ולילה טוב.</h2></div><span class="step-count" id="stepCount"></span></div>
+        <ol class="steps" id="steps"></ol>
+        <div class="routine-footer"><p id="routineNote"></p><span class="leaf" aria-hidden="true">✳</span></div>
+      </section>
+
+      <div class="completion"><div class="completion-copy"><span id="progressText" aria-live="polite"></span><button id="reset" class="text-button" hidden>איפוס הסימונים</button></div><button class="finish" id="finish">סיימתי את השגרה<span aria-hidden="true">✓</span></button></div>
+      <p class="storage-note" id="storageNote" hidden>הסימונים נשמרים כרגע רק עד סגירת הדף.</p>
+
+      <details class="routine-info">
+        <summary>כמה דברים שכדאי לדעת <span aria-hidden="true">+</span></summary>
+        <div class="info-content">
+          <p><strong>זו הצעה לשגרה פשוטה.</strong> הרטאויט נשאר ב־0.025% בימים ראשון, שלישי וחמישי, לפי השגרה שסיפרת עליה. שינוי בתדירות, בריכוז או במריחה על הצוואר — עם רופא/ת העור.</p>
+          <p>הפילינג המנדלי והניאצינמיד הנפרד הוצאו משגרת הבסיס. האזלאית בשישי וה־Numbuzin בשני ובשבת הם לבחירה; אין העלאת תדירות אוטומטית.</p>
+          <p>מסכות וקרם צוואר הם תוספות שאפשר ליהנות מהן. אם זו מסכת Medicube Collagen Night Wrapping, מורחים אותה אחרי קרם הלחות. ה־LED ממתין לבירור עם איש מקצוע, בהתאם להוראות Nanoleaf לשימוש לצד רטינואידים.</p>
+          <p>אם מופיעים צריבה או קילופים, דלגי על האקטיבים והסתפקי בניקוי עדין ולחות. גירוי מתמשך מצריך ייעוץ רפואי.</p>
+          <p class="source-links"><a href="https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/wrinkle-remedies" target="_blank" rel="noopener noreferrer">הנחיות רופאי עור ↗</a><a href="https://support.nanoleaf.me/hc/en-us/articles/36393672968596-FAQ-Wellness-Red-Light-Devices-Side-Effects" target="_blank" rel="noopener noreferrer">הוראות Nanoleaf ↗</a></p>
+        </div>
+      </details>
+      <footer class="footer"><span>פחות שלבים. יותר עקביות.</span><span dir="ltr">made for shimi</span></footer>
+    </main>
+  </div>
+  <div class="toast" role="status" id="toast"></div>
+  <noscript><p class="noscript">כדי להציג את השגרה ולסמן שלבים צריך להפעיל JavaScript בדפדפן.</p></noscript>
+</body>
+</html>
